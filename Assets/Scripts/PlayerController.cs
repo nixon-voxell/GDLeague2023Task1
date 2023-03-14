@@ -9,42 +9,25 @@ public class PlayerController : MonoBehaviour
 {
     public PlayerInput playerInput;
 
-    public TextMeshProUGUI actionMapText;
-    public TextMeshProUGUI controlSchemeText;
-    public TextMeshProUGUI playerIndexText;
 
-    public TextMeshProUGUI movementText;
-    public TextMeshProUGUI abilitiesText;
-    public TextMeshProUGUI abilitiesTwoText;
-    public TextMeshProUGUI abilitiesThreeText;
-    public TextMeshProUGUI dashText;
-    public TextMeshProUGUI knockbackText;
-    public TextMeshProUGUI pauseText;
-
-
-    private void Start()
+    private void OnControlsChanged(PlayerInput newPlayerInput)
     {
-        UpdatePlayerInputInfo();
-        
+        Debug.Log("Controls Changed : " + newPlayerInput.currentControlScheme);
     }
-
-    private void UpdatePlayerInputInfo()
+    private void OnDeviceLost(PlayerInput newPlayerInput)
     {
-        playerIndexText.text = "Player Index: " + playerInput.playerIndex;
-        controlSchemeText.text = "Control Scheme: " + playerInput.currentControlScheme;
-        actionMapText.text = "Action Map: " + playerInput.currentActionMap.name;
+        Debug.Log("Device Lost : " + newPlayerInput.devices);
     }
-
-    private void OnControlsChanged(PlayerInput playerInput)
+    private void OnDeviceRegained(PlayerInput newPlayerInput)
     {
-        UpdatePlayerInputInfo();
+        Debug.Log("Device Regained : " + newPlayerInput.devices);
+
     }
 
     private void OnMovement(InputValue value)
     {
         Vector2 moveValue = value.Get<Vector2>();
         Debug.Log("Movement: " + moveValue);
-        movementText.text = "Movement: " + moveValue.ToString();
 
     }
 
@@ -52,9 +35,6 @@ public class PlayerController : MonoBehaviour
     {
         bool isPressed = value.isPressed;
         Debug.Log("Dash: " + isPressed);
-        dashText.text = "Dash: " + isPressed.ToString();
-        if (isPressed == false)
-            StartCoroutine(ClearText(dashText));
 
     }
 
@@ -62,9 +42,6 @@ public class PlayerController : MonoBehaviour
     {
         bool isPressed = value.isPressed;
         Debug.Log("Knockback: " + isPressed);
-        knockbackText.text = "Knockback: " + isPressed.ToString();
-        if (isPressed == false)
-            StartCoroutine(ClearText(knockbackText));
 
     }
 
@@ -72,45 +49,24 @@ public class PlayerController : MonoBehaviour
     {
         bool isPressed = value.isPressed;
         Debug.Log("Skill One: " + isPressed);
-        abilitiesText.text = "Skill One: " + isPressed.ToString();
-
-        if (isPressed == false)
-            StartCoroutine(ClearText(abilitiesText));
     }
 
     private void OnSkillTwo(InputValue value)
     {
         bool isPressed = value.isPressed;
         Debug.Log("Skill Two: " + isPressed);
-        abilitiesTwoText.text = "Skill Two: " + isPressed.ToString();
-
-        if (isPressed == false)
-            StartCoroutine(ClearText(abilitiesTwoText));
     }
 
     private void OnSkillThree(InputValue value)
     {
         bool isPressed = value.isPressed;
         Debug.Log("Skill Three: " + isPressed);
-        abilitiesThreeText.text = "Skill Three: " + isPressed.ToString();
-
-        if (isPressed == false)
-            StartCoroutine(ClearText(abilitiesThreeText));
     }
     private void OnPause(InputValue value)
     {
         bool isPressed = value.isPressed;
         Debug.Log("Pause: " + isPressed);
-        pauseText.text = "Pause: " + isPressed.ToString();
-
-        StartCoroutine(ClearText(pauseText));
     }
 
-
-    IEnumerator ClearText(TextMeshProUGUI textPanel)
-    {
-        yield return new WaitForSeconds(1);
-        string[] newText = textPanel.text.Split(':');
-        textPanel.text = newText[0];
-    }
+    
 }
