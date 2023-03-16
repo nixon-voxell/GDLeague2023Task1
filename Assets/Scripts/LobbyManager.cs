@@ -48,22 +48,71 @@ public class LobbyManager : Singleton<LobbyManager>
         m_P2OriginalSelectedBtn = m_P2MultiplayerESystem.firstSelectedGameObject;
     }
 
-    private void OnPlayerJoined(PlayerInput playerInput)
+    private void OnJoinLobbyKb1(InputValue value)
     {
-        Debug.Log("[INPUT] Player Joined: " + playerInput);
+        Debug.Log("Keyboard 1");
+
         if (m_P1PlayerInput == null)
         {
-            m_P1PlayerInput = playerInput;
-            m_P1PlayerInput.SwitchCurrentActionMap("UIP1");
-            if (m_P1PlayerInput.currentControlScheme == "DefaultKeyboard")
+            m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current});
+            SetupPlayerUIInput(1);
+        }
+       
+    }
+
+   
+    private void OnJoinLobbyKb2(InputValue value)
+    {
+        Debug.Log("Kb2");
+        if (m_P2PlayerInput == null)
+        {
+            m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
+            SetupPlayerUIInput(2);
+        }
+    }
+    private void OnPlayerJoined(PlayerInput playerInput)
+    {
+        Debug.Log("Player Joined!");
+        //Destroy player input if exceed max 2
+        if (m_P1PlayerInput != null & m_P2PlayerInput != null)
+        {
+            Debug.LogWarning("Exceeded 2 player input");
+            Destroy (playerInput.gameObject);
+        }
+
+        if (playerInput.currentControlScheme == "Controller")
+        {
+            if (m_P1PlayerInput == null)
             {
-
-                m_P1PlayerInput.SwitchCurrentControlScheme("KeyboardOne", new InputDevice[]{ Keyboard.current, Mouse.current});
-                //m_P1PlayerInput = null;
-                //PlayerInput newPlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: [Keyboard.current, Mouse.current]);
-                //return;
+                m_P1PlayerInput = playerInput;
+                SetupPlayerUIInput(1);
             }
-
+            else if (m_P2PlayerInput == null)
+            {
+                m_P2PlayerInput = playerInput;
+                SetupPlayerUIInput(2);
+            }
+        }
+    }
+    private void OnJoinLobbyController(InputValue value)
+    {
+        Debug.Log("Controller");
+        if (m_P1PlayerInput == null)
+        {
+            m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: Gamepad.current);
+            SetupPlayerUIInput(1);
+        }
+        else if (m_P2PlayerInput == null)
+        {
+            m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
+            SetupPlayerUIInput(2);
+        }
+    }
+    private void SetupPlayerUIInput(int playerNumber)
+    {
+        if (playerNumber == 1)
+        {
+            m_P1PlayerInput.SwitchCurrentActionMap("UIP1");
             m_P1InputSystemUIInputModule.enabled = true;
             m_P1MultiplayerESystem.SetSelectedGameObject(m_P1OriginalSelectedBtn);
             m_P1PlayerInput.GetComponent<PlayerLobbyController>().PlayerNumber = 1;
@@ -71,35 +120,17 @@ public class LobbyManager : Singleton<LobbyManager>
             m_P1PlayerInput.uiInputModule = m_P1InputSystemUIInputModule;
             SetCurrentPanel(1, LobbyPage.MAINBUTTONMENU);
         }
-        else if (m_P2PlayerInput == null)
+        else if (playerNumber == 2)
         {
-            m_P2PlayerInput = playerInput;
             m_P2PlayerInput.SwitchCurrentActionMap("UIP2");
-            if (m_P2PlayerInput.currentControlScheme == "DefaultKeyboard")
-            {
-
-                m_P2PlayerInput.SwitchCurrentControlScheme("KeyboardTwo", new InputDevice[] { Keyboard.current, Mouse.current });
-                //m_P1PlayerInput = null;
-                //PlayerInput newPlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: [Keyboard.current, Mouse.current]);
-                //return;
-            }
-
-
             m_P2InputSystemUIInputModule.enabled = true;
             m_P2LobbyController = m_P2PlayerInput.GetComponent<PlayerLobbyController>();
             m_P2MultiplayerESystem.SetSelectedGameObject(m_P2OriginalSelectedBtn);
             m_P2LobbyController.PlayerNumber = 2;
             m_P2PlayerInput.uiInputModule = m_P2InputSystemUIInputModule;
             SetCurrentPanel(2, LobbyPage.MAINBUTTONMENU);
-
         }
-        else
-        {
-            Debug.LogWarning("[INPUT] Third playerInput detected and created!");
-        }
-        
     }
-
 
     private void OnPlayerLeft(PlayerInput playerInput)
     {
