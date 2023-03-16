@@ -463,7 +463,7 @@
                 {
                     "name": "down",
                     "id": "6e206c13-9b0b-4449-bdb3-5746f3e3c56f",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/semicolon",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -474,7 +474,7 @@
                 {
                     "name": "left",
                     "id": "f2f470b4-b576-4d53-8af7-7f27747b67e3",
-                    "path": "<Keyboard>/semicolon",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
