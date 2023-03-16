@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class UnityBtnEvent : UnityEvent<BtnEvent> { }
+public class UnityBtnEvent : UnityEvent<LobbyPage> { }
 
 /// <summary>
 /// Using it to just store button events but maybe can be reused in future

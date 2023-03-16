@@ -11,7 +11,7 @@ using UnityEngine.Events;
 public class LobbyBtnEventTrigger : MonoBehaviour
 {
     public int PlayerNumber;
-    public BtnEvent BtnEvent;
+    public LobbyPage BtnEvent;
 
     public void ButtonPressed()
     {

@@ -614,7 +614,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 309800235}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 309800238}
+        m_TargetAssemblyTypeName: LobbyBtnEventTrigger, Assembly-CSharp
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &309800235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -954,7 +966,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_JoinAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Join
       m_Type: 0
@@ -972,23 +984,16 @@ MonoBehaviour:
         m_Action: Join
         m_Flags: 0
       - m_Name: 
-        m_Id: 84a906d9-11e1-4c54-b191-2504a9c42f58
-        m_Path: <Keyboard>/e
-        m_Interactions: 
-        m_Processors: 
-        m_Groups: 
-        m_Action: Join
-        m_Flags: 0
-      - m_Name: 
         m_Id: 2dfdf9fa-0fff-4f1c-8b86-a1fceb7ecfca
-        m_Path: <Keyboard>/leftBracket
+        m_Path: <Keyboard>/space
         m_Interactions: 
         m_Processors: 
         m_Groups: 
         m_Action: Join
         m_Flags: 0
       m_Flags: 0
-    m_Reference: {fileID: 0}
+    m_Reference: {fileID: 4529020461827413432, guid: e0173061947160f4d85ade8e07e712ee,
+      type: 3}
   m_PlayerPrefab: {fileID: 1122511509}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
@@ -1028,6 +1033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7810a494d6595c24dab4da048c73deed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PlayerPrefab: {fileID: 1122511509}
   m_P1EventObject: {fileID: 1007069852}
   m_P1MultiplayerESystem: {fileID: 1007069855}
   m_P1InputSystemUIInputModule: {fileID: 1007069854}
@@ -1040,6 +1046,14 @@ MonoBehaviour:
   m_P2MainBtnCtrlPanel: {fileID: 182679414}
   m_P2JoinInstruction: {fileID: 1339194379}
   m_P2ReadyToFight: {fileID: 830032351}
+  m_Player2SpecialColor:
+    m_NormalColor: {r: 0.18039216, g: 0.3647059, b: 0.62352943, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
 --- !u!1 &567674880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1174367770
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2374,7 +2388,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1248593217}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1248593219}
+        m_TargetAssemblyTypeName: LobbyBtnEventTrigger, Assembly-CSharp
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1248593217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2645,7 +2671,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1318660426}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1318660429}
+        m_TargetAssemblyTypeName: LobbyBtnEventTrigger, Assembly-CSharp
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1318660426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2736,7 +2774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1339194380
 RectTransform:
   m_ObjectHideFlags: 0
