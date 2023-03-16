@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 /// <summary>
 /// Connect Button's OnClick event to the ButtonPressed method
-/// Connect this script's UnityBtnEvent to the LobbyManager.ButtonEvent
 /// </summary>
 public class LobbyBtnEventTrigger : MonoBehaviour
 {

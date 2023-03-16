@@ -36,8 +36,6 @@ public class LobbyManager : Singleton<LobbyManager>
     private PlayerInput m_P2PlayerInput;
     private GameObject m_P1OriginalSelectedBtn;
     private GameObject m_P2OriginalSelectedBtn;
-    private bool m_P1Ready = false;
-    private bool m_P2Ready = false;
     private LobbyPage m_P1LobbyPage;
     private LobbyPage m_P2LobbyPage;
 
