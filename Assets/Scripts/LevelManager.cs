@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     public GameObject m_PlayerPrefab;
 
