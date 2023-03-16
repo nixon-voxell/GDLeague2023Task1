@@ -974,13 +974,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerPrefab: {fileID: 1122511509}
-  m_P1EventObject: {fileID: 1007069852}
   m_P1MultiplayerESystem: {fileID: 1007069855}
   m_P1InputSystemUIInputModule: {fileID: 1007069854}
   m_P1MainBtnCtrlPanel: {fileID: 2130984391}
   m_P1JoinInstruction: {fileID: 1174367769}
   m_P1ReadyToFight: {fileID: 812987718}
-  m_P2EventObject: {fileID: 1522684093}
   m_P2MultiplayerESystem: {fileID: 1522684096}
   m_P2InputSystemUIInputModule: {fileID: 1522684095}
   m_P2MainBtnCtrlPanel: {fileID: 182679414}
