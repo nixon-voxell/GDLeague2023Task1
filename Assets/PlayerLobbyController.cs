@@ -17,7 +17,7 @@ public class PlayerLobbyController : MonoBehaviour
 
     private void OnCancel(InputValue value)
     {
-        LobbyManager.Instance.BtnPress(LobbyPage.MAINBUTTONMENU, PlayerNumber);
+        LobbyManager.Instance.BtnPress(LobbyPage.MAIN_BUTTON_MENU, PlayerNumber);
     }
 
     public void LoadSpecialP2Setup(Button p2Button, ColorBlock hackPlayer2Color)
