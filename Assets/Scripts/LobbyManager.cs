@@ -54,6 +54,7 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current});
             SetupPlayerUIInput(1);
+            // GameManager.Instance.PlayerManager.MovePlayerToScene(m_P1PlayerInput.gameObject);
         }
        
     }
