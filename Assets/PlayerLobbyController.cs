@@ -14,10 +14,6 @@ public class PlayerLobbyController : MonoBehaviour
     private ColorBlock m_HackPlayer2Color;
     private bool m_firstP2Setup = true;
 
-    private void Start()
-    {
-        Debug.Log("Player: " + PlayerNumber + " | Scheme: " + GetComponent<PlayerInput>().currentControlScheme);
-    }
 
     private void OnCancel(InputValue value)
     {
