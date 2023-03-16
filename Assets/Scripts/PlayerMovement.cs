@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Unity.Mathematics;
 
 public class PlayerMovement : MonoBehaviour
@@ -33,19 +34,19 @@ public class PlayerMovement : MonoBehaviour
         this.m_CollisionPoints = new Dictionary<int, float3>();
     }
 
+    private void OnMovement(InputValue value)
+    {
+        Vector2 moveValue = value.Get<Vector2>();
+        this.m_MovementDirection.x = moveValue.x;
+        this.m_MovementDirection.z = moveValue.y;
+    }
+
     private void Update()
     {
         this.m_ForwardDirection = this.transform.forward;
         // cannot perform any calculations anyway
         if (Time.deltaTime < math.EPSILON) return;
 
-        // assign direction based on key input
-        // TODO: change this for new input system in the future
-        this.m_MovementDirection = 0.0f;
-        this.m_MovementDirection.z += Input.GetKey(KeyCode.W) ? 1.0f : 0.0f;
-        this.m_MovementDirection.z += Input.GetKey(KeyCode.S) ? -1.0f : 0.0f;
-        this.m_MovementDirection.x += Input.GetKey(KeyCode.D) ? 1.0f : 0.0f;
-        this.m_MovementDirection.x += Input.GetKey(KeyCode.A) ? -1.0f : 0.0f;
         // normalize so that it remains a unit vector
         if (math.all(this.m_MovementDirection != 0.0f))
         {
