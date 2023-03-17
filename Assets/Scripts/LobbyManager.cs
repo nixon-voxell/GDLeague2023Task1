@@ -46,8 +46,6 @@ public class LobbyManager : Singleton<LobbyManager>
 
     private void OnJoinLobbyKb1(InputValue value)
     {
-        Debug.Log("Keyboard 1");
-
         if (m_P1PlayerInput == null)
         {
             m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current});
@@ -59,16 +57,16 @@ public class LobbyManager : Singleton<LobbyManager>
    
     private void OnJoinLobbyKb2(InputValue value)
     {
-        Debug.Log("Kb2");
         if (m_P2PlayerInput == null)
         {
             m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
             SetupPlayerUIInput(2);
         }
     }
+
+
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        Debug.Log("Player Joined!");
         //Destroy player input if exceed max 2
         if (m_P1PlayerInput != null & m_P2PlayerInput != null)
         {
@@ -90,20 +88,7 @@ public class LobbyManager : Singleton<LobbyManager>
             }
         }
     }
-    private void OnJoinLobbyController(InputValue value)
-    {
-        Debug.Log("Controller");
-        if (m_P1PlayerInput == null)
-        {
-            m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: Gamepad.current);
-            SetupPlayerUIInput(1);
-        }
-        else if (m_P2PlayerInput == null)
-        {
-            m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
-            SetupPlayerUIInput(2);
-        }
-    }
+
     private void SetupPlayerUIInput(int playerNumber)
     {
         if (playerNumber == 1)
@@ -132,18 +117,17 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         if (m_P1PlayerInput == playerInput)
         {
-            Debug.Log("p1 left");
+            Debug.Log("[CONTROLLER] P1 left");
         }
         else if (m_P2PlayerInput == playerInput)
         {
-            Debug.Log("P2 left");
+            Debug.Log("[CONTROLLER] P2 left");
 
         }
     }
 
     public void BtnPress(LobbyPage btnEvent, int playerNumber)
     {
-        Debug.Log(btnEvent + " | " + playerNumber);
         switch (btnEvent)
         {
             case LobbyPage.READYUP:
