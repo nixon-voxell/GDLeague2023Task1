@@ -10,7 +10,6 @@ public class LobbyManager : Singleton<LobbyManager>
 {
     [SerializeField] private GameObject m_PlayerPrefab;
 
-    [SerializeField] private GameObject m_P1EventObject;
     [SerializeField] private MultiplayerEventSystem m_P1MultiplayerESystem;
     [SerializeField] private InputSystemUIInputModule m_P1InputSystemUIInputModule;
     [SerializeField] private GameObject m_P1MainBtnCtrlPanel;
@@ -19,7 +18,6 @@ public class LobbyManager : Singleton<LobbyManager>
 
     //-----
 
-    [SerializeField] private GameObject m_P2EventObject;
     [SerializeField] private MultiplayerEventSystem m_P2MultiplayerESystem;
     [SerializeField] private InputSystemUIInputModule m_P2InputSystemUIInputModule;
     [SerializeField] private GameObject m_P2MainBtnCtrlPanel;
@@ -48,8 +46,6 @@ public class LobbyManager : Singleton<LobbyManager>
 
     private void OnJoinLobbyKb1(InputValue value)
     {
-        Debug.Log("Keyboard 1");
-
         if (m_P1PlayerInput == null)
         {
             m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current});
@@ -62,16 +58,16 @@ public class LobbyManager : Singleton<LobbyManager>
    
     private void OnJoinLobbyKb2(InputValue value)
     {
-        Debug.Log("Kb2");
         if (m_P2PlayerInput == null)
         {
             m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Keyboard", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
             SetupPlayerUIInput(2);
         }
     }
+
+
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        Debug.Log("Player Joined!");
         //Destroy player input if exceed max 2
         if (m_P1PlayerInput != null & m_P2PlayerInput != null)
         {
@@ -93,20 +89,7 @@ public class LobbyManager : Singleton<LobbyManager>
             }
         }
     }
-    private void OnJoinLobbyController(InputValue value)
-    {
-        Debug.Log("Controller");
-        if (m_P1PlayerInput == null)
-        {
-            m_P1PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: Gamepad.current);
-            SetupPlayerUIInput(1);
-        }
-        else if (m_P2PlayerInput == null)
-        {
-            m_P2PlayerInput = PlayerInput.Instantiate(m_PlayerPrefab, controlScheme: "Controller", pairWithDevices: new InputDevice[] { Keyboard.current, Mouse.current });
-            SetupPlayerUIInput(2);
-        }
-    }
+
     private void SetupPlayerUIInput(int playerNumber)
     {
         if (playerNumber == 1)
@@ -117,7 +100,7 @@ public class LobbyManager : Singleton<LobbyManager>
             m_P1PlayerInput.GetComponent<PlayerLobbyController>().PlayerNumber = 1;
 
             m_P1PlayerInput.uiInputModule = m_P1InputSystemUIInputModule;
-            SetCurrentPanel(1, LobbyPage.MAINBUTTONMENU);
+            SetCurrentPanel(1, LobbyPage.MAIN_BUTTON_MENU);
         }
         else if (playerNumber == 2)
         {
@@ -127,7 +110,7 @@ public class LobbyManager : Singleton<LobbyManager>
             m_P2MultiplayerESystem.SetSelectedGameObject(m_P2OriginalSelectedBtn);
             m_P2LobbyController.PlayerNumber = 2;
             m_P2PlayerInput.uiInputModule = m_P2InputSystemUIInputModule;
-            SetCurrentPanel(2, LobbyPage.MAINBUTTONMENU);
+            SetCurrentPanel(2, LobbyPage.MAIN_BUTTON_MENU);
         }
     }
 
@@ -135,25 +118,24 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         if (m_P1PlayerInput == playerInput)
         {
-            Debug.Log("p1 left");
+            Debug.Log("[CONTROLLER] P1 left");
         }
         else if (m_P2PlayerInput == playerInput)
         {
-            Debug.Log("P2 left");
+            Debug.Log("[CONTROLLER] P2 left");
 
         }
     }
 
     public void BtnPress(LobbyPage btnEvent, int playerNumber)
     {
-        Debug.Log(btnEvent + " | " + playerNumber);
         switch (btnEvent)
         {
-            case LobbyPage.READYPUP:
+            case LobbyPage.READYUP:
                 SetCurrentPanel(playerNumber, btnEvent);
 
                 break;
-            case LobbyPage.MAINBUTTONMENU:
+            case LobbyPage.MAIN_BUTTON_MENU:
                 SetCurrentPanel(playerNumber, btnEvent);
                 break;
             case LobbyPage.QUIT:
@@ -190,41 +172,41 @@ public class LobbyManager : Singleton<LobbyManager>
     /// <param name="enable"></param>
     private void SetCurrentPanel(int playerNumber, LobbyPage changeToPanel)
     {
-        if (changeToPanel == LobbyPage.MAINBUTTONMENU)
+        if (changeToPanel == LobbyPage.MAIN_BUTTON_MENU)
         {
-            if (playerNumber == 1 && m_P1LobbyPage != LobbyPage.MAINBUTTONMENU)
+            if (playerNumber == 1 && m_P1LobbyPage != LobbyPage.MAIN_BUTTON_MENU)
             {
                 m_P1MainBtnCtrlPanel.SetActive(true);
                 m_P1JoinInstruction.SetActive(false);
                 m_P1ReadyToFight.SetActive(false);
-                m_P1LobbyPage = LobbyPage.MAINBUTTONMENU;
+                m_P1LobbyPage = LobbyPage.MAIN_BUTTON_MENU;
             }
-            else if (playerNumber == 2 && m_P2LobbyPage != LobbyPage.MAINBUTTONMENU)
+            else if (playerNumber == 2 && m_P2LobbyPage != LobbyPage.MAIN_BUTTON_MENU)
             {
                 m_P2MainBtnCtrlPanel.SetActive(true);
                 m_P2JoinInstruction.SetActive(false);
                 m_P2ReadyToFight.SetActive(false);
                 m_P2LobbyController.LoadSpecialP2Setup(m_P2OriginalSelectedBtn.GetComponent<Button>(), m_Player2SpecialColor);
-                m_P2LobbyPage = LobbyPage.MAINBUTTONMENU;
+                m_P2LobbyPage = LobbyPage.MAIN_BUTTON_MENU;
 
             }
         }
-        else if (changeToPanel == LobbyPage.READYPUP)
+        else if (changeToPanel == LobbyPage.READYUP)
         {
-            if (playerNumber == 1 && m_P1LobbyPage != LobbyPage.READYPUP)
+            if (playerNumber == 1 && m_P1LobbyPage != LobbyPage.READYUP)
             {
                 m_P1MainBtnCtrlPanel.SetActive(false);
                 m_P1JoinInstruction.SetActive(false);
                 m_P1ReadyToFight.SetActive(true);
-                m_P1LobbyPage = LobbyPage.READYPUP;
+                m_P1LobbyPage = LobbyPage.READYUP;
 
             }
-            else if (playerNumber == 2 && m_P2LobbyPage != LobbyPage.READYPUP)
+            else if (playerNumber == 2 && m_P2LobbyPage != LobbyPage.READYUP)
             {
                 m_P2MainBtnCtrlPanel.SetActive(false);
                 m_P2JoinInstruction.SetActive(false);
                 m_P2ReadyToFight.SetActive(true);
-                m_P2LobbyPage = LobbyPage.READYPUP;
+                m_P2LobbyPage = LobbyPage.READYUP;
             }
         }
         else if (changeToPanel == LobbyPage.QUIT)
@@ -255,5 +237,5 @@ public class LobbyManager : Singleton<LobbyManager>
 
 public enum LobbyPage
 {
-    READYPUP, BINDING, QUIT, MAINBUTTONMENU
+    READYUP, BINDING, QUIT, MAIN_BUTTON_MENU
 }
