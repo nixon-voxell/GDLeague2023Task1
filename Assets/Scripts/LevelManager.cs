@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public GameObject m_PlayerPrefab;
+    [SerializeField] private GridSystem m_GridSystem;
+
+    public GridSystem GridSystem => this.m_GridSystem;
 
     private void Start()
     {
-        GameManager.Instance.PlayerManager = this;
+        GameManager.Instance.LevelManager = this;
     }
 
     public void MovePlayerToScene(GameObject playerGO)
