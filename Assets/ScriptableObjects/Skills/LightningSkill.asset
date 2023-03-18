@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab742b70bd072f4ba5e506aec4b397a, type: 3}
-  m_Name: SkillScriptableObject
+  m_Script: {fileID: 11500000, guid: 20f0ad3be5cc70a44a82c602caed3cae, type: 3}
+  m_Name: LightningSkill
   m_EditorClassIdentifier: 

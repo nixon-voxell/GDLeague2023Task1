@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using Voxell.Util;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private SphereCollider m_SphereCollider;
+    [SerializeField] private float m_CollisionRadius = 0.5f;
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_Damping = 0.98f;
     [SerializeField] private float m_DashVelocity;
@@ -15,12 +17,11 @@ public class PlayerMovement : MonoBehaviour
         m_ForwardDirection;
 
     // for PBD physics
-    private float3
+    [SerializeField, InspectOnly] private float3
         m_Position,
         m_PrevPosition,
         m_Velocity;
 
-    // private List<float3> m_ContactPoints;
     private Dictionary<int, float3> m_CollisionPoints;
 
     private void Start()
@@ -102,5 +103,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         this.m_CollisionPoints.Remove(collision.collider.GetInstanceID());
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(this.transform.position, this.m_CollisionRadius);
     }
 }
