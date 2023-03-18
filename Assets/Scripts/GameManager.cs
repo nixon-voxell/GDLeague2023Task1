@@ -1,11 +1,13 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] private Camera m_Camera;
     [HideInInspector] public LevelManager PlayerManager;
 
-    public static void CreatePlayer(PlayerInput playerInput)
+    public Camera MainCamera => this.m_Camera;
+
+    private void Awake()
     {
         
     }

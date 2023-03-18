@@ -42,6 +42,12 @@ public class PlayerMovement : MonoBehaviour
         this.m_MovementDirection.z = moveValue.y;
     }
 
+    private void OnDash()
+    {
+        // apply dash
+        this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
+    }
+
     private void Update()
     {
         this.m_ForwardDirection = this.transform.forward;
@@ -56,12 +62,6 @@ public class PlayerMovement : MonoBehaviour
 
         // apply movement
         this.m_Position += this.m_MovementDirection * this.m_Speed * Time.deltaTime;
-
-        // apply dash
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
-        }
 
         // apply velocity
         this.m_Position += this.m_Velocity * Time.deltaTime;

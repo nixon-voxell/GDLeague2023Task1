@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GridSystem : MonoBehaviour
 {
-    public GameObject plane;
-    public float cellSize;
+    [SerializeField] private GameObject m_Plane;
+    [SerializeField] private float m_CellSize;
 
     private int gridSizeX, gridSizeY;
     private Vector3 origin;
@@ -22,10 +20,10 @@ public class GridSystem : MonoBehaviour
 
     private void CalculateGridSize()
     {
-        Vector3 planeSize = plane.GetComponent<Renderer>().bounds.size;
-        gridSizeX = Mathf.FloorToInt(planeSize.x / cellSize);
-        gridSizeY = Mathf.FloorToInt(planeSize.z / cellSize);
-        origin = plane.transform.position - planeSize / 2 + new Vector3(cellSize / 2, 0, cellSize / 2);
+        Vector3 planeSize = m_Plane.GetComponent<Renderer>().bounds.size;
+        gridSizeX = Mathf.FloorToInt(planeSize.x / m_CellSize);
+        gridSizeY = Mathf.FloorToInt(planeSize.z / m_CellSize);
+        origin = m_Plane.transform.position - planeSize / 2 + new Vector3(m_CellSize / 2, 0, m_CellSize / 2);
     }
 
     private void InitializeGrid()
@@ -35,7 +33,7 @@ public class GridSystem : MonoBehaviour
 
     public Vector3 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x * cellSize, 0, y * cellSize) + origin + new Vector3(0, 0.5f, 0); ;
+        return new Vector3(x * m_CellSize, 0, y * m_CellSize) + origin + new Vector3(0, 0.5f, 0); ;
     }
 
     public bool IsCellOccupied(int x, int y)
