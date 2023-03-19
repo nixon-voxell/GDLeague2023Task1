@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private float3
         m_MovementDirection,
         m_ForwardDirection;
-    private Quaternion m_TargetRotation;
+    private quaternion m_TargetRotation;
 
     // for PBD physics
     [SerializeField, InspectOnly] private float3
@@ -43,10 +43,16 @@ public class PlayerMovement : MonoBehaviour
         this.m_MovementDirection.x = moveValue.x;
         this.m_MovementDirection.z = moveValue.y;
 
-        this.m_TargetRotation = Quaternion.LookRotation(
-            math.normalize(this.m_MovementDirection),
-            Vector3.up
-        );
+        if (math.length(this.m_MovementDirection) > math.EPSILON)
+        {
+            this.m_TargetRotation = quaternion.LookRotation(
+                math.normalize(this.m_MovementDirection),
+                new float3(0.0f, 1.0f, 0.0f)
+            );
+        } else
+        {
+            this.m_TargetRotation = this.transform.rotation;
+        }
     }
 
     private void OnDash(InputValue value)
@@ -72,14 +78,11 @@ public class PlayerMovement : MonoBehaviour
 
         // apply movement
         this.m_Position += this.m_MovementDirection * this.m_Speed * Time.deltaTime;
-
-        if (math.length(this.m_MovementDirection) > math.EPSILON)
-        {
-            this.transform.rotation = Quaternion.RotateTowards(
-                this.transform.rotation, this.m_TargetRotation,
-                this.m_RotationSpeed * Time.deltaTime
-            );
-        }
+        // apply rotation
+        this.transform.rotation = Quaternion.RotateTowards(
+            this.transform.rotation, this.m_TargetRotation,
+            this.m_RotationSpeed * Time.deltaTime
+        );
 
         // apply velocity
         this.m_Position += this.m_Velocity * Time.deltaTime;
