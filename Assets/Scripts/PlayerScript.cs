@@ -14,14 +14,14 @@ public class PlayerScript : MonoBehaviour
     private bool m_IsAlive;
 
     // TODO: change to a suitable datatype later on
-    public GameObject[] m_PlayerSkill
+    public GameObject[] playerSkill
     {
         get { return m_PlayerSkill; }
         set { m_PlayerSkill = value; }
     }
 
     // TODO: change to a suitable datatype later on
-    public GameObject[] m_StatusEffects
+    public GameObject[] statusEffects
     {
         get { return m_StatusEffects; }
         set { m_StatusEffects = value; }
