@@ -9,12 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SphereCollider m_SphereCollider;
     [SerializeField] private float m_CollisionRadius = 0.5f;
     [SerializeField] private float m_Speed;
+    [SerializeField] private float m_RotationSpeed;
     [SerializeField] private float m_Damping = 0.98f;
     [SerializeField] private float m_DashVelocity;
 
     private float3
         m_MovementDirection,
         m_ForwardDirection;
+    private Quaternion m_TargetRotation;
 
     // for PBD physics
     [SerializeField, InspectOnly] private float3
@@ -40,12 +42,20 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveValue = value.Get<Vector2>();
         this.m_MovementDirection.x = moveValue.x;
         this.m_MovementDirection.z = moveValue.y;
+
+        this.m_TargetRotation = Quaternion.LookRotation(
+            math.normalize(this.m_MovementDirection),
+            Vector3.up
+        );
     }
 
-    private void OnDash()
+    private void OnDash(InputValue value)
     {
-        // apply dash
-        this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
+        if (value.isPressed)
+        {
+            // apply dash
+            this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
+        }
     }
 
     private void Update()
@@ -62,6 +72,14 @@ public class PlayerMovement : MonoBehaviour
 
         // apply movement
         this.m_Position += this.m_MovementDirection * this.m_Speed * Time.deltaTime;
+
+        if (math.length(this.m_MovementDirection) > math.EPSILON)
+        {
+            this.transform.rotation = Quaternion.RotateTowards(
+                this.transform.rotation, this.m_TargetRotation,
+                this.m_RotationSpeed * Time.deltaTime
+            );
+        }
 
         // apply velocity
         this.m_Position += this.m_Velocity * Time.deltaTime;

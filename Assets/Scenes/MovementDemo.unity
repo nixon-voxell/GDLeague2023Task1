@@ -265,7 +265,6 @@ GameObject:
   - component: {fileID: 685557764}
   - component: {fileID: 685557765}
   - component: {fileID: 685557763}
-  - component: {fileID: 685557766}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -366,9 +365,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SphereCollider: {fileID: 685557759}
   m_CollisionRadius: 0.5
-  m_Speed: 0.5
-  m_Damping: 0.9
-  m_DashVelocity: 50
+  m_Speed: 2
+  m_RotationSpeed: 1000
+  m_Damping: 0.5
+  m_DashVelocity: 30
+  m_Position:
+    x: 0
+    y: 0
+    z: 0
+  m_PrevPosition:
+    x: 0
+    y: 0
+    z: 0
+  m_Velocity:
+    x: 0
+    y: 0
+    z: 0
 --- !u!54 &685557764
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -382,9 +394,9 @@ Rigidbody:
   m_AngularDrag: 0.06
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!114 &685557765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,19 +428,6 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerOne
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &685557766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685557758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c657644d6e9ed468f4ecdd772a6bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
 --- !u!1 &819599064
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +440,6 @@ GameObject:
   - component: {fileID: 819599068}
   - component: {fileID: 819599067}
   - component: {fileID: 819599066}
-  - component: {fileID: 819599069}
   m_Layer: 0
   m_Name: Wall_0
   m_TagString: Untagged
@@ -527,22 +525,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 819599064}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &819599069
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 819599064}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &940716665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,7 +1011,6 @@ GameObject:
   - component: {fileID: 1560071357}
   - component: {fileID: 1560071356}
   - component: {fileID: 1560071355}
-  - component: {fileID: 1560071354}
   m_Layer: 0
   m_Name: Player_1
   m_TagString: Untagged
@@ -1037,19 +1018,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1560071354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560071353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c657644d6e9ed468f4ecdd772a6bef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
 --- !u!114 &1560071355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,8 +1033,21 @@ MonoBehaviour:
   m_SphereCollider: {fileID: 1560071358}
   m_CollisionRadius: 0.5
   m_Speed: 0.5
+  m_RotationSpeed: 10
   m_Damping: 0.9
   m_DashVelocity: 50
+  m_Position:
+    x: 0
+    y: 0
+    z: 0
+  m_PrevPosition:
+    x: 0
+    y: 0
+    z: 0
+  m_Velocity:
+    x: 0
+    y: 0
+    z: 0
 --- !u!114 &1560071356
 MonoBehaviour:
   m_ObjectHideFlags: 0

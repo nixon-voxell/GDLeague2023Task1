@@ -430,7 +430,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1258647502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8fd97ceb7c4181a4b8aa9eaa56658a7e, type: 3}
   m_Name: 
@@ -510,4 +510,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 330585545}
-  PlayerManager: {fileID: 0}
+  LevelManager: {fileID: 0}
