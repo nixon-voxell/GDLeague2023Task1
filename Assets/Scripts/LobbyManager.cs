@@ -26,6 +26,10 @@ public class LobbyManager : Singleton<LobbyManager>
     [SerializeField] private GameObject m_P2ReadyToFight;
 
 
+    [Header("Special P1 Var")]
+    [SerializeField] private ColorBlock m_Player1SpecialColor;
+    private PlayerLobbyController m_P1LobbyController;
+    
     [Header("Special P2 Var")]
     [SerializeField] private ColorBlock m_Player2SpecialColor;
     private PlayerLobbyController m_P2LobbyController;
@@ -98,8 +102,10 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             m_P1PlayerInput.SwitchCurrentActionMap("UIP1");
             m_P1InputSystemUIInputModule.enabled = true;
+            m_P1LobbyController = m_P1PlayerInput.GetComponent<PlayerLobbyController>();
+
             m_P1MultiplayerESystem.SetSelectedGameObject(m_P1OriginalSelectedBtn);
-            m_P1PlayerInput.GetComponent<PlayerLobbyController>().PlayerNumber = 1;
+            m_P1LobbyController.PlayerNumber = 1;
 
             m_P1PlayerInput.uiInputModule = m_P1InputSystemUIInputModule;
             SetCurrentPanel(1, LobbyPage.MAIN_BUTTON_MENU);
@@ -109,8 +115,10 @@ public class LobbyManager : Singleton<LobbyManager>
             m_P2PlayerInput.SwitchCurrentActionMap("UIP2");
             m_P2InputSystemUIInputModule.enabled = true;
             m_P2LobbyController = m_P2PlayerInput.GetComponent<PlayerLobbyController>();
+
             m_P2MultiplayerESystem.SetSelectedGameObject(m_P2OriginalSelectedBtn);
             m_P2LobbyController.PlayerNumber = 2;
+
             m_P2PlayerInput.uiInputModule = m_P2InputSystemUIInputModule;
             SetCurrentPanel(2, LobbyPage.MAIN_BUTTON_MENU);
         }
@@ -190,6 +198,7 @@ public class LobbyManager : Singleton<LobbyManager>
                 m_P1MainBtnCtrlPanel.SetActive(true);
                 m_P1JoinInstruction.SetActive(false);
                 m_P1ReadyToFight.SetActive(false);
+                m_P1LobbyController.LoadSpecialLobbySetup(m_P1OriginalSelectedBtn.GetComponent<Button>(), m_Player1SpecialColor, m_P1MultiplayerESystem);
                 m_P1LobbyPage = LobbyPage.MAIN_BUTTON_MENU;
             }
             else if (playerNumber == 2 && m_P2LobbyPage != LobbyPage.MAIN_BUTTON_MENU)
@@ -197,7 +206,7 @@ public class LobbyManager : Singleton<LobbyManager>
                 m_P2MainBtnCtrlPanel.SetActive(true);
                 m_P2JoinInstruction.SetActive(false);
                 m_P2ReadyToFight.SetActive(false);
-                m_P2LobbyController.LoadSpecialP2Setup(m_P2OriginalSelectedBtn.GetComponent<Button>(), m_Player2SpecialColor);
+                m_P2LobbyController.LoadSpecialLobbySetup(m_P2OriginalSelectedBtn.GetComponent<Button>(), m_Player2SpecialColor, m_P2MultiplayerESystem);
                 m_P2LobbyPage = LobbyPage.MAIN_BUTTON_MENU;
 
             }
@@ -239,7 +248,13 @@ public class LobbyManager : Singleton<LobbyManager>
         }
     }
 
-    
+    public void ReturnToMainMenu()
+    {
+        // TODO: Load to main menu scene
+        //Destroy the two controller
+        // GameManager.Instance.LoadScene();
+        Debug.Log("To Main Menu!");
+    }
 
     
 
