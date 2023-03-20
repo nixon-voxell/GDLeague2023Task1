@@ -1,54 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Mathematics;
+
+public enum PlayerStatus
+{
+    Default,
+    Immobilized,
+    Dead,
+}
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
 
-    // TODO: change to a suitable datatype later on
-    [SerializeField] private GameObject[] m_PlayerSkill; // for skill inventory 
-    [SerializeField] private GameObject[] m_StatusEffects; // for stun/knockback
-
-    private int m_CurrentHealth;
-    private bool m_IsAlive;
     private PlayerInput m_PlayerInput;
+    private PlayerMovement m_PlayerMovement;
+
+    private PlayerStatus m_PlayerStatus = PlayerStatus.Default;
     private int m_PlayerNumber;
+    private int m_CurrentHealth;
 
-    public int PlayerNumber
-    {
-        get { return m_PlayerNumber; }
-        set
-        {
-            if (m_PlayerNumber ==  0)
-                m_PlayerNumber = value;
-        }
-    }
-    // Recommendation: To have all sub-script references in the playerscript
+    // index of skill in scriptable obejct
+    private int[] m_PlayerSkills;
 
+    public PlayerMovement PlayerMovement => this.m_PlayerMovement;
+    public PlayerStatus PlayerStatus => this.m_PlayerStatus;
+    public int PlayerNumber => this.m_PlayerNumber;
+    public int CurrentHealth => this.m_CurrentHealth;
 
-    // TODO: change to a suitable datatype later on
-    public GameObject[] playerSkill
-    {
-        get { return m_PlayerSkill; }
-        set { m_PlayerSkill = value; }
-    }
-
-    // TODO: change to a suitable datatype later on
-    public GameObject[] statusEffects
-    {
-        get { return m_StatusEffects; }
-        set { m_StatusEffects = value; }
-    }
-    private void Start()
-    {
-        m_PlayerInput = GetComponent<PlayerInput>();
-
-        m_IsAlive = true;
-        m_CurrentHealth = m_MaxHealth;
-    }
-    
     /// <summary>
     /// Setup required stuff of the player
     /// Currently only sets the player number and position
@@ -56,40 +35,60 @@ public class Player : MonoBehaviour
     /// <param name="playerNumber"></param>
     public void SetupPlayer(int playerNumber)
     {
-        PlayerNumber = playerNumber;
+        this.m_PlayerInput = this.GetComponent<PlayerInput>();
+        this.m_PlayerMovement = this.GetComponent<PlayerMovement>();
+
+        this.m_PlayerStatus = PlayerStatus.Default;
+        this.m_CurrentHealth = m_MaxHealth;
+
+        this.m_PlayerNumber = playerNumber;
         
         if (playerNumber == 1)
         {
             m_PlayerInput.SwitchCurrentActionMap("PlayerOne");
-
-        }
-        else if (playerNumber == 2)
+        } else if (playerNumber == 2)
         {
             m_PlayerInput.SwitchCurrentActionMap("PlayerTwo");
-
         }
+    }
 
+    private void OnMovement(InputValue value)
+    {
+        float2 moveValue = value.Get<Vector2>();
+        this.m_PlayerMovement.SetMoveDirection(moveValue);
+    }
+
+    private void OnDash(InputValue value)
+    {
+        this.m_PlayerMovement.Dash();
     }
 
     private void OnDeath()
     {
-        m_IsAlive  = false;
+        this.m_PlayerStatus = PlayerStatus.Dead;
         Debug.Log("Player dead");
     }
 
-    public void TakeDamage(int damage)
+    public void Damage(int damage)
     {
-        m_CurrentHealth -= damage;
+        this.SetHealth(this.CurrentHealth - damage);
+    }
 
-        if (m_CurrentHealth <= 0)
+    public void SetHealth(int health)
+    {
+        this.m_CurrentHealth = health;
+
+        if (this.m_CurrentHealth <= 0)
         {
-            m_CurrentHealth = 0;
+            this.m_CurrentHealth = 0;
             OnDeath();
         }
     }
 
-    public void GetPlayerPosition()
+    /// <summary>Get skill at index.</summary>
+    public int GetSkill(int skillIdx)
     {
-        Vector3 playerPosition = transform.position;
+        Debug.Assert(skillIdx < 3, "Skill index must not exceed 2.");
+        return this.m_PlayerSkills[skillIdx];
     }
 }
