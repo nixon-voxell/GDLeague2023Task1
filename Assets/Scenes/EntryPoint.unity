@@ -511,3 +511,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 330585545}
   LevelManager: {fileID: 0}
+  m_InitialScenes: []
