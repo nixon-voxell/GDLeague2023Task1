@@ -87,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // apply dash
             this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
+            GameManager.Instance.SoundManager.PlayOneShot("TestDash");
         }
     }
 
