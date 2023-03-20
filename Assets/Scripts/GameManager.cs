@@ -12,6 +12,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 1;
         // get all active scenes
         string[] loadedScenes = new string[SceneManager.sceneCount];
         for (int s = 0; s < loadedScenes.Length; s++)

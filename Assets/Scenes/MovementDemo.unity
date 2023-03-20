@@ -366,7 +366,7 @@ MonoBehaviour:
   m_SphereCollider: {fileID: 685557759}
   m_CollisionRadius: 0.5
   m_Speed: 2
-  m_RotationSpeed: 1000
+  m_RotationSpeed: 2000
   m_Damping: 0.5
   m_DashVelocity: 20
   m_Position:
