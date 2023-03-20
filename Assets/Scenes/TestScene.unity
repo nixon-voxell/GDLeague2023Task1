@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -376,9 +376,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SphereCollider: {fileID: 0}
+  m_CollisionRadius: 0.5
   m_Speed: 0.5
+  m_RotationSpeed: 0
   m_Damping: 0.95
   m_DashVelocity: 50
+  m_Position:
+    x: 0
+    y: 0
+    z: 0
+  m_PrevPosition:
+    x: 0
+    y: 0
+    z: 0
+  m_Velocity:
+    x: 0
+    y: 0
+    z: 0
 --- !u!54 &685557764
 Rigidbody:
   m_ObjectHideFlags: 0

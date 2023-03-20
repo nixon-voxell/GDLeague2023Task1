@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnControlsChanged(PlayerInput newPlayerInput)
     {
-        Debug.Log("Controls Changed : " + newPlayerInput.currentControlScheme);
+        Debug.Log("[CONTROLLER] Controls Changed : " + newPlayerInput.currentControlScheme);
     }
     private void OnDeviceLost(PlayerInput newPlayerInput)
     {
@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     private void OnMovement(InputValue value)
     {
         Vector2 moveValue = value.Get<Vector2>();
-        Debug.Log("Movement: " + moveValue);
 
     }
 

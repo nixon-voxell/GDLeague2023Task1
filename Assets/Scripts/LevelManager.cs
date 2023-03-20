@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GridSystem m_GridSystem;
+    [SerializeField] private string m_LevelSceneName; // TODO: Change the scene name to the appropriate level name
 
     public GridSystem GridSystem => this.m_GridSystem;
 
@@ -12,8 +13,27 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.LevelManager = this;
     }
 
-    public void MovePlayerToScene(GameObject playerGO)
+    /// <summary>
+    /// Moves the two player game object to the level scene and then unload the lobby scene
+    /// </summary>
+    /// <param name="playerGOP1"></param>
+    /// <param name="playerGOP2"></param>
+    public void MovePlayerToScene(GameObject playerGOP1, GameObject playerGOP2)
     {
-        SceneManager.MoveGameObjectToScene(playerGO, this.gameObject.scene);
+        SceneManager.MoveGameObjectToScene(playerGOP1, SceneManager.GetSceneByName(m_LevelSceneName));
+        SceneManager.MoveGameObjectToScene(playerGOP2, SceneManager.GetSceneByName(m_LevelSceneName));
+
+
+        // TODO: To switch this function to the game manager script
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Lobby"));
+
+        PlayerScript p1Script = playerGOP1.GetComponent<PlayerScript>();
+        PlayerScript p2Script = playerGOP2.GetComponent<PlayerScript>();
+        p1Script.SetupPlayer(1);
+        p2Script.SetupPlayer(2);
+
+        Destroy(playerGOP1.GetComponent<PlayerLobbyController>());
+        Destroy(playerGOP2.GetComponent<PlayerLobbyController>());
+
     }
 }
