@@ -27,8 +27,8 @@ public class LevelManager : MonoBehaviour
         // TODO: To switch this function to the game manager script
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Lobby"));
 
-        PlayerScript p1Script = playerGOP1.GetComponent<PlayerScript>();
-        PlayerScript p2Script = playerGOP2.GetComponent<PlayerScript>();
+        Player p1Script = playerGOP1.GetComponent<Player>();
+        Player p2Script = playerGOP2.GetComponent<Player>();
         p1Script.SetupPlayer(1);
         p2Script.SetupPlayer(2);
 

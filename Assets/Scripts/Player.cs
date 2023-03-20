@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
 
