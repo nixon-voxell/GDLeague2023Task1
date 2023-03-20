@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -12,6 +13,20 @@ public class PlayerScript : MonoBehaviour
 
     private int m_CurrentHealth;
     private bool m_IsAlive;
+    private PlayerInput m_PlayerInput;
+    private int m_PlayerNumber;
+
+    public int PlayerNumber
+    {
+        get { return m_PlayerNumber; }
+        set
+        {
+            if (m_PlayerNumber ==  0)
+                m_PlayerNumber = value;
+        }
+    }
+    // Recommendation: To have all sub-script references in the playerscript
+
 
     // TODO: change to a suitable datatype later on
     public GameObject[] playerSkill
@@ -26,11 +41,34 @@ public class PlayerScript : MonoBehaviour
         get { return m_StatusEffects; }
         set { m_StatusEffects = value; }
     }
-
     private void Start()
     {
+        m_PlayerInput = GetComponent<PlayerInput>();
+
         m_IsAlive = true;
         m_CurrentHealth = m_MaxHealth;
+    }
+    
+    /// <summary>
+    /// Setup required stuff of the player
+    /// Currently only sets the player number and position
+    /// </summary>
+    /// <param name="playerNumber"></param>
+    public void SetupPlayer(int playerNumber)
+    {
+        PlayerNumber = playerNumber;
+        
+        if (playerNumber == 1)
+        {
+            m_PlayerInput.SwitchCurrentActionMap("PlayerOne");
+
+        }
+        else if (playerNumber == 2)
+        {
+            m_PlayerInput.SwitchCurrentActionMap("PlayerTwo");
+
+        }
+
     }
 
     private void OnDeath()

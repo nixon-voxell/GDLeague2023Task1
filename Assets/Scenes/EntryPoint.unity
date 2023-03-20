@@ -450,6 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GridSystem: {fileID: 1258647503}
+  m_LevelSceneName: EmptyScene
 --- !u!4 &1258647505
 Transform:
   m_ObjectHideFlags: 0

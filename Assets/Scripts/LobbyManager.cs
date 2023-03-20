@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
+using System;
 
 public class LobbyManager : Singleton<LobbyManager>
 {
@@ -34,14 +35,15 @@ public class LobbyManager : Singleton<LobbyManager>
     private PlayerInput m_P2PlayerInput;
     private GameObject m_P1OriginalSelectedBtn;
     private GameObject m_P2OriginalSelectedBtn;
-    private LobbyPage m_P1LobbyPage;
-    private LobbyPage m_P2LobbyPage;
+    private LobbyPage m_P1LobbyPage = LobbyPage.QUIT;
+    private LobbyPage m_P2LobbyPage = LobbyPage.QUIT;
 
 
     private void Start()
     {
         m_P1OriginalSelectedBtn = m_P1MultiplayerESystem.firstSelectedGameObject;
         m_P2OriginalSelectedBtn = m_P2MultiplayerESystem.firstSelectedGameObject;
+
     }
 
     private void OnJoinLobbyKb1(InputValue value)
@@ -133,7 +135,11 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             case LobbyPage.READYUP:
                 SetCurrentPanel(playerNumber, btnEvent);
-
+                // Check if both player readied up
+                if (m_P1LobbyPage == LobbyPage.READYUP && m_P2LobbyPage == LobbyPage.READYUP)
+                {
+                    GameManager.Instance.LevelManager.MovePlayerToScene(m_P1PlayerInput.gameObject, m_P2PlayerInput.gameObject);
+                }
                 break;
             case LobbyPage.MAIN_BUTTON_MENU:
                 SetCurrentPanel(playerNumber, btnEvent);
@@ -143,6 +149,11 @@ public class LobbyManager : Singleton<LobbyManager>
                 PlayerReset(playerNumber);
                 break;
         }
+    }
+
+    private void CheckStartGame()
+    {
+        
     }
 
     /// <summary>
