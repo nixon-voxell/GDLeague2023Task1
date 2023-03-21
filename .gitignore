@@ -84,30 +84,11 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# Tensorflow trained checkpoints and weights
-*.h5
-*.h5.meta
-*.pbmm
-*.pbmm.meta
-*.tflite
-*.tflite.meta
-
 # API keys
 *.apikey
 
 # pycaches
 *.pyc
 
-# audio files
-AudioClips/
-*.mp3
-*.wav
-*.audio
-
 # license
 LICENSE.meta
-
-# large libraries
-native/
-tensorflow.dll
-tensorflow.dll.meta
