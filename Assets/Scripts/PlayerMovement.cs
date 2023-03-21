@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Unity.Mathematics;
 using Voxell.Util;
 
@@ -37,11 +36,19 @@ public class PlayerMovement : MonoBehaviour
         this.m_CollisionPoints = new Dictionary<int, float3>();
     }
 
-    private void OnMovement(InputValue value)
+    public void SetTransform(Transform trans)
     {
-        Vector2 moveValue = value.Get<Vector2>();
-        this.m_MovementDirection.x = moveValue.x;
-        this.m_MovementDirection.z = moveValue.y;
+        this.m_Position = trans.position;
+        this.m_PrevPosition = this.m_Position;
+        this.m_TargetRotation = trans.rotation;
+
+        this.transform.SetPositionAndRotation(trans.position, trans.rotation);
+    }
+
+    public void SetMoveDirection(float2 direction)
+    {
+        this.m_MovementDirection.x = direction.x;
+        this.m_MovementDirection.z = direction.y;
 
         if (math.length(this.m_MovementDirection) > math.EPSILON)
         {
@@ -55,13 +62,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnDash(InputValue value)
+    public void Dash()
     {
-        if (value.isPressed)
-        {
-            // apply dash
-            this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
-        }
+        this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
     }
 
     private void Update()
