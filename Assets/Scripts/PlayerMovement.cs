@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Unity.Mathematics;
 using Voxell.Util;
 
@@ -63,32 +62,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnMovement(InputValue value)
+    public void Dash()
     {
-        Vector2 moveValue = value.Get<Vector2>();
-        this.m_MovementDirection.x = moveValue.x;
-        this.m_MovementDirection.z = moveValue.y;
-
-        if (math.length(this.m_MovementDirection) > math.EPSILON)
-        {
-            this.m_TargetRotation = quaternion.LookRotation(
-                math.normalize(this.m_MovementDirection),
-                new float3(0.0f, 1.0f, 0.0f)
-            );
-        } else
-        {
-            this.m_TargetRotation = this.transform.rotation;
-        }
-    }
-
-    private void OnDash(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            // apply dash
-            this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
-            GameManager.Instance.SoundManager.PlayOneShot("TestDash");
-        }
+        this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
     }
 
     private void Update()
