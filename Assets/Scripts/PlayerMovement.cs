@@ -37,6 +37,32 @@ public class PlayerMovement : MonoBehaviour
         this.m_CollisionPoints = new Dictionary<int, float3>();
     }
 
+    public void SetTransform(Transform trans)
+    {
+        this.m_Position = trans.position;
+        this.m_PrevPosition = this.m_Position;
+        this.m_TargetRotation = trans.rotation;
+
+        this.transform.SetPositionAndRotation(trans.position, trans.rotation);
+    }
+
+    public void SetMoveDirection(float2 direction)
+    {
+        this.m_MovementDirection.x = direction.x;
+        this.m_MovementDirection.z = direction.y;
+
+        if (math.length(this.m_MovementDirection) > math.EPSILON)
+        {
+            this.m_TargetRotation = quaternion.LookRotation(
+                math.normalize(this.m_MovementDirection),
+                new float3(0.0f, 1.0f, 0.0f)
+            );
+        } else
+        {
+            this.m_TargetRotation = this.transform.rotation;
+        }
+    }
+
     private void OnMovement(InputValue value)
     {
         Vector2 moveValue = value.Get<Vector2>();
@@ -61,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // apply dash
             this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
+            GameManager.Instance.SoundManager.PlayOneShot("TestDash");
         }
     }
 
