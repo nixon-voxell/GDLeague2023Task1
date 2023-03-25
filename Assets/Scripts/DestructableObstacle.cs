@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class DestructibleObstacle : MonoBehaviour
+public class DestructableObstacle : MonoBehaviour
 {
     [SerializeField] private Animator m_Animator;
     private static readonly int m_DestroyTrigger = Animator.StringToHash("Destroy");
@@ -9,11 +9,11 @@ public class DestructibleObstacle : MonoBehaviour
 
     private void Start()
     {
-        // Add this object to the LevelManager's DestructibleObstacle array
+        // Add this object to the LevelManager's DestructableObstacle array
         LevelManager levelManager = FindObjectOfType<LevelManager>();
         if (levelManager != null)
         {
-            levelManager.DestructibleObstacles.Add(this);
+            levelManager.DestructableObstacle.Add(this);
         }
     }
 

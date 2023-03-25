@@ -6,10 +6,10 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GridSystem m_GridSystem;
     [SerializeField] private string m_LevelSceneName; // TODO: Change the scene name to the appropriate level name
-    [SerializeField] private List<DestructibleObstacle> m_DestructibleObstacles = new List<DestructibleObstacle>();
+    [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
 
     public GridSystem GridSystem => this.m_GridSystem;
-    public List<DestructibleObstacle> DestructibleObstacles => this.m_DestructibleObstacles;
+    public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
 
 
     private void Start()
