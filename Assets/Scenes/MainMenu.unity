@@ -436,13 +436,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 102437029}
   m_HandleRect: {fileID: 570741401}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 827378142}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: AudioSetting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &346166808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e688e6e72b9578d4082c39a8a429f3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioMixer: {fileID: 24100000, guid: ff7ad6160f951724485c1ffa14f13356, type: 2}
+  slider: {fileID: 340651202}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
