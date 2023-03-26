@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using Unity.Mathematics;
 using Voxell.Util;
@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_Speed;
     [SerializeField] private float m_RotationSpeed;
     [SerializeField] private float m_Damping = 0.98f;
+    [SerializeField] private float m_DashDuration = 1.0f;
     [SerializeField] private float m_DashVelocity;
     [SerializeField] private AnimationCurve m_DashVelocityCurve;
 
@@ -50,11 +51,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Dash()
-    {
-        this.m_Velocity += this.m_ForwardDirection * this.m_DashVelocity;
-    }
-
     private void Update()
     {
         this.m_ForwardDirection = this.transform.forward;
@@ -77,5 +73,22 @@ public class PlayerMovement : MonoBehaviour
 
         this.m_Controller.Move(this.m_MovementDirection * this.m_Speed * Time.deltaTime);
         this.m_Controller.Move(this.m_Velocity * Time.deltaTime);
+    }
+
+    public IEnumerator Dash()
+    {
+        float startTime = Time.time;
+
+        while (Time.time < startTime + this.m_DashDuration)
+        {
+            float timePassed = Time.time - startTime;
+            // multiply by 2 to get to the ping ponged value
+            float percentage = timePassed / this.m_DashDuration * 2.0f;
+            // Debug.Log(this.m_DashVelocityCurve.Evaluate(percentage));
+            float magnitude = this.m_DashVelocityCurve.Evaluate(percentage) * this.m_DashVelocity;
+            this.m_Velocity = this.m_ForwardDirection * magnitude;
+
+            yield return null;
+        }
     }
 }

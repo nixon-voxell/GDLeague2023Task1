@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
     {
         if (value.isPressed)
         {
-            this.m_PlayerMovement.Dash();
+            this.StartCoroutine(this.m_PlayerMovement.Dash());
         }
     }
 
