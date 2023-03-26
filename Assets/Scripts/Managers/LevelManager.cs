@@ -7,17 +7,18 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
     [SerializeField] private SkillSO m_SkillScriptableObject;
-    [SerializeField] private VisualEffect m_VisualEffectPrefab;
-
-    private VisualEffect[] m_VisualEffectPool;
+    [SerializeField] private ObjectPool<VisualEffect> m_VisualEffectPool;
     private Player[] m_Players;
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
 
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.LevelManager = this;
+
+        // initialize vfx pool
+        this.m_VisualEffectPool.Initialize(this.transform);
     }
 
     /// <summary>
