@@ -702,8 +702,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 330585545}
+  DisableStartToLobby: 0
   LevelManager: {fileID: 0}
   SoundManager: {fileID: 0}
-  PlayerManager: {fileID: 0}
   m_InitialScenes:
   - map
+  - MainMenu
