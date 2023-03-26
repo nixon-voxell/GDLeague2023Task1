@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_RotationSpeed;
     [SerializeField] private float m_Damping = 0.98f;
     [SerializeField] private float m_DashVelocity;
+    [SerializeField] private AnimationCurve m_DashVelocityCurve;
 
     private float3
         m_MovementDirection,

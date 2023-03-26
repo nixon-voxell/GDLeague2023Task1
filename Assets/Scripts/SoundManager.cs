@@ -10,11 +10,19 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource m_PlayOneShotSource;
     [SerializeField] private AudioSource m_MusicSource;
 
+    private Dictionary<string, Sound> m_OneShotAudioDict;
     private IEnumerator m_MusicLoopFunc;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.SoundManager = this;
+
+        this.m_OneShotAudioDict = new Dictionary<string, Sound>();
+        for (int s = 0; s < this.m_OneShotAudioArr.Length; s++)
+        {
+            Sound sound = this.m_OneShotAudioArr[s];
+            this.m_OneShotAudioDict.Add(sound.SoundName, sound);
+        }
     }
 
     /// <summary>
@@ -23,19 +31,20 @@ public class SoundManager : MonoBehaviour
     /// <param name="soundName"></param>
     public void PlayOneShot(string soundName)
     {
-        Sound soundToPlay = Array.Find(m_OneShotAudioArr, sound => sound.SoundName == soundName);
-
-        if (soundToPlay == null)
+        // Sound soundToPlay = Array.Find(m_OneShotAudioArr, sound => sound.SoundName == soundName);
+        Sound soundToPlay;
+        if (this.m_OneShotAudioDict.TryGetValue(soundName, out soundToPlay))
+        {
+            m_PlayOneShotSource.volume = soundToPlay.Volume;
+            m_PlayOneShotSource.spatialBlend = soundToPlay.SpatialBlend;
+            m_PlayOneShotSource.pitch = soundToPlay.Pitch;
+            m_PlayOneShotSource.PlayOneShot(soundToPlay.Clip);
+        } else
         {
             Debug.LogWarning("Sound: " + soundName + " not found!");
             return;
         }
 
-
-        m_PlayOneShotSource.volume = soundToPlay.Volume;
-        m_PlayOneShotSource.spatialBlend = soundToPlay.SpatialBlend;
-        m_PlayOneShotSource.pitch = soundToPlay.Pitch;
-        m_PlayOneShotSource.PlayOneShot(soundToPlay.Clip);
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ public class DestructableObstacle : MonoBehaviour
     private void Start()
     {
         // Add this object to the LevelManager's DestructableObstacle array
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        LevelManager levelManager = GameManager.Instance.LevelManager;
         if (levelManager != null)
         {
             levelManager.DestructableObstacle.Add(this);
