@@ -54,6 +54,9 @@ public class Player : MonoBehaviour
 
     private void OnMovement(InputValue value)
     {
+        // move only when status is default
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+
         float2 moveValue = value.Get<Vector2>();
         this.m_PlayerMovement.SetMoveDirection(moveValue);
     }
@@ -93,5 +96,10 @@ public class Player : MonoBehaviour
     {
         Debug.Assert(skillIdx < 3, "Skill index must not exceed 2.");
         return this.m_PlayerSkills[skillIdx];
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        // Debug.Log(collision.gameObject.name);
     }
 }
