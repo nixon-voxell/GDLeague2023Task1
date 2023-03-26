@@ -12,9 +12,9 @@ public enum PlayerStatus
 public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
+    [SerializeField] private PlayerMovement m_PlayerMovement;
 
     private PlayerInput m_PlayerInput;
-    private PlayerMovement m_PlayerMovement;
 
     private PlayerStatus m_PlayerStatus = PlayerStatus.Default;
     private int m_PlayerNumber;
@@ -60,7 +60,10 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue value)
     {
-        this.m_PlayerMovement.Dash();
+        if (value.isPressed)
+        {
+            this.m_PlayerMovement.Dash();
+        }
     }
 
     private void OnDeath()
