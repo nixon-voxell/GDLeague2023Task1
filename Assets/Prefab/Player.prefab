@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 943276409528283093}
   - component: {fileID: 943276409528283091}
   - component: {fileID: 5626796031102942964}
+  - component: {fileID: -6547879505722853592}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -161,20 +162,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336029bfe6ee07f449124aab75dad9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SphereCollider: {fileID: 943276409528279087}
-  m_CollisionRadius: 0.5
-  m_Speed: 2
+  m_Controller: {fileID: -6547879505722853592}
+  m_Speed: 6
   m_RotationSpeed: 1000
   m_Damping: 0.5
-  m_DashVelocity: 20
-  m_Position:
-    x: 0
-    y: 0
-    z: 0
-  m_PrevPosition:
-    x: 0
-    y: 0
-    z: 0
+  m_DashDuration: 0.3
+  m_DashVelocity: 30
+  m_DashVelocityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Velocity:
     x: 0
     y: 0
@@ -192,8 +209,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 100
-  m_PlayerSkill: []
-  m_StatusEffects: []
+  m_PlayerMovement: {fileID: 0}
+--- !u!143 &-6547879505722853592
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943276409528279086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 0
+  m_StepOffset: 0
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &943276409978105990
 GameObject:
   m_ObjectHideFlags: 0

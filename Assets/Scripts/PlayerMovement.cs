@@ -31,7 +31,9 @@ public class PlayerMovement : MonoBehaviour
     {
         this.m_TargetRotation = trans.rotation;
 
+        this.m_Controller.enabled = false;
         this.transform.SetPositionAndRotation(trans.position, trans.rotation);
+        this.m_Controller.enabled = true;
     }
 
     public void SetMoveDirection(float2 direction)
