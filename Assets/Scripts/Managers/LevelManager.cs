@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private string m_LevelSceneName; // TODO: Change the scene name to the appropriate level name
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
     [SerializeField] private SkillSO m_SkillScriptableObject;
+    [SerializeField] private VisualEffect m_VisualEffectPrefab;
+
+    private VisualEffect[] m_VisualEffectPool;
     private Player[] m_Players;
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
@@ -24,9 +27,9 @@ public class LevelManager : MonoBehaviour
     /// <param name="playerGOP2"></param>
     public void MovePlayerToScene(GameObject playerGOP1, GameObject playerGOP2)
     {
-        SceneManager.MoveGameObjectToScene(playerGOP1, SceneManager.GetSceneByName(m_LevelSceneName));
-        SceneManager.MoveGameObjectToScene(playerGOP2, SceneManager.GetSceneByName(m_LevelSceneName));
-
+        // move them to the current scene
+        SceneManager.MoveGameObjectToScene(playerGOP1, this.gameObject.scene);
+        SceneManager.MoveGameObjectToScene(playerGOP2, this.gameObject.scene);
 
         // TODO: To switch this function to the game manager script
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Lobby"));
