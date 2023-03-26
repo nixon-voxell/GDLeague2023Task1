@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        GameManager.Instance.LevelManager.MainMenuLoading(true);
+        // GameManager.Instance.LevelManager.MainMenuLoading(true);
     }
 
     public void QuitGame()

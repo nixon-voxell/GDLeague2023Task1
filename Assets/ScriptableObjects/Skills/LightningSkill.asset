@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f0ad3be5cc70a44a82c602caed3cae, type: 3}
   m_Name: LightningSkill
   m_EditorClassIdentifier: 
-  CastTime: 0
-  Damage: 0
-  VisualEffectAsset: {fileID: 8926484042661614526, guid: f6d353055ba31714b893c3566e4aca56,
-    type: 3}
-  Range: 0
+  CastTime: 0.2
+  Damage: 4
+  OrbVFX: {fileID: 8926484042661614526, guid: e9e9d9c29db2c7e428baa0374dbbf84a, type: 3}
+  CastVFX: {fileID: 8926484042661614526, guid: f6d353055ba31714b893c3566e4aca56, type: 3}
+  Range: 7
