@@ -143,11 +143,7 @@ public class LobbyManager : Singleton<LobbyManager>
         {
             case LobbyPage.READYUP:
                 SetCurrentPanel(playerNumber, btnEvent);
-                // Check if both player readied up
-                if (m_P1LobbyPage == LobbyPage.READYUP && m_P2LobbyPage == LobbyPage.READYUP)
-                {
-                    GameManager.Instance.LevelManager.MovePlayerToScene(m_P1PlayerInput.gameObject, m_P2PlayerInput.gameObject);
-                }
+                CheckPlayerReadyUp();
                 break;
             case LobbyPage.MAIN_BUTTON_MENU:
                 SetCurrentPanel(playerNumber, btnEvent);
@@ -159,9 +155,15 @@ public class LobbyManager : Singleton<LobbyManager>
         }
     }
 
-    private void CheckStartGame()
+    private void CheckPlayerReadyUp()
     {
+        // Check if both player readied up
+        if (m_P1LobbyPage == LobbyPage.READYUP && m_P2LobbyPage == LobbyPage.READYUP)
+        {
+            GameManager.Instance.LevelManager.MovePlayerToScene(m_P1PlayerInput.gameObject, m_P2PlayerInput.gameObject);
         
+        }
+
     }
 
     /// <summary>
@@ -250,10 +252,9 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void ReturnToMainMenu()
     {
-        // TODO: Load to main menu scene
-        //Destroy the two controller
-        // GameManager.Instance.LoadScene();
-        Debug.Log("To Main Menu!");
+
+        GameManager.Instance.LevelManager.UnloadScene("Lobby");
+        GameManager.Instance.LevelManager.LoadScene("MainMenu");
     }
 
     

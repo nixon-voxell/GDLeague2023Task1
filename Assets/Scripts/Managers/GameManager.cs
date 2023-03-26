@@ -4,8 +4,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Camera m_Camera;
+    public bool DisableStartToLobby;
+
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public SoundManager SoundManager;
+
 
     [SerializeField, Voxell.Util.Scene] private string[] m_InitialScenes;
 
@@ -32,4 +35,5 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+
 }

@@ -8,6 +8,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
     [SerializeField] private SkillSO m_SkillScriptableObject;
     [SerializeField] private ObjectPool<VisualEffect> m_VisualEffectPool;
+    [SerializeField] private Transform m_PlayerOneSpawnPoint;
+    [SerializeField] private Transform m_PlayerTwoSpawnPoint;
+
     private Player[] m_Players;
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
@@ -21,6 +24,7 @@ public class LevelManager : MonoBehaviour
         this.m_VisualEffectPool.Initialize(this.transform);
     }
 
+
     /// <summary>
     /// Moves the two player game object to the level scene and then unload the lobby scene
     /// </summary>
@@ -33,7 +37,8 @@ public class LevelManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(playerGOP2, this.gameObject.scene);
 
         // TODO: To switch this function to the game manager script
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Lobby"));
+        UnloadScene("Lobby");
+
 
         this.m_Players = new Player[2];
 
@@ -44,5 +49,18 @@ public class LevelManager : MonoBehaviour
 
         Destroy(playerGOP1.GetComponent<PlayerLobbyController>());
         Destroy(playerGOP2.GetComponent<PlayerLobbyController>());
+
+        m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);
+        m_Players[1].PlayerMovement.SetTransform(m_PlayerTwoSpawnPoint);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+    }
+
+    public void UnloadScene(string sceneName)
+    {
+        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(sceneName));
     }
 }
