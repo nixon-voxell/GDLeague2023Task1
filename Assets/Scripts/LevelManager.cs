@@ -4,11 +4,9 @@ using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private GridSystem m_GridSystem;
     [SerializeField] private string m_LevelSceneName; // TODO: Change the scene name to the appropriate level name
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
 
-    public GridSystem GridSystem => this.m_GridSystem;
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
 
 
