@@ -8,6 +8,7 @@ public abstract class AbstractSkill : ScriptableObject
 
     public VisualEffectAsset OrbVFX;
     public VisualEffectAsset CastVFX;
+    public Sprite SkillIcon;    
 
     public virtual void OnPress(Player player) {}
     public virtual void OnRelease() {}

@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
         {
             m_PlayerInput.SwitchCurrentActionMap("PlayerTwo");
         }
+
     }
 
     private void OnMovement(InputValue value)
@@ -83,6 +84,7 @@ public class Player : MonoBehaviour
     public void SetHealth(int health)
     {
         this.m_CurrentHealth = health;
+        GameManager.Instance.UIManager.SetHealth(m_PlayerNumber, this.m_CurrentHealth);
 
         if (this.m_CurrentHealth <= 0)
         {
