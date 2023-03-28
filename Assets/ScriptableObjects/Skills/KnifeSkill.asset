@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: KnifeSkill
   m_EditorClassIdentifier: 
   CastTime: 0
-  Damage: 0
-  OrbVFX: {fileID: 0}
-  CastVFX: {fileID: 0}
-  Range: 0
-  StabInterval: 0
-  PoisonDuration: 0
-  PoisonDamage: 0
+  Damage: 5
+  OrbVFX: {fileID: 8926484042661614526, guid: 1d930180a717e0243952bdd136ae26bf, type: 3}
+  CastVFX: {fileID: 8926484042661614526, guid: 54c475e5101a4b345b928dde5bd5b5c8, type: 3}
+  Range: 1
+  StabInterval: 2
+  PoisonDuration: 3
+  PoisonDamage: 1

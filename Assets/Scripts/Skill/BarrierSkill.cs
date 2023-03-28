@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
+[CreateAssetMenu(fileName = "BarrierSkill", menuName = "ScriptableObjects/Barrier Skill")]
 public class BarrierSkill : AbstractSkill
 {
     public float Duration;
