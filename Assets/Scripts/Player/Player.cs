@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using System.Collections;
 
 public enum PlayerStatus
 {
@@ -101,5 +102,24 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         // Debug.Log(collision.gameObject.name);
+    }
+
+    public void SetImmune(bool immune)
+    {
+        if (immune)
+        {
+            this.m_PlayerStatus = PlayerStatus.Immobilized;
+            StartCoroutine(RemoveImmunity());
+        }
+        else
+        {
+            this.m_PlayerStatus = PlayerStatus.Default;
+        }
+    }
+
+    private IEnumerator RemoveImmunity()
+    {
+        yield return new WaitForSeconds(3f);
+        this.m_PlayerStatus = PlayerStatus.Default;
     }
 }

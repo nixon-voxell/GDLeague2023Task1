@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
-[CreateAssetMenu(fileName = "LightningSkill", menuName = "ScriptableObjects/Lightning Skill")]
-public class LightningSkill : AbstractSkill
+[CreateAssetMenu(fileName = "WindSlashSkill", menuName = "ScriptableObjects/Wind Slash Skill")]
+public class WindSlashSkill : AbstractSkill
 {
     public int Range;
+    public float CloseRangeDamage = 10f;
+    public float MidRangeDamage = 7f;
+    public float FarRangeDamage = 5f;
 
     private VisualEffect orbEffect;
     private Player player;
@@ -42,10 +45,19 @@ public class LightningSkill : AbstractSkill
 
         foreach (RaycastHit hit in hits)
         {
+            float distance = Vector3.Distance(position, hit.point);
+            float damage = CloseRangeDamage;
+
+            if (distance > 2 * Range / 3) {
+                damage = FarRangeDamage;
+            } else if (distance > Range / 3) {
+                damage = MidRangeDamage;
+            }
+
             Player opponent = hit.collider.GetComponent<Player>();
             if (opponent != null)
             {
-                opponent.Damage((int)Damage);
+                opponent.Damage((int)damage);
             }
 
             if (CastVFX != null)
@@ -55,6 +67,12 @@ public class LightningSkill : AbstractSkill
                 castEffect.transform.position = hit.point;
                 castEffect.Play();
             }
+        }
+    }
+
+    public float TotalDamage {
+        get {
+            return CloseRangeDamage + MidRangeDamage + FarRangeDamage;
         }
     }
 }
