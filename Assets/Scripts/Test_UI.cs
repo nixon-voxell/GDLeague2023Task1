@@ -68,6 +68,16 @@ public class Test_UI : MonoBehaviour
         {
             SetupGame();
         }
+
+        if (kb.digit7Key.wasPressedThisFrame)
+        {
+            GameManager.Instance.UIManager.SetTimer(100);
+        }
+
+        if (kb.digit8Key.wasPressedThisFrame)
+        {
+            GameManager.Instance.UIManager.SetScore(1, 2);
+        }
     }
 
 }

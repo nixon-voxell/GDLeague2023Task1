@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -11,7 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SkillSO m_SkillSO;
     [SerializeField] private AbilitySO m_DashSO;
     [SerializeField] private AbilitySO m_KnockbackSO;
+    [SerializeField] private TextMeshProUGUI m_CountdownText;
     [SerializeField] private PlayerHUD[] m_PlayerHUD = new PlayerHUD[2];
+    [SerializeField] private GameObject[] m_Player1VictoryCount = new GameObject[2];
+    [SerializeField] private GameObject[] m_Player2VictoryCount = new GameObject[2];
 
     [Header("Adjustable Parameters")]
     [SerializeField] private Sprite m_SkillEmptyIcon;
@@ -92,6 +96,27 @@ public class UIManager : MonoBehaviour
         m_PlayerHUD[playerNumber - 1].HPBarHUD.value = currentHealth/100;
     }
 
+    public void SetTimer(int seconds)
+    {
+        int minutesLabel = seconds / 60;
+        int secondLabel = seconds % 60;
+
+        m_CountdownText.text = String.Format("{0} : {1}", minutesLabel, secondLabel);
+    }
+
+    public void SetScore(int p1Wins, int p2Wins)
+    {
+        for (int i = 0; i < p1Wins; i++)
+        {
+            m_Player1VictoryCount[i].SetActive(true);
+        }
+
+        for (int i = 0; i < p2Wins; i++)
+        {
+            m_Player2VictoryCount[i].SetActive(true);
+        }
+    }
+
     // TODO: To set timer tick based on game state
     public void OnGameStart()
     {
@@ -106,22 +131,10 @@ public class UIManager : MonoBehaviour
         ResetAllUI();
     }
 
-    private void ResetAllUI()
-    {
-        ResetAbilityHUD(1, "KNOCKBACK");
-        ResetAbilityHUD(1, "DASH");
-        ResetAbilityHUD(2, "KNOCKBACK");
-        ResetAbilityHUD(2, "DASH");
-        ResetSkillHUD(1, 1);
-        ResetSkillHUD(1, 2);
-        ResetSkillHUD(1, 3);
-        ResetSkillHUD(2, 1);
-        ResetSkillHUD(2, 2);
-        ResetSkillHUD(2, 3);
-        SetHealth(1, 100);
-        SetHealth(2, 100);
 
-    }
+    //---------------
+
+    
 
 
     // TODO: To sync with skills and ability timer in their script
@@ -138,7 +151,7 @@ public class UIManager : MonoBehaviour
 
 
 
-    // ----- [TIMER -----
+    // ----- [TIMER] -----
 
     /// <summary>
     /// Sets the skill timer expiry time
@@ -199,9 +212,25 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
 
-   
+
+    private void SetAbilityActive(int playerNumber, string abilityName)
+    {
+        PlayerHUD playerHUD = m_PlayerHUD[playerNumber - 1];
+
+        if (abilityName == "KNOCKBACK")
+        {
+            playerHUD.KnockbackHUD.Background.fillAmount = 1;
+            playerHUD.KnockbackHUD.IsActive = true;
+            playerHUD.KnockbackHUD.AbilityIconHolder.sprite = playerHUD.KnockbackHUD.AbilitySO.AbilityActiveIcon;
+        }
+        else if (abilityName == "DASH")
+        {
+            playerHUD.DashHUD.Background.fillAmount = 1;
+            playerHUD.DashHUD.IsActive = true;
+            playerHUD.DashHUD.AbilityIconHolder.sprite = playerHUD.DashHUD.AbilitySO.AbilityActiveIcon;
+        }
+    }
 
 
     // ----- [RESET] -----
@@ -244,22 +273,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void SetAbilityActive(int playerNumber, string abilityName)
+    private void ResetAllUI()
     {
-        PlayerHUD playerHUD = m_PlayerHUD[playerNumber - 1];
+        ResetAbilityHUD(1, "KNOCKBACK");
+        ResetAbilityHUD(1, "DASH");
+        ResetAbilityHUD(2, "KNOCKBACK");
+        ResetAbilityHUD(2, "DASH");
+        ResetSkillHUD(1, 1);
+        ResetSkillHUD(1, 2);
+        ResetSkillHUD(1, 3);
+        ResetSkillHUD(2, 1);
+        ResetSkillHUD(2, 2);
+        ResetSkillHUD(2, 3);
+        SetHealth(1, 100);
+        SetHealth(2, 100);
 
-        if (abilityName == "KNOCKBACK")
-        {
-            playerHUD.KnockbackHUD.Background.fillAmount = 1;
-            playerHUD.KnockbackHUD.IsActive = true;
-            playerHUD.KnockbackHUD.AbilityIconHolder.sprite = playerHUD.KnockbackHUD.AbilitySO.AbilityActiveIcon;
-        }
-        else if (abilityName == "DASH")
-        {
-            playerHUD.DashHUD.Background.fillAmount = 1;
-            playerHUD.DashHUD.IsActive = true;
-            playerHUD.DashHUD.AbilityIconHolder.sprite = playerHUD.DashHUD.AbilitySO.AbilityActiveIcon;
-        }
     }
+   
 
 }
