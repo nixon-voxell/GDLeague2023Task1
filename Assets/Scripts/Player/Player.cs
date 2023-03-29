@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using System.Collections;
 
 public enum PlayerStatus
 {
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
         {
             m_PlayerInput.SwitchCurrentActionMap("PlayerTwo");
         }
+
     }
 
     private void OnMovement(InputValue value)
@@ -83,6 +85,7 @@ public class Player : MonoBehaviour
     public void SetHealth(int health)
     {
         this.m_CurrentHealth = health;
+        GameManager.Instance.UIManager.SetHealth(m_PlayerNumber, this.m_CurrentHealth);
 
         if (this.m_CurrentHealth <= 0)
         {
@@ -101,5 +104,24 @@ public class Player : MonoBehaviour
     public void OnCollisionEnter(Collision collision)
     {
         // Debug.Log(collision.gameObject.name);
+    }
+
+    public void SetImmune(bool immune)
+    {
+        if (immune)
+        {
+            this.m_PlayerStatus = PlayerStatus.Immobilized;
+            StartCoroutine(RemoveImmunity());
+        }
+        else
+        {
+            this.m_PlayerStatus = PlayerStatus.Default;
+        }
+    }
+
+    private IEnumerator RemoveImmunity()
+    {
+        yield return new WaitForSeconds(3f);
+        this.m_PlayerStatus = PlayerStatus.Default;
     }
 }

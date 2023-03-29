@@ -8,14 +8,19 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public SoundManager SoundManager;
-
+    [HideInInspector] public UIManager UIManager; // UI Manager for the level UI
 
     [SerializeField, Voxell.Util.Scene] private string[] m_InitialScenes;
+    [Voxell.Util.Scene] public string MainMenuScene;
+    [Voxell.Util.Scene] public string LobbyScene;
 
     public Camera MainCamera => this.m_Camera;
 
     private void Awake()
     {
+        // randomize seed
+        Random.InitState(System.DateTime.Now.Millisecond);
+
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 1;
 
@@ -35,5 +40,4 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
-
 }

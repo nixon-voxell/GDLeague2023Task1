@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab742b70bd072f4ba5e506aec4b397a, type: 3}
   m_Name: Skills
   m_EditorClassIdentifier: 
+  ExpireDuration: 10
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 12
   Skills:
   - {fileID: 11400000, guid: 3120207e26871e846932f999441fd39f, type: 2}
+  - {fileID: 11400000, guid: 5c07fe81ce02a3e43ac4da71072816ad, type: 2}
+  - {fileID: 11400000, guid: feb8964c7ea198c4ea6c1c4338140003, type: 2}
+  - {fileID: 11400000, guid: e1024c51553de6b408e7873363c19fad, type: 2}

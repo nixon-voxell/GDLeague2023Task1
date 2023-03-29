@@ -3,33 +3,47 @@ using UnityEngine;
 [System.Serializable]
 public class ObjectPool<T> where T : Object
 {
-    [SerializeField] private T Original;
+    [SerializeField] private T m_Original;
     [SerializeField] private int m_Count;
-    public T[] Pool;
+    private T[] m_Pool;
 
     public int Count => this.m_Count;
+
+    private int m_CurrIdx;
 
     public void Initialize(Transform parent)
     {
 #if UNITY_EDITOR
-        Debug.Assert(this.Original != null, "Original object cannot be null.");
+        Debug.Assert(this.m_Original != null, "Original object cannot be null.");
 #endif
-        this.Pool = new T[this.Count];
+        this.m_Pool = new T[this.Count];
         for (int i = 0; i < this.Count; i++)
         {
-            this.Pool[i] = Object.Instantiate(this.Original, Vector3.zero, Quaternion.identity, parent);
+            this.m_Pool[i] = Object.Instantiate(this.m_Original, Vector3.zero, Quaternion.identity, parent);
         }
     }
 
     public void Initialize()
     {
 #if UNITY_EDITOR
-        Debug.Assert(this.Original != null, "Original object cannot be null.");
+        Debug.Assert(this.m_Original != null, "Original object cannot be null.");
 #endif
-        this.Pool = new T[this.Count];
+        this.m_Pool = new T[this.Count];
         for (int i = 0; i < this.Count; i++)
         {
-            this.Pool[i] = Object.Instantiate(this.Original, Vector3.zero, Quaternion.identity);
+            this.m_Pool[i] = Object.Instantiate(this.m_Original, Vector3.zero, Quaternion.identity);
         }
+    }
+
+    public T GetNextObject()
+    {
+        T nextObj = this.m_Pool[this.m_CurrIdx];
+        this.m_CurrIdx = this.GetNextIdx();
+        return nextObj;
+    }
+
+    private int GetNextIdx()
+    {
+        return (this.m_CurrIdx + 1) % this.m_Count;
     }
 }

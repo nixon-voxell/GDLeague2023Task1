@@ -705,6 +705,9 @@ MonoBehaviour:
   DisableStartToLobby: 0
   LevelManager: {fileID: 0}
   SoundManager: {fileID: 0}
+  UIManager: {fileID: 0}
   m_InitialScenes:
-  - map
   - MainMenu
+  - Level
+  MainMenuScene: MainMenu
+  LobbyScene: Lobby

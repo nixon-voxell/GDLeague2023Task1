@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
-    [SerializeField] private SkillSO m_SkillScriptableObject;
+    [SerializeField] private SkillSO m_so_Skill;
     [SerializeField] private ObjectPool<VisualEffect> m_VisualEffectPool;
     [SerializeField] private Transform m_PlayerOneSpawnPoint;
     [SerializeField] private Transform m_PlayerTwoSpawnPoint;
@@ -14,16 +14,16 @@ public class LevelManager : MonoBehaviour
     private Player[] m_Players;
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
+    public SkillSO so_Skill => this.m_so_Skill;
+    public ObjectPool<VisualEffect> VisualEffectPool => this.m_VisualEffectPool;
 
-
-    private void Start()
+    private void Awake()
     {
         GameManager.Instance.LevelManager = this;
 
         // initialize vfx pool
         this.m_VisualEffectPool.Initialize(this.transform);
     }
-
 
     /// <summary>
     /// Moves the two player game object to the level scene and then unload the lobby scene
@@ -36,9 +36,7 @@ public class LevelManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(playerGOP1, this.gameObject.scene);
         SceneManager.MoveGameObjectToScene(playerGOP2, this.gameObject.scene);
 
-        // TODO: To switch this function to the game manager script
-        UnloadScene("Lobby");
-
+        SceneManager.UnloadSceneAsync(GameManager.Instance.LobbyScene);
 
         this.m_Players = new Player[2];
 
@@ -52,15 +50,5 @@ public class LevelManager : MonoBehaviour
 
         m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);
         m_Players[1].PlayerMovement.SetTransform(m_PlayerTwoSpawnPoint);
-    }
-
-    public void LoadScene(string sceneName)
-    {
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-    }
-
-    public void UnloadScene(string sceneName)
-    {
-        SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName(sceneName));
     }
 }

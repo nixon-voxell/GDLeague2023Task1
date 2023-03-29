@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
-using System;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : Singleton<LobbyManager>
 {
@@ -252,13 +249,9 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void ReturnToMainMenu()
     {
-
-        GameManager.Instance.LevelManager.UnloadScene("Lobby");
-        GameManager.Instance.LevelManager.LoadScene("MainMenu");
+        SceneManager.UnloadSceneAsync(GameManager.Instance.LobbyScene);
+        SceneManager.LoadSceneAsync(GameManager.Instance.MainMenuScene, LoadSceneMode.Additive);
     }
-
-    
-
 }
 
 
