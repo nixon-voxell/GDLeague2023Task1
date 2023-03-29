@@ -16,8 +16,7 @@ public class LevelManager : MonoBehaviour
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
     public SkillSO so_Skill => this.m_so_Skill;
 
-
-    private void Start()
+    private void Awake()
     {
         GameManager.Instance.LevelManager = this;
 

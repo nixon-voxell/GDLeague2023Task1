@@ -17,6 +17,9 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        // randomize seed
+        Random.InitState(System.DateTime.Now.Millisecond);
+
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 1;
 
