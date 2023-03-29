@@ -7,7 +7,7 @@ public abstract class AbstractSkill : ScriptableObject
     public float Damage;
 
     public GameObject OrbPrefab;
-    public VisualEffectAsset CastPrefab;
+    public VisualEffectAsset CastFX;
     public Sprite SkillIcon;
 
     public virtual void OnPress(Player player) {}

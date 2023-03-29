@@ -61,7 +61,7 @@ public class KnifeSkill : AbstractSkill
                     }
                 }
 
-                if (CastPrefab != null)
+                if (CastFX != null)
                 {
                     VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
                     // castEffect.visualEffectAsset = CastPrefab;

@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         // If run on update : ((playerHUD.SkillsHUD[i].TimerSlider.value * m_SkillCooldownTime) + m_TimerUpdateTime) / m_SkillCooldownTime;
         // Formula: increase_value = slide max range / (total_time / time_interval)
 
-        m_SkillTimerUpdateValue = 1.0f / (m_SkillSO.SkillExpireTime / m_TimerInterval); ;
+        m_SkillTimerUpdateValue = 1.0f / (m_SkillSO.ExpireDuration / m_TimerInterval); ;
         m_DashTimerUpdateValue = 1.0f / (m_DashSO.CooldownTime / m_TimerInterval);   
         m_KnockbackTimerUpdateValue = 1.0f / (m_KnockbackSO.CooldownTime / m_TimerInterval);
 

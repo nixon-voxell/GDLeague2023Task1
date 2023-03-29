@@ -60,7 +60,7 @@ public class WindSlashSkill : AbstractSkill
                 opponent.Damage((int)damage);
             }
 
-            if (CastPrefab != null)
+            if (CastFX != null)
             {
                 VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
                 // castEffect.visualEffectAsset = CastPrefab;

@@ -16,7 +16,6 @@ MonoBehaviour:
   Damage: 4
   OrbPrefab: {fileID: 5395572082253160282, guid: f24fbb34aa9b3ad46b84729789194bb4,
     type: 3}
-  CastPrefab: {fileID: 8926484042661614526, guid: f6d353055ba31714b893c3566e4aca56,
-    type: 3}
+  CastFX: {fileID: 8926484042661614526, guid: f6d353055ba31714b893c3566e4aca56, type: 3}
   SkillIcon: {fileID: 21300000, guid: 110488ffec8e8de40865e1f5264e4d8e, type: 3}
   Range: 7
