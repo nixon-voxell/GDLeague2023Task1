@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1572807824664338276}
   - component: {fileID: 1572807824664338283}
   m_Layer: 0
-  m_Name: DaggerOrb
+  m_Name: KnifeOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -60,10 +60,10 @@ public class PlayerMovement : MonoBehaviour
         if (Time.deltaTime < math.EPSILON) return;
 
         // normalize so that it remains a unit vector
-        if (math.all(this.m_MovementDirection != 0.0f))
-        {
-            this.m_MovementDirection = math.normalize(this.m_MovementDirection);
-        }
+        // if (math.all(this.m_MovementDirection != 0.0f))
+        // {
+        //     this.m_MovementDirection = math.normalize(this.m_MovementDirection);
+        // }
 
         // apply rotation
         this.transform.rotation = Quaternion.RotateTowards(
