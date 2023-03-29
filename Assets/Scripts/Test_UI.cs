@@ -25,7 +25,7 @@ public class Test_UI : MonoBehaviour
         players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
 
         Debug.Log("setup game");
-        GameManager.Instance.UIManager.OnGameSetup();
+        GameManager.Instance.UIManager.ResetAllUI();
         GameManager.Instance.UIManager.OnSkillChange(1, 1, thunderSkill);
         Invoke("StartGame", 1.0f);
         players[0].SetHealth(100);

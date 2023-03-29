@@ -12,7 +12,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SkillSO m_SkillSO;
     [SerializeField] private AbilitySO m_DashSO;
     [SerializeField] private AbilitySO m_KnockbackSO;
-    [SerializeField] private TextMeshProUGUI m_CountdownText;
+    [SerializeField] private TextMeshProUGUI m_RoundTimerText;
+    [SerializeField] private TextMeshProUGUI m_CenterText;
     [SerializeField] private PlayerHUD[] m_PlayerHUD = new PlayerHUD[2];
     [SerializeField] private GameObject[] m_Player1VictoryCount = new GameObject[2];
     [SerializeField] private GameObject[] m_Player2VictoryCount = new GameObject[2];
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
     private float m_SkillTimerUpdateValue;
     private IEnumerator m_TimerTick;
     private bool IsTimerActive;
+    private int m_CurrentRoundTime;
 
 
     void Start()
@@ -103,7 +105,7 @@ public class UIManager : MonoBehaviour
         int minutesLabel = seconds / 60;
         int secondLabel = seconds % 60;
 
-        m_CountdownText.text = String.Format("{0} : {1}", minutesLabel, secondLabel);
+        m_RoundTimerText.text = String.Format("{0} : {1}", minutesLabel, secondLabel);
     }
 
     public void SetScore(int p1Wins, int p2Wins)
@@ -119,24 +121,61 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void SetCenterText(string time)
+    {
+        m_CenterText.text = time;
+    }
+
     // TODO: To set timer tick based on game state
     public void OnGameStart()
     {
         m_TimerTick = StartHUDTick();
         IsTimerActive = true;
         StartCoroutine(m_TimerTick);
+        StartCoroutine(RoundTimerTick());
     }
 
-    public void OnGameSetup()
+    public void OnPause()
+    {
+
+    }
+
+    public void OnRoundEnd()
     {
         IsTimerActive = false;
-        ResetAllUI();
+    }
+
+    public void OnGameEnd(int playerWinner)
+    {
+        
+    }
+
+    public void ResetAllUI()
+    {
+        IsTimerActive = false;
+        m_CurrentRoundTime = GameManager.Instance.LevelManager.MaxRoundTime;
+
+        ResetAbilityHUD(1, "KNOCKBACK");
+        ResetAbilityHUD(1, "DASH");
+        ResetAbilityHUD(2, "KNOCKBACK");
+        ResetAbilityHUD(2, "DASH");
+        ResetSkillHUD(1, 1);
+        ResetSkillHUD(1, 2);
+        ResetSkillHUD(1, 3);
+        ResetSkillHUD(2, 1);
+        ResetSkillHUD(2, 2);
+        ResetSkillHUD(2, 3);
+        SetHealth(1, 100);
+        SetHealth(2, 100);
+        SetTimer(m_CurrentRoundTime);
+        SetScore(0, 0);
+        SetCenterText("");
     }
 
 
     //---------------
 
-    
+
 
 
     // TODO: To sync with skills and ability timer in their script
@@ -214,6 +253,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private IEnumerator RoundTimerTick()
+    {
+        while (IsTimerActive)
+        {
+            yield return new WaitForSeconds(1.0f);
+            m_CurrentRoundTime--;
+            SetTimer(m_CurrentRoundTime);
+
+            if (m_CurrentRoundTime == 0)
+                GameManager.Instance.OnRoundEnd(-1);
+
+        }
+        
+    }
+
 
 
     private void SetAbilityActive(int playerNumber, string abilityName)
@@ -275,22 +329,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void ResetAllUI()
-    {
-        ResetAbilityHUD(1, "KNOCKBACK");
-        ResetAbilityHUD(1, "DASH");
-        ResetAbilityHUD(2, "KNOCKBACK");
-        ResetAbilityHUD(2, "DASH");
-        ResetSkillHUD(1, 1);
-        ResetSkillHUD(1, 2);
-        ResetSkillHUD(1, 3);
-        ResetSkillHUD(2, 1);
-        ResetSkillHUD(2, 2);
-        ResetSkillHUD(2, 3);
-        SetHealth(1, 100);
-        SetHealth(2, 100);
-
-    }
+   
    
 
 }

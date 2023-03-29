@@ -39,8 +39,10 @@ public class Player : MonoBehaviour
         this.m_PlayerInput = this.GetComponent<PlayerInput>();
         this.m_PlayerMovement = this.GetComponent<PlayerMovement>();
 
-        this.m_PlayerStatus = PlayerStatus.Default;
-        this.m_CurrentHealth = m_MaxHealth;
+
+        // Removing this coz it will be set using the reset player function
+        //this.m_PlayerStatus = PlayerStatus.Default;
+        //this.m_CurrentHealth = m_MaxHealth;
 
         this.m_PlayerNumber = playerNumber;
         
@@ -53,6 +55,29 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public void ResetPlayer()
+    {
+        this.m_PlayerStatus = PlayerStatus.Immobilized;
+        this.m_CurrentHealth = m_MaxHealth;
+
+        for (int i = 0; i < m_PlayerSkills.Length; i++)
+        {
+            m_PlayerSkills[i] = -1;
+        }
+    }
+
+    /// <summary>
+    /// Used mostly for pausing and resuming player actions
+    /// </summary>
+    public void EnablePlayer(bool enable)
+    {
+        if (enable)
+            this.m_PlayerStatus = PlayerStatus.Default;
+        else
+            this.m_PlayerStatus = PlayerStatus.Immobilized;
+    }
+
 
     private void OnMovement(InputValue value)
     {

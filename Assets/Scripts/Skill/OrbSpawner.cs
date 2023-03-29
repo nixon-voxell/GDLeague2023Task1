@@ -14,13 +14,13 @@ public class OrbSpawner : MonoBehaviour
     }
 
     /// <summary>Enable spawner.</summary>
-    private void EnableSpawn()
+    public void EnableSpawn()
     {
         StartCoroutine(Respawn(0.0f));
     }
 
     /// <summary>Disable spawner.</summary>
-    private void DisableSpawn()
+    public void DisableSpawn()
     {
         if (this.m_SkillOrb != null)
         {
