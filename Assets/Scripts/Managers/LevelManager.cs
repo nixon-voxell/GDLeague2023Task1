@@ -56,6 +56,8 @@ public class LevelManager : MonoBehaviour
 
         m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);
         m_Players[1].PlayerMovement.SetTransform(m_PlayerTwoSpawnPoint);
+
+        GameManager.Instance.OnMapLoad();
     }
 
     public void ResetPlayer()
