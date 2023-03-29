@@ -36,4 +36,10 @@ public class OrbSpawner : MonoBehaviour
         GameObject skillOrbPrefab = so_skill.Skills[this.m_SkillIdx].OrbPrefab;
         this.m_SkillOrb = Object.Instantiate(skillOrbPrefab, this.transform);
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(this.transform.position, 0.5f);
+    }
 }

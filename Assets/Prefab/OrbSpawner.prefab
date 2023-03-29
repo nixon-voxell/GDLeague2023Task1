@@ -124,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83748bdedff9dde4987b6d05d4df9615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_VFX: {fileID: 6105287296055278194}
   m_RespawnInterval: 0
   m_SkillIdx: 0
 --- !u!135 &-2674598950771305760
@@ -139,4 +138,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}

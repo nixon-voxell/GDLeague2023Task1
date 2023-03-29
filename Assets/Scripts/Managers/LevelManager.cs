@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
     public SkillSO so_Skill => this.m_so_Skill;
+    public ObjectPool<VisualEffect> VisualEffectPool => this.m_VisualEffectPool;
 
     private void Awake()
     {
@@ -23,7 +24,6 @@ public class LevelManager : MonoBehaviour
         // initialize vfx pool
         this.m_VisualEffectPool.Initialize(this.transform);
     }
-
 
     /// <summary>
     /// Moves the two player game object to the level scene and then unload the lobby scene

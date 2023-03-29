@@ -14,9 +14,13 @@ public class LightningSkill : AbstractSkill
         LayerMask playerLayer = GameManager.Instance.LevelManager.so_Skill.PlayerLayer;
 
         RaycastHit hit;
-        if (Physics.Raycast(position, direction, out hit, Range))
-        {
-        }
+        Physics.Raycast(position, direction, out hit, Range);
+
+        LevelManager levelManager = GameManager.Instance.LevelManager;
+        VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
+
+        vfx.enabled = true;
+        vfx.visualEffectAsset = this.CastFX;
 
         // foreach (RaycastHit hit in hits)
         // {
