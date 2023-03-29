@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efa8e609138ee449889678afbaf95a7, type: 3}
   m_Name: KnifeSkill
   m_EditorClassIdentifier: 
-  CastTime: 0
+  CastTime: 0.4
   Damage: 5
+  PositionOffset: {x: 0, y: 0, z: 0}
   OrbPrefab: {fileID: 1572807824664338282, guid: edc5334229dc3d64fb6c1f69243d09e8,
     type: 3}
   CastFX: {fileID: 8926484042661614526, guid: 54c475e5101a4b345b928dde5bd5b5c8, type: 3}
   SkillIcon: {fileID: 0}
-  Range: 1
-  StabInterval: 2
-  PoisonDuration: 3
-  PoisonDamage: 1
+  Range: 3
+  Radius: 0.5

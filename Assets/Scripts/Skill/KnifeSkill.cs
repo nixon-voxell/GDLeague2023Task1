@@ -1,84 +1,64 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "KnifeSkill", menuName = "ScriptableObjects/Knife Skill")]
 public class KnifeSkill : AbstractSkill
 {
-    public int Range;
-    public float StabInterval;
-    public float PoisonDuration;
-    public float PoisonDamage;
-
-    private Player player;
-    private float lastStabTime;
-    private int stabCount;
-    private float poisonEndTime;
+    public float Range;
+    public float Radius;
 
     public override void OnPress(Player player)
     {
-        this.player = player;
+        Vector3 position = player.transform.position;
+        Vector3 direction = player.transform.forward;
 
-        // if (OrbPrefab != null)
-        // {
-        //     VisualEffect orbEffect = new GameObject().AddComponent<VisualEffect>();
-        //     orbEffect.visualEffectAsset = OrbPrefab;
-        //     orbEffect.transform.position = player.transform.position;
-        //     orbEffect.Play();
-        // }
+        LayerMask playerLayer = GameManager.Instance.LevelManager.so_Skill.PlayerLayer;
 
-        stabCount = 0;
-        lastStabTime = Time.time;
-        poisonEndTime = 0f;
+        LevelManager levelManager = GameManager.Instance.LevelManager;
+        VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
+
+        Transform playerTrans = player.transform;
+        vfx.transform.SetPositionAndRotation(playerTrans.position, playerTrans.rotation);
+        vfx.enabled = true;
+        vfx.visualEffectAsset = this.CastFX;
+        vfx.Play();
+
+        player.StartCoroutine(this.CleanupRoutine(player, vfx));
     }
 
-    private void Update()
+    private IEnumerator CleanupRoutine(Player player, VisualEffect vfx)
     {
-        if (stabCount >= 2)
-        {
-            return;
-        }
+        yield return new WaitForSeconds(this.CastTime);
 
-        float timeSinceLastStab = Time.time - lastStabTime;
+        LevelManager levelManager = GameManager.Instance.LevelManager;
 
-        if (timeSinceLastStab >= StabInterval)
-        {
-            lastStabTime = Time.time;
+        // cleanup vfx -> stop and disable
+        vfx.Stop();
+        vfx.enabled = false;
+        vfx.visualEffectAsset = null;
 
-            Vector3 position = player.transform.position;
-            Vector3 direction = player.transform.forward;
-
-            RaycastHit hit;
-            if (Physics.Raycast(position, direction, out hit, Range))
+        Transform playerTrans = player.transform;
+        // check if it hits anything
+        RaycastHit hit;
+        if (Physics.SphereCast(
+            playerTrans.position + this.PositionOffset,
+            this.Radius, playerTrans.forward,
+            out hit, this.Range
+        )) {
+            Player otherPlayer = hit.collider.GetComponent<Player>();
+            if (otherPlayer != null && otherPlayer != player)
             {
-                Player opponent = hit.collider.GetComponent<Player>();
-                if (opponent != null)
-                {
-                    opponent.Damage(2);
-
-                    if (poisonEndTime <= Time.time)
-                    {
-                        poisonEndTime = Time.time + PoisonDuration;
-                    }
-                }
-
-                if (CastFX != null)
-                {
-                    VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
-                    // castEffect.visualEffectAsset = CastPrefab;
-                    castEffect.transform.position = hit.point;
-                    castEffect.Play();
-                }
+                otherPlayer.Damage(this.Damage);
+                yield break;
             }
 
-            stabCount++;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (poisonEndTime > Time.time)
-        {
-            player.Damage(Mathf.RoundToInt(PoisonDamage * Time.fixedDeltaTime));
+            DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
+            if (obstacle != null)
+            {
+                obstacle.DestroyObstacle();
+                yield break;
+            }
         }
     }
 }

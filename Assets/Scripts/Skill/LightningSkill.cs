@@ -5,7 +5,7 @@ using UnityEngine.VFX;
 [CreateAssetMenu(fileName = "LightningSkill", menuName = "ScriptableObjects/Lightning Skill")]
 public class LightningSkill : AbstractSkill
 {
-    public int Range;
+    public float Range;
 
     public override void OnPress(Player player)
     {
@@ -15,7 +15,7 @@ public class LightningSkill : AbstractSkill
         LayerMask playerLayer = GameManager.Instance.LevelManager.so_Skill.PlayerLayer;
 
         RaycastHit hit;
-        Physics.Raycast(position, direction, out hit, Range);
+        Physics.Raycast(position, direction, out hit, this.Range);
 
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
@@ -25,18 +25,16 @@ public class LightningSkill : AbstractSkill
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
 
-        player.StartCoroutine(this.CleanupRoutine(hit));
+        player.StartCoroutine(this.CleanupRoutine(hit, vfx));
     }
 
-    private IEnumerator CleanupRoutine(RaycastHit initHit)
+    private IEnumerator CleanupRoutine(RaycastHit initHit, VisualEffect vfx)
     {
         yield return new WaitForSeconds(this.CastTime);
 
         LevelManager levelManager = GameManager.Instance.LevelManager;
 
         // cleanup vfx -> stop and disable
-        VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
-
         vfx.Stop();
         vfx.enabled = false;
         vfx.visualEffectAsset = null;

@@ -9,8 +9,13 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<OrbSpawner> m_OrbSpawners = new List<OrbSpawner>();
     [SerializeField] private SkillSO m_so_Skill;
     [SerializeField] private ObjectPool<VisualEffect> m_VisualEffectPool;
+
+    [Header("Player One")]
     [SerializeField] private Transform m_PlayerOneSpawnPoint;
+    [SerializeField] private GameObject m_PlayerOneHelmet;
+    [Header("Player Two")]
     [SerializeField] private Transform m_PlayerTwoSpawnPoint;
+    [SerializeField] private GameObject m_PlayerTwoHelmet;
 
     private Player[] m_Players;
 
@@ -44,6 +49,8 @@ public class LevelManager : MonoBehaviour
 
         this.m_Players[0] = playerGOP1.GetComponent<Player>();
         this.m_Players[1] = playerGOP2.GetComponent<Player>();
+        Object.Instantiate(this.m_PlayerOneHelmet, this.m_Players[0].transform);
+        Object.Instantiate(this.m_PlayerTwoHelmet, this.m_Players[1].transform);
         this.m_Players[0].SetupPlayer(1);
         this.m_Players[1].SetupPlayer(2);
 
