@@ -65,10 +65,36 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue value)
     {
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+
         if (value.isPressed)
         {
             this.StartCoroutine(this.m_PlayerMovement.Dash());
         }
+    }
+
+    private void OnSkillOne(InputValue value)
+    {
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (!value.isPressed) return;
+
+        this.ActivateSkillIfExist(0);
+    }
+
+    private void OnSkillTwo(InputValue value)
+    {
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (!value.isPressed) return;
+
+        this.ActivateSkillIfExist(1);
+    }
+
+    private void OnSkillThree(InputValue value)
+    {
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (!value.isPressed) return;
+
+        this.ActivateSkillIfExist(2);
     }
 
     private void OnDeath()
@@ -119,19 +145,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnSkillOne(InputValue value)
+    private void ActivateSkillIfExist(int playerSkillIdx)
     {
-        if (!value.isPressed) return;
-    }
-
-    private void OnSkillTwo(InputValue value)
-    {
-        if (!value.isPressed) return;
-    }
-
-    private void OnSkillThree(InputValue value)
-    {
-        if (!value.isPressed) return;
+        int skillIdx = this.GetSkill(playerSkillIdx);
+        if (skillIdx != -1)
+        {
+            GameManager.Instance.LevelManager.so_Skill.Skills[skillIdx].OnPress(this);
+        }
     }
 
     private IEnumerator RemoveImmunity()

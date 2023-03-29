@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -19,11 +20,44 @@ public class LightningSkill : AbstractSkill
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
-        vfx.transform.position = hit.point;
+        vfx.transform.position = hit.point + this.PositionOffset;
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
 
-        // player.StartCoroutine()
+        player.StartCoroutine(this.CleanupRoutine(hit));
+    }
+
+    private IEnumerator CleanupRoutine(RaycastHit initHit)
+    {
+        yield return new WaitForSeconds(this.CastTime);
+
+        LevelManager levelManager = GameManager.Instance.LevelManager;
+
+        // cleanup vfx -> stop and disable
+        VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
+
+        vfx.Stop();
+        vfx.enabled = false;
+        vfx.visualEffectAsset = null;
+
+        // check if it hits anything
+        RaycastHit hit;
+        if (Physics.Raycast(initHit.point + this.PositionOffset, Vector3.down, out hit))
+        {
+            Player player = hit.collider.GetComponent<Player>();
+            if (player != null)
+            {
+                player.Damage(this.Damage);
+                yield break;
+            }
+
+            DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
+            if (obstacle != null)
+            {
+                obstacle.DestroyObstacle();
+                yield break;
+            }
+        }
     }
 }
