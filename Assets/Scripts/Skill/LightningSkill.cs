@@ -19,25 +19,11 @@ public class LightningSkill : AbstractSkill
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
+        vfx.transform.position = hit.point;
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
+        vfx.Play();
 
-        // foreach (RaycastHit hit in hits)
-        // {
-        //     Player opponent = hit.collider.GetComponent<Player>();
-        //     hit.collider.
-        //     if (opponent != null)
-        //     {
-        //         opponent.Damage((int)Damage);
-        //     }
-
-        //     if (CastFX != null)
-        //     {
-        //         VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
-        //         // castEffect.visualEffectAsset = CastPrefab;
-        //         castEffect.transform.position = hit.point;
-        //         castEffect.Play();
-        //     }
-        // }
+        // player.StartCoroutine()
     }
 }

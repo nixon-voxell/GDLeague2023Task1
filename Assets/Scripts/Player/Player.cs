@@ -119,6 +119,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnSkillOne(InputValue value)
+    {
+        if (!value.isPressed) return;
+    }
+
+    private void OnSkillTwo(InputValue value)
+    {
+        if (!value.isPressed) return;
+    }
+
+    private void OnSkillThree(InputValue value)
+    {
+        if (!value.isPressed) return;
+    }
+
     private IEnumerator RemoveImmunity()
     {
         yield return new WaitForSeconds(3f);
