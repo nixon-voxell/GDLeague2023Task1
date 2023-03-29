@@ -152,6 +152,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(3.0f);
         UIManager.OnGameEnd(playerWinner);
+        LevelManager.ResetObstacles(); // For the main menu to use
         CurrentGameState = GameState.GAME_END;
     }
 
