@@ -437,15 +437,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OneShotAudioArr:
-  - SoundName: TestDash
-    Clip: {fileID: 8300000, guid: 543ff034ebd9dce4eac127a5b60d2c19, type: 3}
+  - SoundName: sfx_dash
+    Clip: {fileID: 8300000, guid: 3b7811722c753364ba1ff72930646421, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_barrier
+    Clip: {fileID: 8300000, guid: 7e58a80cc5ea09f479d2f88edd63ba14, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_gauntlet
+    Clip: {fileID: 8300000, guid: 28454a12c1866184ca85cbdf5f02949d, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_knockback
+    Clip: {fileID: 8300000, guid: 1d22b8339b9a8904ea3c5eafca4a412f, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_shield
+    Clip: {fileID: 8300000, guid: 3657e95a38c916441992f5f22f2ccf52, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_stab
+    Clip: {fileID: 8300000, guid: e0c4ac2968953d845a861f1f3e3e3421, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_teleport_buildup
+    Clip: {fileID: 8300000, guid: 98dfe3220a70b614bb3764f7831ebcda, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_teleport
+    Clip: {fileID: 8300000, guid: 41121b0be76fe6841aeb453553d1740a, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_thunder_strike
+    Clip: {fileID: 8300000, guid: 6486664d6df7296418121159318d9dc8, type: 3}
     Volume: 1
     SpatialBlend: 0
     Pitch: 1
   m_MusicSourceArr:
-  - MusicName: Fight
-    StartMusic: {fileID: 8300000, guid: 90cbc2c83fda23d40a8a9966e540e29f, type: 3}
-    LoopMusic: {fileID: 8300000, guid: c83fd94fe6622b944a0ebea108219a38, type: 3}
+  - MusicName: bgm_main_menu
+    StartMusic: {fileID: 8300000, guid: 7b0cfe2598477f745a5711f7a7cc57f2, type: 3}
+    LoopMusic: {fileID: 8300000, guid: 9f0dff0df12574446bfb71b69d4f8c94, type: 3}
+    Volume: 1
+    Pitch: 1
+  - MusicName: bgm_lobby
+    StartMusic: {fileID: 8300000, guid: 71e7aa1965b7336408fecaa1056cd6bc, type: 3}
+    LoopMusic: {fileID: 8300000, guid: 12337e7d6af7b4c46ba0f79c81bf010d, type: 3}
+    Volume: 1
+    Pitch: 1
+  - MusicName: bgm_fight
+    StartMusic: {fileID: 8300000, guid: cfbcee23e0e4d3a4ebc4744873e94f00, type: 3}
+    LoopMusic: {fileID: 8300000, guid: 9c8e3e1930c4b40468a863531af768e3, type: 3}
     Volume: 1
     Pitch: 1
   m_PlayOneShotSource: {fileID: 1379859210}
