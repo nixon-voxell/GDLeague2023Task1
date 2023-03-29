@@ -13,7 +13,7 @@ public class DestructableObstacle : MonoBehaviour
         LevelManager levelManager = GameManager.Instance.LevelManager;
         if (levelManager != null)
         {
-            levelManager.DestructableObstacle.Add(this);
+            levelManager.DestructableObstacles.Add(this);
         }
     }
 

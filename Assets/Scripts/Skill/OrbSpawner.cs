@@ -9,7 +9,23 @@ public class OrbSpawner : MonoBehaviour
 
     private void Start()
     {
+        // add to LevelManager reference
+        GameManager.Instance.LevelManager.OrbSpawners.Add(this);
+    }
+
+    /// <summary>Enable spawner.</summary>
+    private void EnableSpawn()
+    {
         StartCoroutine(Respawn(0.0f));
+    }
+
+    /// <summary>Disable spawner.</summary>
+    private void DisableSpawn()
+    {
+        if (this.m_SkillOrb != null)
+        {
+            Object.Destroy(this.m_SkillOrb);
+        }
     }
 
     public int GetSkill()
