@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public LevelManager LevelManager;
     [HideInInspector] public SoundManager SoundManager;
+    [HideInInspector] public UIManager UIManager; // UI Manager for the level UI
 
 
     [SerializeField, Voxell.Util.Scene] private string[] m_InitialScenes;

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab742b70bd072f4ba5e506aec4b397a, type: 3}
   m_Name: Skills
   m_EditorClassIdentifier: 
+  SkillExpireTime: 10
   Skills:
   - {fileID: 11400000, guid: 3120207e26871e846932f999441fd39f, type: 2}
