@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private List<DestructableObstacle> m_DestructableObstacle = new List<DestructableObstacle>();
-    [SerializeField] private SkillSO m_SkillScriptableObject;
+    [SerializeField] private SkillSO m_so_Skill;
     [SerializeField] private ObjectPool<VisualEffect> m_VisualEffectPool;
     [SerializeField] private Transform m_PlayerOneSpawnPoint;
     [SerializeField] private Transform m_PlayerTwoSpawnPoint;
@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     private Player[] m_Players;
 
     public List<DestructableObstacle> DestructableObstacle => this.m_DestructableObstacle;
+    public SkillSO so_Skill => this.m_so_Skill;
 
 
     private void Start()
