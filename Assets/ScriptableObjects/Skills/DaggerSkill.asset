@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efa8e609138ee449889678afbaf95a7, type: 3}
+  m_Name: DaggerSkill
+  m_EditorClassIdentifier: 
+  CastTime: 0
+  Damage: 5
+  OrbPrefab: {fileID: 1572807824664338282, guid: edc5334229dc3d64fb6c1f69243d09e8,
+    type: 3}
+  CastFX: {fileID: 8926484042661614526, guid: 54c475e5101a4b345b928dde5bd5b5c8, type: 3}
+  SkillIcon: {fileID: 0}
+  Range: 1
+  StabInterval: 2
+  PoisonDuration: 3
+  PoisonDamage: 1
