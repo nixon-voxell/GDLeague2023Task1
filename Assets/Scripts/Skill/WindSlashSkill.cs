@@ -16,10 +16,10 @@ public class WindSlashSkill : AbstractSkill
     {
         this.player = player;
 
-        if (OrbVFX != null)
+        if (OrbPrefab != null)
         {
             orbEffect = new GameObject().AddComponent<VisualEffect>();
-            orbEffect.visualEffectAsset = OrbVFX;
+            // orbEffect.visualEffectAsset = OrbPrefab;
             orbEffect.transform.position = player.transform.position;
             orbEffect.Play();
         }
@@ -60,10 +60,10 @@ public class WindSlashSkill : AbstractSkill
                 opponent.Damage((int)damage);
             }
 
-            if (CastVFX != null)
+            if (CastPrefab != null)
             {
                 VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
-                castEffect.visualEffectAsset = CastVFX;
+                // castEffect.visualEffectAsset = CastPrefab;
                 castEffect.transform.position = hit.point;
                 castEffect.Play();
             }

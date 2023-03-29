@@ -13,10 +13,10 @@ public class BarrierSkill : AbstractSkill
     {
         this.player = player;
 
-        if (OrbVFX != null)
+        if (OrbPrefab != null)
         {
             VisualEffect orbEffect = new GameObject().AddComponent<VisualEffect>();
-            orbEffect.visualEffectAsset = OrbVFX;
+            // orbEffect.visualEffectAsset = OrbPrefab;
             orbEffect.transform.position = player.transform.position;
             orbEffect.Play();
         }
@@ -24,7 +24,7 @@ public class BarrierSkill : AbstractSkill
         if (barrierEffect == null && Duration > 0f)
         {
             barrierEffect = player.gameObject.AddComponent<VisualEffect>();
-            barrierEffect.visualEffectAsset = CastVFX;
+            // barrierEffect.visualEffectAsset = CastPrefab;
             barrierEffect.Play();
 
             player.SetImmune(true);

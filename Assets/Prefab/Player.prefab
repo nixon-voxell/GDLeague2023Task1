@@ -163,17 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Controller: {fileID: -6547879505722853592}
-  m_Speed: 6
+  m_Speed: 10
   m_RotationSpeed: 1000
   m_Damping: 0.5
-  m_DashDuration: 0.3
-  m_DashVelocity: 30
+  m_DashDuration: 0.2
+  m_DashVelocity: 40
   m_DashVelocityCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2
+      value: 0.7
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 100
-  m_PlayerMovement: {fileID: 0}
+  m_PlayerMovement: {fileID: 943276409528283091}
 --- !u!143 &-6547879505722853592
 CharacterController:
   m_ObjectHideFlags: 0

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CastTime: 0
   Damage: 0
-  OrbVFX: {fileID: 0}
+  OrbVFX: {fileID: 8926484042661614526, guid: 44921620b8f0fea4d9fecef10ad324a2, type: 3}
   CastVFX: {fileID: 0}
+  SkillIcon: {fileID: 0}
   Range: 5
   CloseRangeDamage: 10
   MidRangeDamage: 7

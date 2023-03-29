@@ -18,13 +18,13 @@ public class KnifeSkill : AbstractSkill
     {
         this.player = player;
 
-        if (OrbVFX != null)
-        {
-            VisualEffect orbEffect = new GameObject().AddComponent<VisualEffect>();
-            orbEffect.visualEffectAsset = OrbVFX;
-            orbEffect.transform.position = player.transform.position;
-            orbEffect.Play();
-        }
+        // if (OrbPrefab != null)
+        // {
+        //     VisualEffect orbEffect = new GameObject().AddComponent<VisualEffect>();
+        //     orbEffect.visualEffectAsset = OrbPrefab;
+        //     orbEffect.transform.position = player.transform.position;
+        //     orbEffect.Play();
+        // }
 
         stabCount = 0;
         lastStabTime = Time.time;
@@ -61,10 +61,10 @@ public class KnifeSkill : AbstractSkill
                     }
                 }
 
-                if (CastVFX != null)
+                if (CastPrefab != null)
                 {
                     VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
-                    castEffect.visualEffectAsset = CastVFX;
+                    // castEffect.visualEffectAsset = CastPrefab;
                     castEffect.transform.position = hit.point;
                     castEffect.Play();
                 }

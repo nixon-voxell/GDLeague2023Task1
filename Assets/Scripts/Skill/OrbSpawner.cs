@@ -5,31 +5,35 @@ public class OrbSpawner : MonoBehaviour
 {
     [SerializeField] private float m_RespawnInterval;
     [SerializeField] private int m_SkillIdx;
-    [SerializeField] private GameObject m_OrbPrefab;
-    private GameManager gameManager;
+    private GameObject m_SkillOrb;
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-
-        if (gameManager == null)
-        {
-            Debug.LogError("Could not find GameManager in the scene!");
-        }
-
-        StartCoroutine(Respawn());
+        StartCoroutine(Respawn(0.0f));
     }
 
-    private IEnumerator Respawn()
+    public int GetSkill()
     {
-        yield return new WaitForSeconds(m_RespawnInterval);
+        this.StartCoroutine(this.Respawn(this.m_RespawnInterval));
+        return this.m_SkillIdx;
+    }
 
-        int numSkills = gameManager.LevelManager.so_Skill.Skills.Length;
+    private IEnumerator Respawn(float interval)
+    {
+        // destroy previous skill orb
+        if (this.m_SkillOrb != null)
+        {
+            Object.Destroy(this.m_SkillOrb);
+        }
+        SkillSO so_skill = GameManager.Instance.LevelManager.so_Skill;
 
-        m_SkillIdx = Random.Range(0, numSkills);
+        yield return new WaitForSeconds(interval);
 
-        Instantiate(m_OrbPrefab, transform.position, Quaternion.identity);
+        // randomly select a skill
+        m_SkillIdx = Random.Range(0, so_skill.Skills.Length);
 
-        StartCoroutine(Respawn());
+        // instantiate as child
+        GameObject skillOrbPrefab = so_skill.Skills[this.m_SkillIdx].OrbPrefab;
+        this.m_SkillOrb = Object.Instantiate(skillOrbPrefab, this.transform);
     }
 }

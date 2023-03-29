@@ -58,8 +58,9 @@ public class UIManager : MonoBehaviour
         if (skill != null)
         {
             SkillHUD skillHUD = m_PlayerHUD[playerNumber - 1].SkillsHUD[skillNumber - 1];
-            AbstractSkill oriSkill =  m_SkillSO.Skills.Find(s => s == skill);
-            skillHUD.SkillImage.sprite = oriSkill.SkillIcon;
+            // TODO: what the heck is this?
+            // AbstractSkill oriSkill =  m_SkillSO.Skills.Find(s => s == skill);
+            // skillHUD.SkillImage.sprite = oriSkill.SkillIcon;
 
             skillHUD.TimerSlider.value = 1;
             skillHUD.IsActive = true;

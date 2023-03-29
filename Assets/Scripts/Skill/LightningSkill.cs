@@ -13,13 +13,14 @@ public class LightningSkill : AbstractSkill
     {
         this.player = player;
 
-        if (OrbVFX != null)
-        {
-            orbEffect = new GameObject().AddComponent<VisualEffect>();
-            orbEffect.visualEffectAsset = OrbVFX;
-            orbEffect.transform.position = player.transform.position;
-            orbEffect.Play();
-        }
+        // TODO: do that through level manager
+        // if (OrbPrefab != null)
+        // {
+        //     orbEffect = new GameObject().AddComponent<VisualEffect>();
+        //     orbEffect.visualEffectAsset = OrbPrefab;
+        //     orbEffect.transform.position = player.transform.position;
+        //     orbEffect.Play();
+        // }
     }
 
     public override void OnRelease()
@@ -48,10 +49,10 @@ public class LightningSkill : AbstractSkill
                 opponent.Damage((int)Damage);
             }
 
-            if (CastVFX != null)
+            if (CastPrefab != null)
             {
                 VisualEffect castEffect = new GameObject().AddComponent<VisualEffect>();
-                castEffect.visualEffectAsset = CastVFX;
+                // castEffect.visualEffectAsset = CastPrefab;
                 castEffect.transform.position = hit.point;
                 castEffect.Play();
             }
