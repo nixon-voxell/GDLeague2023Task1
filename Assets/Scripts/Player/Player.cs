@@ -190,6 +190,8 @@ public class Player : MonoBehaviour
     private void OnDeath()
     {
         this.m_PlayerState = PlayerState.Dead;
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_death");
+
         GameManager.Instance.OnRoundEnd(m_PlayerNumber == 1 ? 2 : 1);
     }
 
@@ -199,6 +201,8 @@ public class Player : MonoBehaviour
         if (this.m_PlayerState != PlayerState.Default) return;
         // cannot damage if player is immune
         if (this.Immune == true) return;
+
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_hit");
 
         m_DmgCounter.OnDamage(damage);
 
@@ -221,6 +225,8 @@ public class Player : MonoBehaviour
             {
                 GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
                 m_PlayerSkills[i] = skillIdx;
+                GameManager.Instance.SoundManager.PlayOneShot("sfx_get_orb");
+
 
                 return true;
             }

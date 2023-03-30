@@ -94,6 +94,7 @@ public class GameManager : Singleton<GameManager>
 
         LevelManager.EnableSpawners(true);
         UIManager.OnGameStart();
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_roundstart");
 
         OnFight();
     }
@@ -132,6 +133,8 @@ public class GameManager : Singleton<GameManager>
     public void OnRoundEnd(int playerWinner)
     {
         CurrentGameState = GameState.ROUND_END;
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_roundend");
+
         UIManager.OnRoundEnd();
         LevelManager.EnablePlayer(false);
         LevelManager.EnableSpawners(false);
