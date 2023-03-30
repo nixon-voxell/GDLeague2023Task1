@@ -323,6 +323,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OneShotAudioArr:
+  - SoundName: sfx_button_hover
+    Clip: {fileID: 8300000, guid: 80759132fae30ad42b09ed659dbb28fc, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_button_click
+    Clip: {fileID: 8300000, guid: 32176a198fc572c478944d7bf8dd17e8, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
   - SoundName: sfx_dash
     Clip: {fileID: 8300000, guid: 3b7811722c753364ba1ff72930646421, type: 3}
     Volume: 1
@@ -365,6 +375,71 @@ MonoBehaviour:
     Pitch: 1
   - SoundName: sfx_thunder_strike
     Clip: {fileID: 8300000, guid: 6486664d6df7296418121159318d9dc8, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_death
+    Clip: {fileID: 8300000, guid: 0a79a1599a177af4f8ae0d58c2196baf, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_destructible_crate_destroy
+    Clip: {fileID: 8300000, guid: 9010bb8696c8d5743abaf3623363393f, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_destructible_pillar_destroy
+    Clip: {fileID: 8300000, guid: 78b1947f588b6d646b4b0121a61a210b, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_orb_spawn
+    Clip: {fileID: 8300000, guid: 2951256ef70253347aa7899455e50b5b, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_get_orb
+    Clip: {fileID: 8300000, guid: b20c5d26e6ed8454eaaa01b30adffbd6, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_hit
+    Clip: {fileID: 8300000, guid: 07ee16b49b9aaa24f86f1ae638e00f25, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_walk_1
+    Clip: {fileID: 8300000, guid: f8db536adf434844c83a2d4e1d98939b, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_walk_2
+    Clip: {fileID: 8300000, guid: 9daba0a63e352ab4e945c7921a2cd55e, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_walk_3
+    Clip: {fileID: 8300000, guid: 4167aad2da4e9954b8cf9dd95c10253a, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_walk_4
+    Clip: {fileID: 8300000, guid: 673ed3c99ee75c648bc03a2f3681fc68, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_walk_5
+    Clip: {fileID: 8300000, guid: 7b5661f5a9fd0c74ca410c25f179bdb2, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_roundstart
+    Clip: {fileID: 8300000, guid: 844a932d4803dbb42be1fa50cdbfd8ed, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_roundend
+    Clip: {fileID: 8300000, guid: 8d5a07b3f340b6a43b7bbda005d35c41, type: 3}
     Volume: 1
     SpatialBlend: 0
     Pitch: 1

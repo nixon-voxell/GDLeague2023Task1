@@ -54,6 +54,8 @@ public class WindSlashSkill : AbstractSkill
 
         yield return new WaitForSeconds(CastDelay);
 
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
+
         Collider[] collider = Physics.OverlapSphere(player.transform.position + DmgPosOffset, Radius);
 
         for (int i = 0; i < collider.Length; i++)
