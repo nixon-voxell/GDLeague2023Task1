@@ -12,53 +12,30 @@ public class WindSlashSkill : AbstractSkill
     public override void OnPress(Player player)
     {
         player.StartCoroutine(Attack(player));
-        //testSphere.transform.localScale 
-
-        
-        //RaycastHit[] hits = Physics.RaycastAll(position, direction, Range);
-
-        //foreach (RaycastHit hit in hits)
-        //{
-        //    float distance = Vector3.Distance(position, hit.point);
-        //    float damage = CloseRangeDamage;
-
-        //    if (distance > 2 * Range / 3)
-        //    {
-        //        damage = FarRangeDamage;
-        //    }
-        //    else if (distance > Range / 3)
-        //    {
-        //        damage = MidRangeDamage;
-        //    }
-
-        //    Player opponent = hit.collider.GetComponent<Player>();
-        //    if (opponent != null)
-        //    {
-        //        opponent.Damage((int)damage);
-        //    }
-
-        //}
     }
 
     private IEnumerator Attack(Player player)
     {
-
+        Transform playerTrans = player.transform;
         VisualEffect vfx = GameManager.Instance.LevelManager.VisualEffectPool.GetNextObject();
 
         vfx.enabled = true;
         vfx.visualEffectAsset = CastFX;
-        vfx.transform.position = player.transform.position + PositionOffset;
-        vfx.transform.rotation = Quaternion.identity;
-        vfx.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
-        vfx.Play();
-        GameManager.Instance.SoundManager.PlayOneShot("sfx_windslash");
 
+        Vector3 euler = playerTrans.rotation.eulerAngles;
+        euler.y += 180.0f;
+
+        vfx.transform.SetPositionAndRotation(
+            playerTrans.position + this.PositionOffset,
+            Quaternion.Euler(euler)
+        );
+        vfx.Play();
+
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_windslash");
 
         yield return new WaitForSeconds(CastDelay);
 
-        // GameManager.Instance.SoundManager.PlayOneShot(FxSound);
-
-        Collider[] collider = Physics.OverlapSphere(player.transform.position + DmgPosOffset, Radius);
+        Collider[] collider = Physics.OverlapSphere(playerTrans.position + DmgPosOffset, Radius);
 
         for (int i = 0; i < collider.Length; i++)
         {
@@ -85,5 +62,4 @@ public class WindSlashSkill : AbstractSkill
         vfx.enabled = false;
         vfx.visualEffectAsset = null;
     }
-
 }
