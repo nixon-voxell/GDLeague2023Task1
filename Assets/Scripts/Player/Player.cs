@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber;
     private int m_CurrentHealth;
     private float m_SkillExpireTime;
+    private IEnumerator[] m_SkillExpiryCoroutine = new IEnumerator[3]; 
 
     // index of skill in scriptable obejct
     private int[] m_PlayerSkills = new int[3];
@@ -137,7 +138,7 @@ public class Player : MonoBehaviour
     private void OnDeath()
     {
         this.m_PlayerStatus = PlayerStatus.Dead;
-        Debug.Log("Player dead");
+        GameManager.Instance.OnRoundEnd(m_PlayerNumber == 1 ? 2 : 1);
     }
 
     public void Damage(int damage)
@@ -176,7 +177,9 @@ public class Player : MonoBehaviour
                 GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
                 m_PlayerSkills[i] = skillIdx;
 
-                StartCoroutine(SkillExpire(i));
+                m_SkillExpiryCoroutine[i] = SkillExpire(i);
+
+                StartCoroutine(m_SkillExpiryCoroutine[i]);
                 return true;
             }
         }
@@ -210,6 +213,7 @@ public class Player : MonoBehaviour
             GameManager.Instance.LevelManager.so_Skill.Skills[skillIdx].OnPress(this);
 
             m_PlayerSkills[playerSkillIdx] = -1;
+            StopCoroutine(m_SkillExpiryCoroutine[playerSkillIdx]);
             GameManager.Instance.UIManager.OnSkillUsed(m_PlayerNumber, playerSkillIdx);
         }
     }
@@ -222,7 +226,6 @@ public class Player : MonoBehaviour
 
     private IEnumerator SkillExpire(int skillSlot)
     {
-
         yield return new WaitForSeconds(m_SkillExpireTime);
 
         m_PlayerSkills[skillSlot] = -1;
