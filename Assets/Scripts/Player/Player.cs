@@ -208,6 +208,9 @@ public class Player : MonoBehaviour
         if (skillIdx != -1)
         {
             GameManager.Instance.LevelManager.so_Skill.Skills[skillIdx].OnPress(this);
+
+            m_PlayerSkills[playerSkillIdx] = -1;
+            GameManager.Instance.UIManager.OnSkillUsed(m_PlayerNumber, playerSkillIdx);
         }
     }
 
