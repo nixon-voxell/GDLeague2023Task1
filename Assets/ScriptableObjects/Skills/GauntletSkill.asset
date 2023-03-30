@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GauntletSkill
   m_EditorClassIdentifier: 
   CastTime: 3
-  Damage: 5
+  Damage: 10
   PositionOffset: {x: 0, y: 0.75, z: 0}
   OrbPrefab: {fileID: 3445939783597978617, guid: 55f2d3ac074d6124caabec708717bcc5,
     type: 3}
