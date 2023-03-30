@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KnifeSkill
   m_EditorClassIdentifier: 
   CastTime: 1
-  Damage: 5
+  Damage: 10
   PositionOffset: {x: 0, y: 0, z: 0}
   OrbPrefab: {fileID: 1572807824664338282, guid: edc5334229dc3d64fb6c1f69243d09e8,
     type: 3}
