@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
                 Player otherPlayer = collider.GetComponent<Player>();
                 if (otherPlayer != null && otherPlayer != this && otherPlayer.Immune == false)
                 {
+                    Debug.Log(otherPlayer);
                     otherPlayer.m_PlayerMovement.SetVelocity(trans.forward * this.m_KnockbackSO.Force);
                     this.StartCoroutine(otherPlayer.Knockback());
                 }
@@ -152,7 +153,7 @@ public class Player : MonoBehaviour
     {
         this.m_PlayerState = PlayerState.Immobilized;
         float defaultDamping = this.m_PlayerMovement.Damping;
-        this.m_PlayerMovement.SetDamping(defaultDamping * 2);
+        this.m_PlayerMovement.SetDamping(0.9f);
 
         yield return new WaitForSeconds(this.m_KnockbackSO.Duration);
         this.m_PlayerState = PlayerState.Default;
