@@ -21,6 +21,10 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber;
     private int m_CurrentHealth;
     private float m_SkillExpireTime;
+    private float m_DashCDTime;
+    private float m_KnockbackCDTime;
+    private bool m_CanDash;
+    private bool m_CanKnockback;
     private IEnumerator[] m_SkillExpiryCoroutine = new IEnumerator[3]; 
 
     // index of skill in scriptable obejct
@@ -30,6 +34,7 @@ public class Player : MonoBehaviour
     public PlayerStatus PlayerStatus => this.m_PlayerStatus;
     public int PlayerNumber => this.m_PlayerNumber;
     public int CurrentHealth => this.m_CurrentHealth;
+
 
     private void Start()
     {
@@ -99,9 +104,26 @@ public class Player : MonoBehaviour
     {
         if (this.m_PlayerStatus != PlayerStatus.Default) return;
 
-        if (value.isPressed)
+        if (value.isPressed && m_CanDash)
         {
             this.StartCoroutine(this.m_PlayerMovement.Dash());
+            m_CanDash = false;
+            GameManager.Instance.UIManager.OnAbilityUsed(m_PlayerNumber, "DASH");
+            StartCoroutine(AbilityDashCD());
+        }
+    }
+
+    private void OnKnockback(InputValue value)
+    {
+        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+
+        if (value.isPressed && m_CanKnockback)
+        {
+            // Do your stuff
+
+            m_CanKnockback = false;
+            GameManager.Instance.UIManager.OnAbilityUsed(m_PlayerNumber, "KNOCKBACK");
+            StartCoroutine(AbilityKnockbackCD());
         }
     }
 
@@ -230,5 +252,19 @@ public class Player : MonoBehaviour
 
         m_PlayerSkills[skillSlot] = -1;
         GameManager.Instance.UIManager.OnSkillExpire(m_PlayerNumber, skillSlot);
+    }
+
+    private IEnumerator AbilityDashCD()
+    {
+        yield return new WaitForSeconds(m_DashCDTime);
+        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
+        m_CanDash = true;
+    }
+
+    private IEnumerator AbilityKnockbackCD()
+    {
+        yield return new WaitForSeconds(m_KnockbackCDTime);
+        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
+        m_CanKnockback = true;
     }
 }
