@@ -65,8 +65,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.SetScore(0, 0);
         m_WinningCount[0] = 0;
         m_WinningCount[1] = 0;
-        //LevelManager.EnableUIControls(false);
-
 
         OnGameSetup();
     }
@@ -110,6 +108,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1.0f;
         LevelManager.EnablePlayer(true);
         UIManager.EnablePauseScreen(false);
+        //LevelManager.EnableUIControls(false);
+
 
         CurrentGameState = GameState.FIGHT;
     }
