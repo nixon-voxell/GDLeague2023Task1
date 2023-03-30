@@ -9863,6 +9863,7 @@ GameObject:
   - component: {fileID: 6173682450220489445}
   - component: {fileID: 6173682450220489444}
   - component: {fileID: 6173682450220489451}
+  - component: {fileID: 7039636319439474882}
   m_Layer: 0
   m_Name: PortalOrb
   m_TagString: Untagged
@@ -9953,6 +9954,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7039636319439474882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173682450220489450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c879356e3e60e4f996eb8bf4569a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SkillOrbDX: 5
 --- !u!1 &6173682450918535055
 GameObject:
   m_ObjectHideFlags: 0
