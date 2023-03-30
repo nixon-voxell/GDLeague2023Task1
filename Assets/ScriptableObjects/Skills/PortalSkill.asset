@@ -20,7 +20,7 @@ MonoBehaviour:
   CastFX: {fileID: 8926484042661614526, guid: 976cbfcdfdf770148b367ec44829aa23, type: 3}
   SkillIcon: {fileID: 21300000, guid: 0851940d28272fb4590bbb01f625d545, type: 3}
   TPRange: 5
-  CheckRadius: 0.3
+  CheckRadius: 0.7
   ArriveFx: {fileID: 8926484042661614526, guid: ce72377c44572f54fb4dc1039e931762,
     type: 3}
   ExpandRangeAmt: 0.05
