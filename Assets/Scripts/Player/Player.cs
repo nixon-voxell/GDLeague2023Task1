@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
     [SerializeField] private PlayerMovement m_PlayerMovement;
+    [SerializeField] private DmgPopupController m_DmgCounter;
     [SerializeField] private AbilitySO m_DashSO;
     [SerializeField] private AbilitySO m_KnockbackSO;
     [SerializeField] private VisualEffect m_VFX;
@@ -198,6 +199,8 @@ public class Player : MonoBehaviour
         if (this.m_PlayerState != PlayerState.Default) return;
         // cannot damage if player is immune
         if (this.Immune == true) return;
+
+        m_DmgCounter.OnDamage(damage);
 
         this.SetHealth(this.CurrentHealth - damage);
     }
