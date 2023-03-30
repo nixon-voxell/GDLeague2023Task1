@@ -3,9 +3,11 @@ using System.Collections;
 
 public class DestructableObstacle : MonoBehaviour
 {
-    [SerializeField] private Animator m_Animator;
-    private static readonly int m_DestroyTrigger = Animator.StringToHash("Destroy");
-    private static readonly int m_CreateTrigger = Animator.StringToHash("Create");
+    [SerializeField] private float m_AnimDuration;
+    [SerializeField] private AnimationCurve m_CreateAnimCurve;
+    [SerializeField] private AnimationCurve m_DestroyAnimCurve;
+
+    private bool destroyed = false;
 
     private void Start()
     {
@@ -15,29 +17,61 @@ public class DestructableObstacle : MonoBehaviour
         {
             levelManager.DestructableObstacles.Add(this);
         }
+
+        this.destroyed = false;
     }
 
     public void DestroyObstacle()
     {
-        if (m_Animator != null)
-            m_Animator.SetTrigger(m_DestroyTrigger);
-
-        StartCoroutine(DisableGameObjectAfterDelay(m_Animator.GetCurrentAnimatorStateInfo(0).length));
+        if (destroyed == false)
+        {
+            this.StartCoroutine(this.DestroyAnimation());
+            this.destroyed = true;
+        }
     }
 
     public void CreateObstacle()
     {
-        gameObject.SetActive(true);
-
-        // Temporarily check null to ensure error doesn't pop up
-        if (m_Animator != null)
-            m_Animator.SetTrigger(m_CreateTrigger);
+        if (destroyed == true)
+        {
+            this.StartCoroutine(this.CreateAnimation());
+            this.destroyed = false;
+        }
     }
 
-    private IEnumerator DisableGameObjectAfterDelay(float delay)
+    private IEnumerator DestroyAnimation()
     {
-        yield return new WaitForSeconds(delay);
+        float startTime = Time.time;
+        float timePassed = 0.0f;
+        Transform trans = this.transform;
 
-        gameObject.SetActive(false);
+        while (timePassed < this.m_AnimDuration)
+        {
+            timePassed = Time.time - startTime;
+            float scale = this.m_DestroyAnimCurve.Evaluate(timePassed / this.m_AnimDuration);
+            trans.localScale = new Vector3(scale, scale, scale);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        this.gameObject.SetActive(false);
+    }
+
+    private IEnumerator CreateAnimation()
+    {
+        this.gameObject.SetActive(true);
+
+        float startTime = Time.time;
+        float timePassed = 0.0f;
+        Transform trans = this.transform;
+
+        while (timePassed < this.m_AnimDuration)
+        {
+            timePassed = Time.time - startTime;
+            float scale = this.m_CreateAnimCurve.Evaluate(timePassed / this.m_AnimDuration);
+            trans.localScale = new Vector3(scale, scale, scale);
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

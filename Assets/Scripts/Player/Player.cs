@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 using Unity.Mathematics;
-using System.Collections;
 
 public enum PlayerState
 {
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerMovement m_PlayerMovement;
     [SerializeField] private AbilitySO m_DashSO;
     [SerializeField] private AbilitySO m_KnockbackSO;
+    [SerializeField] private VisualEffect m_VFX;
 
     private PlayerInput m_PlayerInput;
 
@@ -114,11 +116,44 @@ public class Player : MonoBehaviour
 
         if (value.isPressed && m_CanKnockback)
         {
-            // Do your stuff
+            Transform trans = this.transform;
+            this.m_VFX.Play();
 
+            RaycastHit hit;
+            if (Physics.SphereCast(
+                trans.position, this.m_KnockbackSO.Radius, this.transform.forward,
+                out hit, this.m_KnockbackSO.Range
+            )){
+                Player otherPlayer = hit.collider.GetComponent<Player>();
+                Debug.Log(hit.collider.name);
+                if (otherPlayer != null && otherPlayer != this && otherPlayer.Immune == false)
+                {
+                    otherPlayer.m_PlayerMovement.SetVelocity(trans.forward * this.m_KnockbackSO.Force);
+                    this.StartCoroutine(otherPlayer.Knockback());
+                }
+
+                DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
+                if (obstacle != null)
+                {
+                    obstacle.DestroyObstacle();
+                }
+            }
+
+            // ability cooldown
             m_CanKnockback = false;
             GameManager.Instance.UIManager.OnAbilityUsed(m_PlayerNumber, "KNOCKBACK");
         }
+    }
+
+    public IEnumerator Knockback()
+    {
+        this.m_PlayerState = PlayerState.Immobilized;
+        float defaultDamping = this.m_PlayerMovement.Damping;
+        this.m_PlayerMovement.SetDamping(defaultDamping * 2);
+
+        yield return new WaitForSeconds(this.m_KnockbackSO.Duration);
+        this.m_PlayerState = PlayerState.Default;
+        this.m_PlayerMovement.SetDamping(defaultDamping);
     }
 
     private void OnSkillOne(InputValue value)
