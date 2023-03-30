@@ -44,6 +44,7 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         m_P1OriginalSelectedBtn = m_P1MultiplayerESystem.firstSelectedGameObject;
         m_P2OriginalSelectedBtn = m_P2MultiplayerESystem.firstSelectedGameObject;
+        GameManager.Instance.SoundManager.PlayMusic("bgm_lobby");
 
     }
 

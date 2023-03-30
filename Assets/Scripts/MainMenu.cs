@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
         float volume;
         AudioMixer.GetFloat("MainVolume", out volume);
         slider.value = volume;
+        GameManager.Instance.SoundManager.PlayMusic("bgm_main_menu");
 
         Invoke("UISetup", 0.1f);
     }

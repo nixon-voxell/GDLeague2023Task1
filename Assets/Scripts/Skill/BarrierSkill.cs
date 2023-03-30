@@ -16,6 +16,7 @@ public class BarrierSkill : AbstractSkill
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
 
         player.SetImmune(true);
         player.StartCoroutine(this.FollowPlayerRoutine(player, vfx));

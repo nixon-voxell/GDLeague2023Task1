@@ -16,6 +16,8 @@ public class KnifeSkill : AbstractSkill
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
+
 
         player.StartCoroutine(this.DamageRoutine(player, vfx));
         player.StartCoroutine(this.CleanupRoutine(vfx));
