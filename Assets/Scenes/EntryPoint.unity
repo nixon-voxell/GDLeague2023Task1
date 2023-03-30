@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 330585545}
-  DisableStartToLobby: 1
+  DisableStartToLobby: 0
   LevelManager: {fileID: 0}
   SoundManager: {fileID: 0}
   UIManager: {fileID: 0}

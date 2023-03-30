@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     private int m_CurrentHealth;
 
     // index of skill in scriptable obejct
-    private int[] m_PlayerSkills;
+    private int[] m_PlayerSkills = new int[3];
 
     public PlayerMovement PlayerMovement => this.m_PlayerMovement;
     public PlayerStatus PlayerStatus => this.m_PlayerStatus;
@@ -120,6 +120,12 @@ public class Player : MonoBehaviour
         if (!value.isPressed) return;
 
         this.ActivateSkillIfExist(2);
+    }
+
+    private void OnPause(InputValue value)
+    {
+        if (value.isPressed)
+            GameManager.Instance.OnPause();
     }
 
     private void OnDeath()

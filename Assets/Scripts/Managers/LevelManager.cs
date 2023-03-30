@@ -60,6 +60,22 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.OnMapLoad();
     }
 
+    public void UnloadLevel()
+    {
+        ResetObstacles();
+        EnableSpawners(false);
+        Destroy(m_Players[0].gameObject);
+        Destroy(m_Players[1].gameObject);
+        this.m_Players[0] = null;
+        this.m_Players[1] = null;
+
+        GameManager.Instance.UIManager.EnableHUD(false);
+        GameManager.Instance.SoundManager.StopMusic();
+
+        SceneManager.LoadSceneAsync(GameManager.Instance.MainMenuScene, LoadSceneMode.Additive);
+
+    }
+
     public void ResetPlayer()
     {
         m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);

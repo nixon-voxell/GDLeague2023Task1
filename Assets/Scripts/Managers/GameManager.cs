@@ -61,7 +61,9 @@ public class GameManager : Singleton<GameManager>
     {
         CurrentGameState = GameState.MAP_LOAD;
         SoundManager.PlayMusic("Fight");
+        UIManager.EnableHUD(true);
         UIManager.SetScore(0, 0);
+
 
         OnGameSetup();
     }
@@ -88,6 +90,7 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(1.0f);
         UIManager.SetCenterText("1");
         yield return new WaitForSeconds(1.0f);
+        UIManager.SetCenterText("");
 
         LevelManager.EnableSpawners(true);
         UIManager.OnGameStart();
@@ -95,10 +98,14 @@ public class GameManager : Singleton<GameManager>
         OnFight();
     }
 
+    /// <summary>
+    /// For unpause too
+    /// </summary>
     public void OnFight()
     {
         Time.timeScale = 1.0f;
         LevelManager.EnablePlayer(true);
+        UIManager.EnablePauseScreen(false);
 
         CurrentGameState = GameState.FIGHT;
     }
@@ -107,7 +114,7 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 0;
         LevelManager.EnablePlayer(false);
-        UIManager.OnPause();
+        UIManager.EnablePauseScreen(true);
 
         CurrentGameState = GameState.PAUSE;
     }
