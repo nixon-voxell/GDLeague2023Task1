@@ -78,8 +78,12 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void StopMusic()
     {
+        m_MusicSource.Stop();
         StopCoroutine(m_MusicLoopFunc);
         m_MusicLoopFunc = null;
+
+
+        Debug.Log("Stop Music");
     }
 
     /// <summary>

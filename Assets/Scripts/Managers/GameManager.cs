@@ -63,6 +63,8 @@ public class GameManager : Singleton<GameManager>
         SoundManager.PlayMusic("bgm_fight");
         UIManager.EnableHUD(true);
         UIManager.SetScore(0, 0);
+        m_WinningCount[0] = 0;
+        m_WinningCount[1] = 0;
 
 
         OnGameSetup();
@@ -76,6 +78,7 @@ public class GameManager : Singleton<GameManager>
         LevelManager.ResetObstacles();
         LevelManager.EnableSpawners(false);
         UIManager.ResetAllUI();
+        UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
 
         StartCoroutine(OnStartCountdown());
     }

@@ -98,6 +98,19 @@ public class UIManager : MonoBehaviour
 
     public void SetScore(int p1Wins, int p2Wins)
     {
+        if (p1Wins == 0)
+        {
+            m_Player1VictoryCount[0].SetActive(false);
+            m_Player1VictoryCount[1].SetActive(false);
+
+        }
+        if (p2Wins == 0)
+        {
+            m_Player2VictoryCount[0].SetActive(false);
+            m_Player2VictoryCount[1].SetActive(false);
+
+        }
+
         for (int i = 0; i < p1Wins; i++)
         {
             m_Player1VictoryCount[i].SetActive(true);
