@@ -64,14 +64,14 @@ public class UIManager : MonoBehaviour
         skillHUD.ExpireTime = 1;
     }
 
-    public void OnSkillUsed(int playerNumber, int skillNumber)
+    public void OnSkillUsed(int playerNumber, int skillSlot)
     {
-        ResetSkillHUD(playerNumber, skillNumber);
+        ResetSkillHUD(playerNumber, skillSlot);
     }
 
-    public void OnSkillExpire(int playerNumber, int skillNumber)
+    public void OnSkillExpire(int playerNumber, int skillSlot)
     {
-        ResetSkillHUD(playerNumber, skillNumber);
+        ResetSkillHUD(playerNumber, skillSlot);
     }
     public void OnAbilityUsed(int playerNumber, string abilityName)
     {
@@ -149,12 +149,12 @@ public class UIManager : MonoBehaviour
         ResetAbilityHUD(1, "DASH");
         ResetAbilityHUD(2, "KNOCKBACK");
         ResetAbilityHUD(2, "DASH");
+        ResetSkillHUD(1, 0);
         ResetSkillHUD(1, 1);
         ResetSkillHUD(1, 2);
-        ResetSkillHUD(1, 3);
+        ResetSkillHUD(2, 0);
         ResetSkillHUD(2, 1);
         ResetSkillHUD(2, 2);
-        ResetSkillHUD(2, 3);
         SetHealth(1, 100);
         SetHealth(2, 100);
         SetTimer(m_CurrentRoundTime);
@@ -209,7 +209,7 @@ public class UIManager : MonoBehaviour
                 playerHUD.SkillsHUD[j].TimerSlider.value = playerHUD.SkillsHUD[j].ExpireTime;
 
                 if (playerHUD.SkillsHUD[j].ExpireTime <= 0)
-                    ResetSkillHUD(i + 1, j + 1);
+                    ResetSkillHUD(i + 1, j);
             }
         }
     }
@@ -294,9 +294,9 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="playerNumber"></param>
     /// <param name="skillNumber"></param>
-    private void ResetSkillHUD(int playerNumber, int skillNumber)
+    private void ResetSkillHUD(int playerNumber, int skillSlot)
     {
-        SkillHUD skillHUD = m_PlayerHUD[playerNumber - 1].SkillsHUD[skillNumber - 1];
+        SkillHUD skillHUD = m_PlayerHUD[playerNumber - 1].SkillsHUD[skillSlot];
         skillHUD.SkillImage.sprite = m_SkillEmptyIcon;
         skillHUD.TimerSlider.value = 0;
         skillHUD.IsActive = false;
