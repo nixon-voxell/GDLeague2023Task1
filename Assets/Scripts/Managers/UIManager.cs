@@ -93,7 +93,7 @@ public class UIManager : MonoBehaviour
         int minutesLabel = seconds / 60;
         int secondLabel = seconds % 60;
 
-        m_RoundTimerText.text = String.Format("{0} : {1}", minutesLabel, secondLabel);
+        m_RoundTimerText.text = String.Format("{0} : {1}", minutesLabel, secondLabel.ToString().PadLeft(2, '0'));
     }
 
     public void SetScore(int p1Wins, int p2Wins)
