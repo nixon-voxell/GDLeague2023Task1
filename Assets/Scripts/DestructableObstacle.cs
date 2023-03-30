@@ -34,6 +34,8 @@ public class DestructableObstacle : MonoBehaviour
     {
         if (destroyed == true)
         {
+            this.gameObject.SetActive(true);
+
             this.StartCoroutine(this.CreateAnimation());
             this.destroyed = false;
         }
@@ -59,8 +61,6 @@ public class DestructableObstacle : MonoBehaviour
 
     private IEnumerator CreateAnimation()
     {
-        this.gameObject.SetActive(true);
-
         float startTime = Time.time;
         float timePassed = 0.0f;
         Transform trans = this.transform;

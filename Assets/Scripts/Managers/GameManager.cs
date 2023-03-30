@@ -149,7 +149,7 @@ public class GameManager : Singleton<GameManager>
                 m_WinningCount[actualPlayerWinner - 1]++;
                 // Award point to the winner
                 UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
-                UIManager.SetCenterText(String.Format("PLAYER {0} WINS", playerWinner));
+                UIManager.SetCenterText(String.Format("PLAYER {0} WINS", actualPlayerWinner));
             }
             else if (LevelManager.Players[0].CurrentHealth == LevelManager.Players[1].CurrentHealth)
             {
