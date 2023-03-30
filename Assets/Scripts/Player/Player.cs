@@ -138,6 +138,12 @@ public class Player : MonoBehaviour
                     otherPlayer.m_PlayerMovement.SetVelocity(trans.forward * this.m_KnockbackSO.Force);
                     this.StartCoroutine(otherPlayer.Knockback());
                 }
+
+                DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
+                if (obstacle != null)
+                {
+                    obstacle.DestroyObstacle();
+                }
             }
 
             // ability cooldown
