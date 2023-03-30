@@ -51,36 +51,17 @@ public class UIManager : MonoBehaviour
 
     }
 
-    //private void OnDisable()
-    //{
-    //    // Do i ned to remove the reference tho
-    //    GameManager.Instance.UIManager = null;
-    //}
 
-   
     // ------ [PUBLIC FUNCTIONS] ------
 
-    public void OnSkillChange(int playerNumber, int skillNumber, AbstractSkill skill)
+    public void OnSkillChange(int playerNumber, int skillIdx, int skillSlot)
     {
-        //int index = items.FindIndex(i => i.ItemName == "Wood");
-        // Change the image
-        if (skill != null)
-        {
-            SkillHUD skillHUD = m_PlayerHUD[playerNumber - 1].SkillsHUD[skillNumber - 1];
-            // TODO: what the heck is this?
-            AbstractSkill oriSkill = Array.Find(m_SkillSO.Skills, s => s == skill);
-            // AbstractSkill oriSkill =  m_SkillSO.Skills.Find(s => s == skill);
-            skillHUD.SkillImage.sprite = oriSkill.SkillIcon;
-
-            skillHUD.TimerSlider.value = 1;
-            skillHUD.IsActive = true;
-            skillHUD.ExpireTime = 1;
-        }
-        else if (skill == null)
-        {
-            ResetSkillHUD(playerNumber, skillNumber);
-        }
-
+        SkillHUD skillHUD = m_PlayerHUD[playerNumber - 1].SkillsHUD[skillSlot];
+        skillHUD.SkillImage.sprite = m_SkillSO.Skills[skillIdx].SkillIcon;
+        
+        skillHUD.TimerSlider.value = 1;
+        skillHUD.IsActive = true;
+        skillHUD.ExpireTime = 1;
     }
 
     public void OnSkillUsed(int playerNumber, int skillNumber)

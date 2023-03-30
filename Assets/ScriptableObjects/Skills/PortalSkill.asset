@@ -15,6 +15,7 @@ MonoBehaviour:
   CastTime: 0
   Damage: 0
   PositionOffset: {x: 0, y: 0, z: 0}
-  OrbPrefab: {fileID: 0}
+  OrbPrefab: {fileID: 6173682450220489450, guid: 52afe4dafea807143a7197315c255ec0,
+    type: 3}
   CastFX: {fileID: 0}
-  SkillIcon: {fileID: 0}
+  SkillIcon: {fileID: 21300000, guid: 0851940d28272fb4590bbb01f625d545, type: 3}

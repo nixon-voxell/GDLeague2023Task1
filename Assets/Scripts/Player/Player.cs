@@ -158,6 +158,26 @@ public class Player : MonoBehaviour
         return this.m_PlayerSkills[skillIdx];
     }
 
+    // <summary>Allow player to gain new skill
+    public bool GetNewSkill(int skillIdx)
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (m_PlayerSkills[i] == -1)
+            {
+               
+                GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
+                m_PlayerSkills[i] = skillIdx;
+
+                return true;
+                // Start expiry coroutine
+            }
+        }
+
+        return false;
+    }
+
     public void OnCollisionEnter(Collision collision)
     {
         // Debug.Log(collision.gameObject.name);
