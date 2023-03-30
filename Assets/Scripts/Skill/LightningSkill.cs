@@ -30,6 +30,7 @@ public class LightningSkill : AbstractSkill
             hitLocation = position + direction * this.Range;
         }
         vfx.transform.position = hitLocation + this.PositionOffset;
+        vfx.transform.rotation = Quaternion.identity;
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
