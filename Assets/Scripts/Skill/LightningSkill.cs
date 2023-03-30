@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 public class LightningSkill : AbstractSkill
 {
     public float Range;
+    public float Radius;
 
     public override void OnPress(Player player)
     {
@@ -15,20 +16,28 @@ public class LightningSkill : AbstractSkill
         LayerMask playerLayer = GameManager.Instance.LevelManager.so_Skill.PlayerLayer;
 
         RaycastHit hit;
-        Physics.Raycast(position, direction, out hit, this.Range);
+        bool isHit = Physics.Raycast(position, direction, out hit, this.Range);
 
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
-        vfx.transform.position = hit.point + this.PositionOffset;
+        Vector3 hitLocation;
+        if (isHit)
+        {
+            hitLocation = hit.point;
+        } else
+        {
+            hitLocation = position + direction * this.Range;
+        }
+        vfx.transform.position = hitLocation + this.PositionOffset;
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
 
-        player.StartCoroutine(this.CleanupRoutine(hit, vfx));
+        player.StartCoroutine(this.CleanupRoutine(hitLocation, vfx));
     }
 
-    private IEnumerator CleanupRoutine(RaycastHit initHit, VisualEffect vfx)
+    private IEnumerator CleanupRoutine(Vector3 hitLocation, VisualEffect vfx)
     {
         yield return new WaitForSeconds(this.CastTime);
 
@@ -39,22 +48,22 @@ public class LightningSkill : AbstractSkill
         vfx.enabled = false;
         vfx.visualEffectAsset = null;
 
+        RaycastHit[] hits = Physics.SphereCastAll(hitLocation + this.PositionOffset, this.Radius, Vector3.down);
+
         // check if it hits anything
-        RaycastHit hit;
-        if (Physics.Raycast(initHit.point + this.PositionOffset, Vector3.down, out hit))
+        for (int h = 0; h < hits.Length; h++)
         {
+            RaycastHit hit = hits[h];
             Player player = hit.collider.GetComponent<Player>();
             if (player != null)
             {
                 player.Damage(this.Damage);
-                yield break;
             }
 
             DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
             if (obstacle != null)
             {
                 obstacle.DestroyObstacle();
-                yield break;
             }
         }
     }

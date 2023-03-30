@@ -209,6 +209,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaxHealth: 100
   m_PlayerMovement: {fileID: 943276409528283091}
+  m_DashSO: {fileID: 11400000, guid: 173ad1b030fa1b449a0dc59ed7adf83e, type: 2}
+  m_KnockbackSO: {fileID: 11400000, guid: aa8e537082898204e91957bd960ac25a, type: 2}
 --- !u!143 &-6547879505722853592
 CharacterController:
   m_ObjectHideFlags: 0

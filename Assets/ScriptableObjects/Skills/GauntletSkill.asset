@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be0402c3c64269b48a30e1aa24254ee6, type: 3}
   m_Name: GauntletSkill
   m_EditorClassIdentifier: 
-  CastTime: 0
-  Damage: 0
-  PositionOffset: {x: 0, y: 0, z: 0}
+  CastTime: 3
+  Damage: 5
+  PositionOffset: {x: 0, y: 0.75, z: 0}
   OrbPrefab: {fileID: 3445939783597978617, guid: 55f2d3ac074d6124caabec708717bcc5,
     type: 3}
-  CastFX: {fileID: 0}
+  CastFX: {fileID: 8926484042661614526, guid: 0e7507bb8a80e0740a1ba719e19dfd7d, type: 3}
   SkillIcon: {fileID: 21300000, guid: 0206877d5984b414d80d84a273db8507, type: 3}
+  Range: 4
+  Radius: 1

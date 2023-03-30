@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.Mathematics;
 using System.Collections;
 
-public enum PlayerStatus
+public enum PlayerState
 {
     Default,
     Immobilized,
@@ -14,27 +14,28 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
     [SerializeField] private PlayerMovement m_PlayerMovement;
+    [SerializeField] private AbilitySO m_DashSO;
+    [SerializeField] private AbilitySO m_KnockbackSO;
 
     private PlayerInput m_PlayerInput;
 
-    private PlayerStatus m_PlayerStatus = PlayerStatus.Default;
+    private PlayerState m_PlayerState = PlayerState.Default;
     private int m_PlayerNumber;
     private int m_CurrentHealth;
     private float m_SkillExpireTime;
-    private float m_DashCDTime;
-    private float m_KnockbackCDTime;
     private bool m_CanDash;
     private bool m_CanKnockback;
     private IEnumerator[] m_SkillExpiryCoroutine = new IEnumerator[3]; 
+    private bool m_Immune = false;
 
     // index of skill in scriptable obejct
     private int[] m_PlayerSkills = new int[3];
 
     public PlayerMovement PlayerMovement => this.m_PlayerMovement;
-    public PlayerStatus PlayerStatus => this.m_PlayerStatus;
+    public PlayerState PlayerState => this.m_PlayerState;
     public int PlayerNumber => this.m_PlayerNumber;
     public int CurrentHealth => this.m_CurrentHealth;
-
+    public bool Immune => this.m_Immune;
 
     private void Start()
     {
@@ -50,12 +51,6 @@ public class Player : MonoBehaviour
     {
         this.m_PlayerInput = this.GetComponent<PlayerInput>();
         this.m_PlayerMovement = this.GetComponent<PlayerMovement>();
-
-
-        // Removing this coz it will be set using the reset player function
-        //this.m_PlayerStatus = PlayerStatus.Default;
-        //this.m_CurrentHealth = m_MaxHealth;
-
         this.m_PlayerNumber = playerNumber;
         
         if (playerNumber == 1)
@@ -70,13 +65,15 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
+        this.m_PlayerState = PlayerState.Immobilized;
         this.m_CanDash = true;
         this.m_CanKnockback = true;
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
 
-        this.m_PlayerStatus = PlayerStatus.Immobilized;
         this.m_CurrentHealth = m_MaxHealth;
+        this.m_Immune = false;
+        this.m_PlayerMovement.SetMoveDirection(float2.zero);
 
         for (int i = 0; i < m_PlayerSkills.Length; i++)
         {
@@ -90,16 +87,16 @@ public class Player : MonoBehaviour
     public void EnablePlayer(bool enable)
     {
         if (enable)
-            this.m_PlayerStatus = PlayerStatus.Default;
+            this.m_PlayerState = PlayerState.Default;
         else
-            this.m_PlayerStatus = PlayerStatus.Immobilized;
+            this.m_PlayerState = PlayerState.Immobilized;
     }
 
 
     private void OnMovement(InputValue value)
     {
         // move only when status is default
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
 
         float2 moveValue = value.Get<Vector2>();
         this.m_PlayerMovement.SetMoveDirection(moveValue);
@@ -107,7 +104,7 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputValue value)
     {
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
 
         if (value.isPressed && m_CanDash)
         {
@@ -120,7 +117,7 @@ public class Player : MonoBehaviour
 
     private void OnKnockback(InputValue value)
     {
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
 
         if (value.isPressed && m_CanKnockback)
         {
@@ -134,7 +131,7 @@ public class Player : MonoBehaviour
 
     private void OnSkillOne(InputValue value)
     {
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
         if (!value.isPressed) return;
 
         this.ActivateSkillIfExist(0);
@@ -142,7 +139,7 @@ public class Player : MonoBehaviour
 
     private void OnSkillTwo(InputValue value)
     {
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
         if (!value.isPressed) return;
 
         this.ActivateSkillIfExist(1);
@@ -150,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void OnSkillThree(InputValue value)
     {
-        if (this.m_PlayerStatus != PlayerStatus.Default) return;
+        if (this.m_PlayerState != PlayerState.Default) return;
         if (!value.isPressed) return;
 
         this.ActivateSkillIfExist(2);
@@ -164,25 +161,18 @@ public class Player : MonoBehaviour
 
     private void OnDeath()
     {
-        this.m_PlayerStatus = PlayerStatus.Dead;
+        this.m_PlayerState = PlayerState.Dead;
         GameManager.Instance.OnRoundEnd(m_PlayerNumber == 1 ? 2 : 1);
     }
 
     public void Damage(int damage)
     {
+        // can only damage when status is default
+        if (this.m_PlayerState != PlayerState.Default) return;
+        // cannot damage if player is immune
+        if (this.Immune == true) return;
+
         this.SetHealth(this.CurrentHealth - damage);
-    }
-
-    public void SetHealth(int health)
-    {
-        this.m_CurrentHealth = health;
-        GameManager.Instance.UIManager.SetHealth(m_PlayerNumber, this.m_CurrentHealth);
-
-        if (this.m_CurrentHealth <= 0)
-        {
-            this.m_CurrentHealth = 0;
-            OnDeath();
-        }
     }
 
     /// <summary>Get skill at index.</summary>
@@ -195,12 +185,10 @@ public class Player : MonoBehaviour
     // <summary>Allow player to gain new skill
     public bool GetNewSkill(int skillIdx)
     {
-
         for (int i = 0; i < 3; i++)
         {
             if (m_PlayerSkills[i] == -1)
             {
-               
                 GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
                 m_PlayerSkills[i] = skillIdx;
 
@@ -212,24 +200,6 @@ public class Player : MonoBehaviour
         }
 
         return false;
-    }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        // Debug.Log(collision.gameObject.name);
-    }
-
-    public void SetImmune(bool immune)
-    {
-        if (immune)
-        {
-            this.m_PlayerStatus = PlayerStatus.Immobilized;
-            StartCoroutine(RemoveImmunity());
-        }
-        else
-        {
-            this.m_PlayerStatus = PlayerStatus.Default;
-        }
     }
 
     private void ActivateSkillIfExist(int playerSkillIdx)
@@ -245,10 +215,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private IEnumerator RemoveImmunity()
+    public void SetHealth(int health)
     {
-        yield return new WaitForSeconds(3f);
-        this.m_PlayerStatus = PlayerStatus.Default;
+        this.m_CurrentHealth = health;
+        GameManager.Instance.UIManager.SetHealth(m_PlayerNumber, this.m_CurrentHealth);
+
+        if (this.m_CurrentHealth <= 0)
+        {
+            this.m_CurrentHealth = 0;
+            OnDeath();
+        }
+    }
+
+    public void SetImmune(bool immune)
+    {
+        this.m_Immune = immune;
     }
 
     private IEnumerator SkillExpire(int skillSlot)
@@ -261,14 +242,14 @@ public class Player : MonoBehaviour
 
     private IEnumerator AbilityDashCD()
     {
-        yield return new WaitForSeconds(m_DashCDTime);
+        yield return new WaitForSeconds(this.m_DashSO.CooldownTime);
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
         m_CanDash = true;
     }
 
     private IEnumerator AbilityKnockbackCD()
     {
-        yield return new WaitForSeconds(m_KnockbackCDTime);
+        yield return new WaitForSeconds(this.m_KnockbackSO.CooldownTime);
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
         m_CanKnockback = true;
     }

@@ -1,62 +1,44 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
 [CreateAssetMenu(fileName = "BarrierSkill", menuName = "ScriptableObjects/Barrier Skill")]
 public class BarrierSkill : AbstractSkill
 {
-    public float Duration;
-
-    private VisualEffect barrierEffect;
-    private Player player;
+    public Vector3 ScaleOverride;
 
     public override void OnPress(Player player)
     {
-        this.player = player;
+        LevelManager levelManager = GameManager.Instance.LevelManager;
+        VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
-        if (OrbPrefab != null)
+        vfx.transform.localScale = this.ScaleOverride;
+        vfx.enabled = true;
+        vfx.visualEffectAsset = this.CastFX;
+        vfx.Play();
+
+        player.SetImmune(true);
+        player.StartCoroutine(this.FollowPlayerRoutine(player, vfx));
+        player.StartCoroutine(this.CleanupRoutine(player, vfx));
+    }
+
+    private IEnumerator FollowPlayerRoutine(Player player, VisualEffect vfx)
+    {
+        Transform playerTrans = player.transform;
+        float startTime = Time.time;
+
+        while (Time.time - startTime < this.CastTime)
         {
-            VisualEffect orbEffect = new GameObject().AddComponent<VisualEffect>();
-            // orbEffect.visualEffectAsset = OrbPrefab;
-            orbEffect.transform.position = player.transform.position;
-            orbEffect.Play();
-        }
-
-        if (barrierEffect == null && Duration > 0f)
-        {
-            barrierEffect = player.gameObject.AddComponent<VisualEffect>();
-            // barrierEffect.visualEffectAsset = CastPrefab;
-            barrierEffect.Play();
-
-            player.SetImmune(true);
+            vfx.transform.SetPositionAndRotation(playerTrans.position, playerTrans.rotation);
+            yield return new WaitForEndOfFrame();
         }
     }
 
-    public override void OnRelease()
+    private IEnumerator CleanupRoutine(Player player, VisualEffect vfx)
     {
-        if (barrierEffect != null)
-        {
-            barrierEffect.Stop();
-            Destroy(barrierEffect.gameObject);
-        }
+        yield return new WaitForSeconds(this.CastTime);
 
         player.SetImmune(false);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (player == null || barrierEffect == null)
-        {
-            return;
-        }
-
-        Player opponent = collision.collider.GetComponent<Player>();
-        if (opponent != null)
-        {
-            /*    Not sure if you want to use or not
-             *    Vector3 knockbackDirection = (opponent.transform.position - player.transform.position).normalized;
-             *    knockbackDirection.y = 0f;
-             *    opponent.GetComponent<Rigidbody>().AddForce(knockbackDirection * 100f, ForceMode.Impulse);
-            */
-        }
+        vfx.transform.localScale = Vector3.one;
     }
 }

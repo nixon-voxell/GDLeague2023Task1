@@ -28,9 +28,7 @@ public class GameManager : Singleton<GameManager>
     private GameState m_CurrentGameState;
     private int[] m_WinningCount = new int[2];
 
-
     public GameState CurrentGameState { get => m_CurrentGameState; set => m_CurrentGameState = value; }
-
 
     private void Awake()
     {
@@ -73,10 +71,10 @@ public class GameManager : Singleton<GameManager>
     {
         CurrentGameState = GameState.GAME_SETUP;
 
-        LevelManager.ResetPlayer();
         LevelManager.ResetObstacles();
         LevelManager.EnableSpawners(false);
         UIManager.ResetAllUI();
+        LevelManager.ResetPlayer();
         UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
 
         StartCoroutine(OnStartCountdown());
