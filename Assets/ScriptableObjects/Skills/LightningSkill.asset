@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f0ad3be5cc70a44a82c602caed3cae, type: 3}
   m_Name: LightningSkill
   m_EditorClassIdentifier: 
-  CastTime: 0.1
+  CastTime: 0.2
   Damage: 40
   PositionOffset: {x: 0.5, y: 6.5, z: 0}
   OrbPrefab: {fileID: 5395572082253160282, guid: f24fbb34aa9b3ad46b84729789194bb4,
