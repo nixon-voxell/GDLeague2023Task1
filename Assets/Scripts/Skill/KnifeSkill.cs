@@ -18,7 +18,7 @@ public class KnifeSkill : AbstractSkill
         vfx.Play();
 
         player.StartCoroutine(this.DamageRoutine(player, vfx));
-        player.StartCoroutine(this.CleanupRoutine(player, vfx));
+        player.StartCoroutine(this.CleanupRoutine(vfx));
     }
 
     private IEnumerator DamageRoutine(Player player, VisualEffect vfx)
@@ -67,7 +67,7 @@ public class KnifeSkill : AbstractSkill
         }
     }
 
-    private IEnumerator CleanupRoutine(Player player, VisualEffect vfx)
+    private IEnumerator CleanupRoutine(VisualEffect vfx)
     {
         yield return new WaitForSeconds(this.CastTime);
 

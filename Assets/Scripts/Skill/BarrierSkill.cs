@@ -5,13 +5,14 @@ using UnityEngine.VFX;
 [CreateAssetMenu(fileName = "BarrierSkill", menuName = "ScriptableObjects/Barrier Skill")]
 public class BarrierSkill : AbstractSkill
 {
-    public float Duration;
+    public Vector3 ScaleOverride;
 
     public override void OnPress(Player player)
     {
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
+        vfx.transform.localScale = this.ScaleOverride;
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
@@ -19,7 +20,7 @@ public class BarrierSkill : AbstractSkill
         // TODO: set player state to immune
 
         player.StartCoroutine(this.FollowPlayerRoutine(player, vfx));
-        player.StartCoroutine(this.CleanupRoutine());
+        player.StartCoroutine(this.CleanupRoutine(vfx));
     }
 
     private IEnumerator FollowPlayerRoutine(Player player, VisualEffect vfx)
@@ -34,10 +35,11 @@ public class BarrierSkill : AbstractSkill
         }
     }
 
-    private IEnumerator CleanupRoutine()
+    private IEnumerator CleanupRoutine(VisualEffect vfx)
     {
         yield return new WaitForSeconds(this.CastTime);
 
         // TODO: set player state back to normal
+        vfx.transform.localScale = Vector3.one;
     }
 }
