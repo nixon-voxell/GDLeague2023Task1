@@ -24,7 +24,6 @@ public class MainMenu : MonoBehaviour
     private void UISetup()
     {
         GameManager.Instance.UIManager.ChangeEventSystemRoot(m_ParentUI);
-
     }
 
     public void PlayGame()
@@ -35,8 +34,6 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadSceneAsync(GameManager.Instance.LobbyScene, LoadSceneMode.Additive);
         }
-
-       
     }
 
     public void QuitGame()
@@ -47,5 +44,15 @@ public class MainMenu : MonoBehaviour
     public void AudioSetting(float audioLevel)
     {
         AudioMixer.SetFloat("MainVolume", audioLevel);
+    }
+
+    public void PlayButtonHoverClip()
+    {
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_hover");
+    }
+
+    public void PlayButtonClickClip()
+    {
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
     }
 }
