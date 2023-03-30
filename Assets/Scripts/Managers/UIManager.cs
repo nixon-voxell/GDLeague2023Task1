@@ -27,9 +27,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite m_SkillEmptyIcon;
     [SerializeField] private float m_TimerInterval; // How many sec for it to decrease/increase cooldown
 
-    private float m_DashTimerUpdateValue;
-    private float m_KnockbackTimerUpdateValue;
-    private float m_SkillTimerUpdateValue;
     private IEnumerator m_TimerTick;
     private bool IsTimerActive;
     private int m_CurrentRoundTime;
@@ -47,9 +44,8 @@ public class UIManager : MonoBehaviour
         // If run on update : ((playerHUD.SkillsHUD[i].TimerSlider.value * m_SkillCooldownTime) + m_TimerUpdateTime) / m_SkillCooldownTime;
         // Formula: increase_value = slide max range / (total_time / time_interval)
 
-        m_SkillTimerUpdateValue = 1.0f / (m_SkillSO.ExpireDuration / m_TimerInterval); ;
-        m_DashTimerUpdateValue = 1.0f / (m_DashSO.CooldownTime / m_TimerInterval);   
-        m_KnockbackTimerUpdateValue = 1.0f / (m_KnockbackSO.CooldownTime / m_TimerInterval);
+        //Debug.Log(m_DashSO.CooldownTime);
+
 
     }
 
@@ -63,7 +59,7 @@ public class UIManager : MonoBehaviour
         
         skillHUD.TimerSlider.value = 1;
         skillHUD.IsActive = true;
-        skillHUD.ExpireTime = 1;
+        skillHUD.ExpireTime = m_SkillSO.ExpireDuration;
     }
 
     public void OnSkillUsed(int playerNumber, int skillSlot)
@@ -237,11 +233,14 @@ public class UIManager : MonoBehaviour
                 if (playerHUD.SkillsHUD[j].IsActive == false)
                     continue;
 
-                playerHUD.SkillsHUD[j].ExpireTime = playerHUD.SkillsHUD[j].ExpireTime - m_SkillTimerUpdateValue;
-                playerHUD.SkillsHUD[j].TimerSlider.value = playerHUD.SkillsHUD[j].ExpireTime;
+                playerHUD.SkillsHUD[j].ExpireTime = playerHUD.SkillsHUD[j].ExpireTime - m_TimerInterval;
+                playerHUD.SkillsHUD[j].TimerSlider.value = playerHUD.SkillsHUD[j].ExpireTime / m_SkillSO.ExpireDuration;
 
                 if (playerHUD.SkillsHUD[j].ExpireTime <= 0)
+                {
                     ResetSkillHUD(i + 1, j);
+                    GameManager.Instance.LevelManager.Players[i].ExpireSkill(j);
+                }
             }
         }
     }
@@ -257,10 +256,10 @@ public class UIManager : MonoBehaviour
 
             if (playerHUD.KnockbackHUD.IsActive == false)
             {
-                playerHUD.KnockbackHUD.CooldownTime = playerHUD.KnockbackHUD.CooldownTime + m_KnockbackTimerUpdateValue;
-                playerHUD.KnockbackHUD.Background.fillAmount = playerHUD.KnockbackHUD.CooldownTime;
+                playerHUD.KnockbackHUD.CooldownTime = playerHUD.KnockbackHUD.CooldownTime + m_TimerInterval;
+                playerHUD.KnockbackHUD.Background.fillAmount = playerHUD.KnockbackHUD.CooldownTime / m_KnockbackSO.CooldownTime;
 
-                if (playerHUD.KnockbackHUD.CooldownTime >= 1)
+                if (playerHUD.KnockbackHUD.CooldownTime >= m_KnockbackSO.CooldownTime)
                 {
                     SetAbilityActive(i + 1, "KNOCKBACK");
                 }
@@ -269,10 +268,10 @@ public class UIManager : MonoBehaviour
             
             if (playerHUD.DashHUD.IsActive == false)
             {
-                playerHUD.DashHUD.CooldownTime = playerHUD.DashHUD.CooldownTime + m_DashTimerUpdateValue;
-                playerHUD.DashHUD.Background.fillAmount = playerHUD.DashHUD.CooldownTime;
+                playerHUD.DashHUD.CooldownTime = playerHUD.DashHUD.CooldownTime + m_TimerInterval;
+                playerHUD.DashHUD.Background.fillAmount = playerHUD.DashHUD.CooldownTime / m_KnockbackSO.CooldownTime;
 
-                if (playerHUD.DashHUD.CooldownTime >= 1)
+                if (playerHUD.DashHUD.CooldownTime >= m_KnockbackSO.CooldownTime)
                 {
                     SetAbilityActive(i + 1, "DASH");
                 }
@@ -302,6 +301,8 @@ public class UIManager : MonoBehaviour
     private void SetAbilityActive(int playerNumber, string abilityName)
     {
         PlayerHUD playerHUD = m_PlayerHUD[playerNumber - 1];
+        GameManager.Instance.LevelManager.Players[playerNumber - 1].RefreshAbilityCD(abilityName);
+
 
         if (abilityName == "KNOCKBACK")
         {

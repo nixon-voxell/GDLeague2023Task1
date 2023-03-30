@@ -22,10 +22,8 @@ public class Player : MonoBehaviour
     private PlayerState m_PlayerState = PlayerState.Default;
     private int m_PlayerNumber;
     private int m_CurrentHealth;
-    private float m_SkillExpireTime;
     private bool m_CanDash;
     private bool m_CanKnockback;
-    private IEnumerator[] m_SkillExpiryCoroutine = new IEnumerator[3]; 
     private bool m_Immune = false;
 
     // index of skill in scriptable obejct
@@ -37,10 +35,6 @@ public class Player : MonoBehaviour
     public int CurrentHealth => this.m_CurrentHealth;
     public bool Immune => this.m_Immune;
 
-    private void Start()
-    {
-        m_SkillExpireTime = GameManager.Instance.LevelManager.so_Skill.ExpireDuration;
-    }
 
     /// <summary>
     /// Setup required stuff of the player
@@ -111,7 +105,6 @@ public class Player : MonoBehaviour
             this.StartCoroutine(this.m_PlayerMovement.Dash());
             m_CanDash = false;
             GameManager.Instance.UIManager.OnAbilityUsed(m_PlayerNumber, "DASH");
-            StartCoroutine(AbilityDashCD());
         }
     }
 
@@ -125,7 +118,6 @@ public class Player : MonoBehaviour
 
             m_CanKnockback = false;
             GameManager.Instance.UIManager.OnAbilityUsed(m_PlayerNumber, "KNOCKBACK");
-            StartCoroutine(AbilityKnockbackCD());
         }
     }
 
@@ -192,14 +184,29 @@ public class Player : MonoBehaviour
                 GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
                 m_PlayerSkills[i] = skillIdx;
 
-                m_SkillExpiryCoroutine[i] = SkillExpire(i);
-
-                StartCoroutine(m_SkillExpiryCoroutine[i]);
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void RefreshAbilityCD(string abilityName)
+    {
+        if (abilityName == "KNOCKBACK")
+        {
+            m_CanKnockback = true;
+        }
+        else if (abilityName == "DASH")
+        {
+            m_CanDash = true;
+        }
+    }
+
+    public void ExpireSkill(int skillSlot)
+    {
+        m_PlayerSkills[skillSlot] = -1;
+
     }
 
     private void ActivateSkillIfExist(int playerSkillIdx)
@@ -210,7 +217,6 @@ public class Player : MonoBehaviour
             GameManager.Instance.LevelManager.so_Skill.Skills[skillIdx].OnPress(this);
 
             m_PlayerSkills[playerSkillIdx] = -1;
-            StopCoroutine(m_SkillExpiryCoroutine[playerSkillIdx]);
             GameManager.Instance.UIManager.OnSkillUsed(m_PlayerNumber, playerSkillIdx);
         }
     }
@@ -232,25 +238,7 @@ public class Player : MonoBehaviour
         this.m_Immune = immune;
     }
 
-    private IEnumerator SkillExpire(int skillSlot)
-    {
-        yield return new WaitForSeconds(m_SkillExpireTime);
 
-        m_PlayerSkills[skillSlot] = -1;
-        GameManager.Instance.UIManager.OnSkillExpire(m_PlayerNumber, skillSlot);
-    }
+   
 
-    private IEnumerator AbilityDashCD()
-    {
-        yield return new WaitForSeconds(this.m_DashSO.CooldownTime);
-        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
-        m_CanDash = true;
-    }
-
-    private IEnumerator AbilityKnockbackCD()
-    {
-        yield return new WaitForSeconds(this.m_KnockbackSO.CooldownTime);
-        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
-        m_CanKnockback = true;
-    }
 }
