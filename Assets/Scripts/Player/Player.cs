@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private int m_MaxHealth = 100;
     [SerializeField] private PlayerMovement m_PlayerMovement;
+    [SerializeField] private AbilitySO m_DashSO;
+    [SerializeField] private AbilitySO m_KnockbackSO;
 
     private PlayerInput m_PlayerInput;
 
@@ -21,12 +23,10 @@ public class Player : MonoBehaviour
     private int m_PlayerNumber;
     private int m_CurrentHealth;
     private float m_SkillExpireTime;
-    private float m_DashCDTime;
-    private float m_KnockbackCDTime;
     private bool m_CanDash;
     private bool m_CanKnockback;
     private IEnumerator[] m_SkillExpiryCoroutine = new IEnumerator[3]; 
-    public bool m_Immune = false;
+    private bool m_Immune = false;
 
     // index of skill in scriptable obejct
     private int[] m_PlayerSkills = new int[3];
@@ -242,14 +242,14 @@ public class Player : MonoBehaviour
 
     private IEnumerator AbilityDashCD()
     {
-        yield return new WaitForSeconds(m_DashCDTime);
+        yield return new WaitForSeconds(this.m_DashSO.CooldownTime);
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
         m_CanDash = true;
     }
 
     private IEnumerator AbilityKnockbackCD()
     {
-        yield return new WaitForSeconds(m_KnockbackCDTime);
+        yield return new WaitForSeconds(this.m_KnockbackSO.CooldownTime);
         GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
         m_CanKnockback = true;
     }

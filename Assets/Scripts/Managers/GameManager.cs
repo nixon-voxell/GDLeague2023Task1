@@ -73,10 +73,10 @@ public class GameManager : Singleton<GameManager>
     {
         CurrentGameState = GameState.GAME_SETUP;
 
-        LevelManager.ResetPlayer();
         LevelManager.ResetObstacles();
         LevelManager.EnableSpawners(false);
         UIManager.ResetAllUI();
+        LevelManager.ResetPlayer();
         UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
 
         StartCoroutine(OnStartCountdown());
