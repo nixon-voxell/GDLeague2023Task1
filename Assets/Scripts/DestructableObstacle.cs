@@ -19,7 +19,8 @@ public class DestructableObstacle : MonoBehaviour
 
     public void DestroyObstacle()
     {
-        m_Animator.SetTrigger(m_DestroyTrigger);
+        if (m_Animator != null)
+            m_Animator.SetTrigger(m_DestroyTrigger);
 
         StartCoroutine(DisableGameObjectAfterDelay(m_Animator.GetCurrentAnimatorStateInfo(0).length));
     }
