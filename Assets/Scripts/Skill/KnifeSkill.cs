@@ -10,11 +10,6 @@ public class KnifeSkill : AbstractSkill
 
     public override void OnPress(Player player)
     {
-        Vector3 position = player.transform.position;
-        Vector3 direction = player.transform.forward;
-
-        LayerMask playerLayer = GameManager.Instance.LevelManager.so_Skill.PlayerLayer;
-
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
