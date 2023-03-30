@@ -37,8 +37,8 @@ public class GameManager : Singleton<GameManager>
         // randomize seed
         UnityEngine.Random.InitState(System.DateTime.Now.Millisecond);
 
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 1;
+        //Application.targetFrameRate = 60;
+        //QualitySettings.vSyncCount = 1;
 
         // get all active scenes
         string[] loadedScenes = new string[SceneManager.sceneCount];
@@ -65,6 +65,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.SetScore(0, 0);
         m_WinningCount[0] = 0;
         m_WinningCount[1] = 0;
+        //LevelManager.EnableUIControls(false);
 
 
         OnGameSetup();
@@ -118,6 +119,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
         LevelManager.EnablePlayer(false);
         UIManager.EnablePauseScreen(true);
+        //LevelManager.EnableUIControls(true);
+
 
         CurrentGameState = GameState.PAUSE;
     }
@@ -137,24 +140,33 @@ public class GameManager : Singleton<GameManager>
 
         // Check Victory Condition
 
+        int actualPlayerWinner = -1;
+
         // Check who wins the round based on hp
         if (playerWinner == -1)
         {
             if (LevelManager.Players[0].CurrentHealth != LevelManager.Players[1].CurrentHealth)
             {
-                playerWinner = LevelManager.Players[0].CurrentHealth > LevelManager.Players[1].CurrentHealth ? 1 : 2;
-                m_WinningCount[playerWinner - 1]++;
+                actualPlayerWinner = LevelManager.Players[0].CurrentHealth > LevelManager.Players[1].CurrentHealth ? 1 : 2;
+                m_WinningCount[actualPlayerWinner - 1]++;
+                // Award point to the winner
+                UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
+                UIManager.SetCenterText(String.Format("PLAYER {0} WINS", playerWinner));
+            }
+            else if (LevelManager.Players[0].CurrentHealth == LevelManager.Players[1].CurrentHealth)
+            {
+                UIManager.SetCenterText(String.Format("DRAW", playerWinner));
+
             }
 
         }
 
-        // Award point to the winner
-        UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
-        UIManager.SetCenterText(String.Format("PLAYER {0} WINS", playerWinner));
+        
 
         // Check game end
-        if (m_WinningCount[playerWinner - 1] == 2 || m_WinningCount[playerWinner - 1] == 2)
-            StartCoroutine(OnGameEnd(playerWinner));
+
+        if (m_WinningCount[0] == 2 || m_WinningCount[1] == 2)
+            StartCoroutine(OnGameEnd(actualPlayerWinner));
         else
             Invoke("OnGameSetup", 3.0f);
 
@@ -168,6 +180,8 @@ public class GameManager : Singleton<GameManager>
         UIManager.SetCenterText("");
         UIManager.EnableEndGameScreen(true, playerWinner);
         LevelManager.ResetObstacles(); // For the main menu to use
+        //LevelManager.EnableUIControls(true);
+
         CurrentGameState = GameState.GAME_END;
     }
 
