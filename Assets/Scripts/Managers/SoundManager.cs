@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private BackgroundMusic[] m_MusicSourceArr;
     [SerializeField] private AudioSource m_PlayOneShotSource;
     [SerializeField] private AudioSource m_MusicSource;
-
+    [SerializeField] private AudioMixerGroup m_MixerGroup;
+ 
     private Dictionary<string, Sound> m_OneShotAudioDict;
     private IEnumerator m_MusicLoopFunc;
 
@@ -38,6 +40,7 @@ public class SoundManager : MonoBehaviour
             m_PlayOneShotSource.volume = soundToPlay.Volume;
             m_PlayOneShotSource.spatialBlend = soundToPlay.SpatialBlend;
             m_PlayOneShotSource.pitch = soundToPlay.Pitch;
+            m_PlayOneShotSource.outputAudioMixerGroup = m_MixerGroup;
             m_PlayOneShotSource.PlayOneShot(soundToPlay.Clip);
         } else
         {
@@ -68,6 +71,8 @@ public class SoundManager : MonoBehaviour
         m_MusicSource.clip = musicToPlay.StartMusic;
         m_MusicSource.volume = musicToPlay.Volume;
         m_MusicSource.pitch = musicToPlay.Pitch;
+        m_MusicSource.outputAudioMixerGroup = m_MixerGroup;
+
 
         m_MusicLoopFunc = PlayLoopMusic(musicToPlay);
         StartCoroutine(m_MusicLoopFunc);
