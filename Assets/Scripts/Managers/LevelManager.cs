@@ -77,6 +77,8 @@ public class LevelManager : MonoBehaviour
         this.m_Players[1] = null;
 
         GameManager.Instance.UIManager.EnableHUD(false);
+        GameManager.Instance.UIManager.EnablePauseScreen(false);
+        GameManager.Instance.UIManager.EnableEndGameScreen(false);
         GameManager.Instance.SoundManager.StopMusic();
 
         SceneManager.LoadSceneAsync(GameManager.Instance.MainMenuScene, LoadSceneMode.Additive);

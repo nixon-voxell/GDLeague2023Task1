@@ -114,7 +114,6 @@ public class UIManager : MonoBehaviour
         m_CenterText.text = time;
     }
 
-    // TODO: To set timer tick based on game state
     public void OnGameStart()
     {
         m_TimerTick = StartHUDTick();
@@ -134,10 +133,17 @@ public class UIManager : MonoBehaviour
         IsTimerActive = false;
     }
 
-    public void OnGameEnd(int playerWinner)
+
+    public void EnableEndGameScreen(bool enable, int playerWinner = -1)
     {
-        m_EndGameScreen.SetActive(true);
-        m_EndGameScreen.GetComponent<VictoryScreen>().SetPlayerWinner(playerWinner);
+        if (enable)
+        {
+            m_EndGameScreen.SetActive(true);
+            m_EndGameScreen.GetComponent<VictoryScreen>().SetPlayerWinner(playerWinner);
+        }
+        else
+            m_EndGameScreen.SetActive(false);
+        
     }
 
     public void ResetAllUI()

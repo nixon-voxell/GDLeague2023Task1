@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager>
     public void OnMapLoad()
     {
         CurrentGameState = GameState.MAP_LOAD;
-        SoundManager.PlayMusic("Fight");
+        SoundManager.PlayMusic("bgm_fight");
         UIManager.EnableHUD(true);
         UIManager.SetScore(0, 0);
 
@@ -159,7 +159,7 @@ public class GameManager : Singleton<GameManager>
     {
         yield return new WaitForSeconds(3.0f);
         UIManager.SetCenterText("");
-        UIManager.OnGameEnd(playerWinner);
+        UIManager.EnableEndGameScreen(true, playerWinner);
         LevelManager.ResetObstacles(); // For the main menu to use
         CurrentGameState = GameState.GAME_END;
     }
