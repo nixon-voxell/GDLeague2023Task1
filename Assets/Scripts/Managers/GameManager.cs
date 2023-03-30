@@ -118,6 +118,8 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 0;
         LevelManager.EnablePlayer(false);
         UIManager.EnablePauseScreen(true);
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
+
         //LevelManager.EnableUIControls(true);
 
 
@@ -149,18 +151,30 @@ public class GameManager : Singleton<GameManager>
             if (LevelManager.Players[0].CurrentHealth != LevelManager.Players[1].CurrentHealth)
             {
                 actualPlayerWinner = LevelManager.Players[0].CurrentHealth > LevelManager.Players[1].CurrentHealth ? 1 : 2;
-                m_WinningCount[actualPlayerWinner - 1]++;
-                // Award point to the winner
-                UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
-                UIManager.SetCenterText(String.Format("PLAYER {0} WINS", actualPlayerWinner));
             }
             else if (LevelManager.Players[0].CurrentHealth == LevelManager.Players[1].CurrentHealth)
             {
-                UIManager.SetCenterText(String.Format("DRAW", playerWinner));
+                actualPlayerWinner = -1;
 
             }
 
         }
+        else
+            actualPlayerWinner = playerWinner;
+
+
+        if (actualPlayerWinner == -1)
+        {
+            UIManager.SetCenterText(String.Format("DRAW", playerWinner));
+        }
+        else
+        {
+            m_WinningCount[actualPlayerWinner - 1]++;
+            // Award point to the winner
+            UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
+            UIManager.SetCenterText(String.Format("PLAYER {0} WINS", actualPlayerWinner));
+        }
+        
 
         
 
