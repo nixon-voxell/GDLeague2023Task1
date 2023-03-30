@@ -140,11 +140,15 @@ public class GameManager : Singleton<GameManager>
         // Check who wins the round based on hp
         if (playerWinner == -1)
         {
-            playerWinner = LevelManager.Players[0].CurrentHealth > LevelManager.Players[1].CurrentHealth ? 1 : 2;
+            if (LevelManager.Players[0].CurrentHealth != LevelManager.Players[1].CurrentHealth)
+            {
+                playerWinner = LevelManager.Players[0].CurrentHealth > LevelManager.Players[1].CurrentHealth ? 1 : 2;
+                m_WinningCount[playerWinner - 1]++;
+            }
+
         }
 
         // Award point to the winner
-        m_WinningCount[playerWinner - 1]++;
         UIManager.SetScore(m_WinningCount[0], m_WinningCount[1]);
         UIManager.SetCenterText(String.Format("PLAYER {0} WINS", playerWinner));
 

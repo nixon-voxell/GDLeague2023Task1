@@ -82,8 +82,6 @@ public class SoundManager : MonoBehaviour
         StopCoroutine(m_MusicLoopFunc);
         m_MusicLoopFunc = null;
 
-
-        Debug.Log("Stop Music");
     }
 
     /// <summary>
