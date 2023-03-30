@@ -370,9 +370,9 @@ MonoBehaviour:
     Pitch: 1
   - SoundName: sfx_teleport
     Clip: {fileID: 8300000, guid: 41121b0be76fe6841aeb453553d1740a, type: 3}
-    Volume: 1
+    Volume: 0.8
     SpatialBlend: 0
-    Pitch: 1
+    Pitch: 0.9
   - SoundName: sfx_thunder_strike
     Clip: {fileID: 8300000, guid: 6486664d6df7296418121159318d9dc8, type: 3}
     Volume: 1

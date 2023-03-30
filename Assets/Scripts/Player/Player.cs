@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
         {
             Transform trans = this.transform;
             this.m_VFX.Play();
+            GameManager.Instance.SoundManager.PlayOneShot("sfx_knockback");
 
             Collider[] colliders = Physics.OverlapSphere(
                 trans.position + trans.forward * this.m_KnockbackSO.Range,
@@ -151,13 +152,18 @@ public class Player : MonoBehaviour
 
     public IEnumerator Knockback()
     {
+        // temporary knockback state
         this.m_PlayerState = PlayerState.Immobilized;
         float defaultDamping = this.m_PlayerMovement.Damping;
         this.m_PlayerMovement.SetDamping(0.9f);
+        this.m_PlayerState = PlayerState.Immobilized;
 
         yield return new WaitForSeconds(this.m_KnockbackSO.Duration);
+
+        // reset to default
         this.m_PlayerState = PlayerState.Default;
         this.m_PlayerMovement.SetDamping(defaultDamping);
+        this.m_PlayerState = PlayerState.Default;
     }
 
     private void OnSkillOne(InputValue value)

@@ -76,6 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
         this.m_Controller.Move(this.m_MovementDirection * this.m_Speed * Time.deltaTime);
         this.m_Controller.Move(this.m_Velocity * Time.deltaTime);
+
+        Vector3 position = this.transform.position;
+        position.y = 1.6f;
+        this.transform.position = position;
     }
 
     public IEnumerator Dash()
