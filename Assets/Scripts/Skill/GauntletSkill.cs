@@ -30,14 +30,16 @@ public class GauntletSkill : AbstractSkill
         player.StartCoroutine(this.CleanupRoutine(vfx));
     }
 
-    private IEnumerator PunchRoutine(Player player, Vector3 forwardDirection, VisualEffect vfx, float punchDuration, int punchRemaining)
-    {
+    private IEnumerator PunchRoutine(
+        Player player, Vector3 forwardDirection,
+        VisualEffect vfx, float punchDuration, int punchRemaining
+    ) {
         Transform playerTrans = player.transform;
         float startTime = Time.time;
+        bool damaged = false;
 
         while (Time.time - startTime < punchDuration)
         {
-            bool damaged = false;
             vfx.transform.position = playerTrans.position;
 
             // just move the position if damage has been done

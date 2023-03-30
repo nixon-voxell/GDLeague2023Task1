@@ -28,9 +28,7 @@ public class GameManager : Singleton<GameManager>
     private GameState m_CurrentGameState;
     private int[] m_WinningCount = new int[2];
 
-
     public GameState CurrentGameState { get => m_CurrentGameState; set => m_CurrentGameState = value; }
-
 
     private void Awake()
     {

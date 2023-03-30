@@ -17,10 +17,9 @@ public class BarrierSkill : AbstractSkill
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
 
-        // TODO: set player state to immune
-
+        player.SetImmune(true);
         player.StartCoroutine(this.FollowPlayerRoutine(player, vfx));
-        player.StartCoroutine(this.CleanupRoutine(vfx));
+        player.StartCoroutine(this.CleanupRoutine(player, vfx));
     }
 
     private IEnumerator FollowPlayerRoutine(Player player, VisualEffect vfx)
@@ -35,11 +34,11 @@ public class BarrierSkill : AbstractSkill
         }
     }
 
-    private IEnumerator CleanupRoutine(VisualEffect vfx)
+    private IEnumerator CleanupRoutine(Player player, VisualEffect vfx)
     {
         yield return new WaitForSeconds(this.CastTime);
 
-        // TODO: set player state back to normal
+        player.SetImmune(false);
         vfx.transform.localScale = Vector3.one;
     }
 }

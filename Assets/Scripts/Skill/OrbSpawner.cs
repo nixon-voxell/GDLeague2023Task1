@@ -28,10 +28,9 @@ public class OrbSpawner : MonoBehaviour
         }
     }
 
-    public int GetSkill()
+    public void ChangeSkillOrb()
     {
         this.StartCoroutine(this.Respawn(this.m_RespawnInterval));
-        return this.m_SkillIdx;
     }
 
     private IEnumerator Respawn(float interval)
@@ -60,10 +59,9 @@ public class OrbSpawner : MonoBehaviour
             if (m_SkillOrb == null)
                 return;
 
+            bool ableToGainSkill = other.GetComponent<Player>().GetNewSkill(m_SkillIdx);
 
-            bool AbleToGainSkill = other.GetComponent<Player>().GetNewSkill(m_SkillIdx);
-            if (AbleToGainSkill)
-                GetSkill();
+            if (ableToGainSkill) ChangeSkillOrb();
         }
     }
 
