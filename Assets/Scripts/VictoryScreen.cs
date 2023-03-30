@@ -16,10 +16,14 @@ public class VictoryScreen : MonoBehaviour
     public void BackToMenu()
     {
         GameManager.Instance.LevelManager.UnloadLevel();
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
+
     }
 
     public void Retry()
     {
         GameManager.Instance.OnMapLoad();
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
+
     }
 }

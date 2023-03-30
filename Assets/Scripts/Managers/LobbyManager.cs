@@ -44,6 +44,7 @@ public class LobbyManager : Singleton<LobbyManager>
     {
         m_P1OriginalSelectedBtn = m_P1MultiplayerESystem.firstSelectedGameObject;
         m_P2OriginalSelectedBtn = m_P2MultiplayerESystem.firstSelectedGameObject;
+        GameManager.Instance.SoundManager.PlayMusic("bgm_lobby");
 
     }
 
@@ -71,6 +72,8 @@ public class LobbyManager : Singleton<LobbyManager>
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
+
         //Destroy player input if exceed max 2
         if (m_P1PlayerInput != null & m_P2PlayerInput != null)
         {
@@ -136,6 +139,7 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void BtnPress(LobbyPage btnEvent, int playerNumber)
     {
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
         switch (btnEvent)
         {
             case LobbyPage.READYUP:
@@ -249,6 +253,8 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void ReturnToMainMenu()
     {
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_button_click");
+
         //Destroy(m_P1PlayerInput.gameObject);
         //Destroy(m_P2PlayerInput.gameObject);
         PlayerReset(1);

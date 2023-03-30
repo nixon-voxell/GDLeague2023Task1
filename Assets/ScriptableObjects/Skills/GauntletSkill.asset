@@ -19,5 +19,6 @@ MonoBehaviour:
     type: 3}
   CastFX: {fileID: 8926484042661614526, guid: 0e7507bb8a80e0740a1ba719e19dfd7d, type: 3}
   SkillIcon: {fileID: 21300000, guid: 0206877d5984b414d80d84a273db8507, type: 3}
+  FxSound: sfx_gauntlet
   Range: 4
   Radius: 1

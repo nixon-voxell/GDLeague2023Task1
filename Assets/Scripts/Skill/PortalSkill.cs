@@ -58,6 +58,8 @@ public class PortalSkill : AbstractSkill
         vfx.enabled = true;
         vfx.visualEffectAsset = CastFX;
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
+
 
         VisualEffect tpVfx = GameManager.Instance.LevelManager.VisualEffectPool.GetNextObject();
 

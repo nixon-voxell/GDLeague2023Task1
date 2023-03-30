@@ -34,6 +34,8 @@ public class LightningSkill : AbstractSkill
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
+
 
         player.StartCoroutine(this.CleanupRoutine(hitLocation, vfx));
     }

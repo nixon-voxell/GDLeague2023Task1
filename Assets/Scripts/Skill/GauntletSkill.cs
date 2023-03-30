@@ -16,6 +16,8 @@ public class GauntletSkill : AbstractSkill
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot(FxSound);
+
 
         Transform playerTrans = player.transform;
         Vector3 euler = playerTrans.rotation.eulerAngles;

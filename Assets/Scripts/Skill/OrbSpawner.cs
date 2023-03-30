@@ -48,6 +48,8 @@ public class OrbSpawner : MonoBehaviour
         m_SkillIdx = Random.Range(0, so_skill.Skills.Length);
 
         // instantiate as child
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_orb_spawn");
+
         GameObject skillOrbPrefab = so_skill.Skills[this.m_SkillIdx].OrbPrefab;
         this.m_SkillOrb = Object.Instantiate(skillOrbPrefab, this.transform);
     }
