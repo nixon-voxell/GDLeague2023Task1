@@ -70,6 +70,11 @@ public class Player : MonoBehaviour
 
     public void ResetPlayer()
     {
+        this.m_CanDash = true;
+        this.m_CanKnockback = true;
+        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "DASH");
+        GameManager.Instance.UIManager.OnAbilityDoneCD(m_PlayerNumber, "KNOCKBACK");
+
         this.m_PlayerStatus = PlayerStatus.Immobilized;
         this.m_CurrentHealth = m_MaxHealth;
 
