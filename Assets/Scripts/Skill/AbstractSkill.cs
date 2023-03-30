@@ -4,7 +4,8 @@ using UnityEngine.VFX;
 public abstract class AbstractSkill : ScriptableObject
 {
     public float CastTime;
-    public float Damage;
+    public int Damage;
+    public Vector3 PositionOffset;
 
     public GameObject OrbPrefab;
     public VisualEffectAsset CastFX;

@@ -124,8 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83748bdedff9dde4987b6d05d4df9615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RespawnInterval: 0
-  m_SkillIdx: 0
+  m_RespawnInterval: 6
 --- !u!135 &-2674598950771305760
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -137,5 +136,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}

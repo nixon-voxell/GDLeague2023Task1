@@ -13,13 +13,14 @@ public class DestructableObstacle : MonoBehaviour
         LevelManager levelManager = GameManager.Instance.LevelManager;
         if (levelManager != null)
         {
-            levelManager.DestructableObstacle.Add(this);
+            levelManager.DestructableObstacles.Add(this);
         }
     }
 
     public void DestroyObstacle()
     {
-        m_Animator.SetTrigger(m_DestroyTrigger);
+        if (m_Animator != null)
+            m_Animator.SetTrigger(m_DestroyTrigger);
 
         StartCoroutine(DisableGameObjectAfterDelay(m_Animator.GetCurrentAnimatorStateInfo(0).length));
     }
@@ -28,7 +29,9 @@ public class DestructableObstacle : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        m_Animator.SetTrigger(m_CreateTrigger);
+        // Temporarily check null to ensure error doesn't pop up
+        if (m_Animator != null)
+            m_Animator.SetTrigger(m_CreateTrigger);
     }
 
     private IEnumerator DisableGameObjectAfterDelay(float delay)

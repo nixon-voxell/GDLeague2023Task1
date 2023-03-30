@@ -25,8 +25,8 @@ public class Test_UI : MonoBehaviour
         players = GameObject.FindObjectsOfType(typeof(Player)) as Player[];
 
         Debug.Log("setup game");
-        GameManager.Instance.UIManager.OnGameSetup();
-        GameManager.Instance.UIManager.OnSkillChange(1, 1, thunderSkill);
+        GameManager.Instance.UIManager.ResetAllUI();
+        //GameManager.Instance.UIManager.OnSkillChange(1, 1, thunderSkill);
         Invoke("StartGame", 1.0f);
         players[0].SetHealth(100);
         Debug.Log("Player Health Hooked: " + players[0].PlayerNumber);
@@ -39,7 +39,7 @@ public class Test_UI : MonoBehaviour
 
         if (kb.digit1Key.wasPressedThisFrame)
         {
-            GameManager.Instance.UIManager.OnSkillChange(1, 1, thunderSkill);
+            //GameManager.Instance.UIManager.OnSkillChange(1, 1, thunderSkill);
         }
         if (kb.digit2Key.wasPressedThisFrame)
         {
