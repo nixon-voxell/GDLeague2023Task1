@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private PlayerStatus m_PlayerStatus = PlayerStatus.Default;
     private int m_PlayerNumber;
     private int m_CurrentHealth;
+    private float m_SkillExpireTime;
 
     // index of skill in scriptable obejct
     private int[] m_PlayerSkills = new int[3];
@@ -28,6 +29,11 @@ public class Player : MonoBehaviour
     public PlayerStatus PlayerStatus => this.m_PlayerStatus;
     public int PlayerNumber => this.m_PlayerNumber;
     public int CurrentHealth => this.m_CurrentHealth;
+
+    private void Start()
+    {
+        m_SkillExpireTime = GameManager.Instance.LevelManager.so_Skill.ExpireDuration;
+    }
 
     /// <summary>
     /// Setup required stuff of the player
@@ -170,8 +176,8 @@ public class Player : MonoBehaviour
                 GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
                 m_PlayerSkills[i] = skillIdx;
 
+                StartCoroutine(SkillExpire(i));
                 return true;
-                // Start expiry coroutine
             }
         }
 
@@ -209,5 +215,14 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         this.m_PlayerStatus = PlayerStatus.Default;
+    }
+
+    private IEnumerator SkillExpire(int skillSlot)
+    {
+
+        yield return new WaitForSeconds(m_SkillExpireTime);
+
+        m_PlayerSkills[skillSlot] = -1;
+        GameManager.Instance.UIManager.OnSkillExpire(m_PlayerNumber, skillSlot);
     }
 }
