@@ -16,6 +16,7 @@ MonoBehaviour:
   CooldownTime: 2
   AbilityActiveIcon: {fileID: 21300000, guid: 9a03dbae265c9ef48819423bff1a6444, type: 3}
   AbilityCDIcon: {fileID: 21300000, guid: 8eeefb2e935e9ea4cb7fc0340a88c304, type: 3}
-  Parameters:
-  - ParameterName: KnockbackRangeExample
-    ParameterValue: 2.3
+  Range: 4.5
+  Force: 20
+  Radius: 0.5
+  Duration: 0.2

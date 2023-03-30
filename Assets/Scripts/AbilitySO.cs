@@ -7,12 +7,18 @@ public class AbilitySO : ScriptableObject
     public float CooldownTime;
     public Sprite AbilityActiveIcon;
     public Sprite AbilityCDIcon;
-    public AbilityParameter[] Parameters;
+
+    public float Range;
+    public float Force;
+    public float Radius;
+    public float Duration;
+
+    // public AbilityParameter[] Parameters;
 }
 
-[System.Serializable]
-public class AbilityParameter
-{
-    public string ParameterName;
-    public float ParameterValue;
-}
+// [System.Serializable]
+// public class AbilityParameter
+// {
+//     public string ParameterName;
+//     public float ParameterValue;
+// }

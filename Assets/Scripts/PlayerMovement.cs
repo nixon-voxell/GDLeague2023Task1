@@ -13,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float m_DashVelocity;
     [SerializeField] private AnimationCurve m_DashVelocityCurve;
 
+    public float Damping => this.m_Damping;
+
     private float3
         m_MovementDirection,
         m_ForwardDirection;
     private quaternion m_TargetRotation;
 
-    // for PBD physics
     [SerializeField, InspectOnly] private float3 m_Velocity;
 
     private void Start()
@@ -92,5 +93,15 @@ public class PlayerMovement : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void SetVelocity(float3 velocity)
+    {
+        this.m_Velocity = velocity;
+    }
+
+    public void SetDamping(float damping)
+    {
+        this.m_Damping = damping;
     }
 }

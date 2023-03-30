@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CastTime: 0
   Damage: 0
+  PositionOffset: {x: 0, y: 0, z: 0}
   OrbPrefab: {fileID: 4648844951283306422, guid: 4529591937ccade448b49655592d0644,
     type: 3}
   CastFX: {fileID: 8926484042661614526, guid: 44921620b8f0fea4d9fecef10ad324a2, type: 3}
