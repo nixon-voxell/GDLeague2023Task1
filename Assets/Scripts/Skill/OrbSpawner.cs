@@ -4,7 +4,7 @@ using UnityEngine;
 public class OrbSpawner : MonoBehaviour
 {
     [SerializeField] private float m_RespawnInterval;
-    [SerializeField] private int m_SkillIdx;
+    private int m_SkillIdx; // I believe this supposed to be not seen by the game designers tho
     private GameObject m_SkillOrb;
 
     private void Start()
@@ -14,13 +14,13 @@ public class OrbSpawner : MonoBehaviour
     }
 
     /// <summary>Enable spawner.</summary>
-    private void EnableSpawn()
+    public void EnableSpawn()
     {
         StartCoroutine(Respawn(0.0f));
     }
 
     /// <summary>Disable spawner.</summary>
-    private void DisableSpawn()
+    public void DisableSpawn()
     {
         if (this.m_SkillOrb != null)
         {
@@ -36,7 +36,7 @@ public class OrbSpawner : MonoBehaviour
 
     private IEnumerator Respawn(float interval)
     {
-        // destroy previous skill orb
+        // destroy previous skill orb   
         if (this.m_SkillOrb != null)
         {
             Object.Destroy(this.m_SkillOrb);
@@ -52,6 +52,21 @@ public class OrbSpawner : MonoBehaviour
         GameObject skillOrbPrefab = so_skill.Skills[this.m_SkillIdx].OrbPrefab;
         this.m_SkillOrb = Object.Instantiate(skillOrbPrefab, this.transform);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (m_SkillOrb == null)
+                return;
+
+
+            bool AbleToGainSkill = other.GetComponent<Player>().GetNewSkill(m_SkillIdx);
+            if (AbleToGainSkill)
+                GetSkill();
+        }
+    }
+
 
     private void OnDrawGizmos()
     {

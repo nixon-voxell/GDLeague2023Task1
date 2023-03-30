@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be0402c3c64269b48a30e1aa24254ee6, type: 3}
+  m_Name: GauntletSkill
+  m_EditorClassIdentifier: 
+  CastTime: 0
+  Damage: 0
+  PositionOffset: {x: 0, y: 0, z: 0}
+  OrbPrefab: {fileID: 3445939783597978617, guid: 55f2d3ac074d6124caabec708717bcc5,
+    type: 3}
+  CastFX: {fileID: 0}
+  SkillIcon: {fileID: 21300000, guid: 0206877d5984b414d80d84a273db8507, type: 3}

@@ -28,7 +28,9 @@ public class DestructableObstacle : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        m_Animator.SetTrigger(m_CreateTrigger);
+        // Temporarily check null to ensure error doesn't pop up
+        if (m_Animator != null)
+            m_Animator.SetTrigger(m_CreateTrigger);
     }
 
     private IEnumerator DisableGameObjectAfterDelay(float delay)

@@ -20,14 +20,20 @@ public class Player : MonoBehaviour
     private PlayerStatus m_PlayerStatus = PlayerStatus.Default;
     private int m_PlayerNumber;
     private int m_CurrentHealth;
+    private float m_SkillExpireTime;
 
     // index of skill in scriptable obejct
-    private int[] m_PlayerSkills;
+    private int[] m_PlayerSkills = new int[3];
 
     public PlayerMovement PlayerMovement => this.m_PlayerMovement;
     public PlayerStatus PlayerStatus => this.m_PlayerStatus;
     public int PlayerNumber => this.m_PlayerNumber;
     public int CurrentHealth => this.m_CurrentHealth;
+
+    private void Start()
+    {
+        m_SkillExpireTime = GameManager.Instance.LevelManager.so_Skill.ExpireDuration;
+    }
 
     /// <summary>
     /// Setup required stuff of the player
@@ -39,8 +45,10 @@ public class Player : MonoBehaviour
         this.m_PlayerInput = this.GetComponent<PlayerInput>();
         this.m_PlayerMovement = this.GetComponent<PlayerMovement>();
 
-        this.m_PlayerStatus = PlayerStatus.Default;
-        this.m_CurrentHealth = m_MaxHealth;
+
+        // Removing this coz it will be set using the reset player function
+        //this.m_PlayerStatus = PlayerStatus.Default;
+        //this.m_CurrentHealth = m_MaxHealth;
 
         this.m_PlayerNumber = playerNumber;
         
@@ -53,6 +61,29 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    public void ResetPlayer()
+    {
+        this.m_PlayerStatus = PlayerStatus.Immobilized;
+        this.m_CurrentHealth = m_MaxHealth;
+
+        for (int i = 0; i < m_PlayerSkills.Length; i++)
+        {
+            m_PlayerSkills[i] = -1;
+        }
+    }
+
+    /// <summary>
+    /// Used mostly for pausing and resuming player actions
+    /// </summary>
+    public void EnablePlayer(bool enable)
+    {
+        if (enable)
+            this.m_PlayerStatus = PlayerStatus.Default;
+        else
+            this.m_PlayerStatus = PlayerStatus.Immobilized;
+    }
+
 
     private void OnMovement(InputValue value)
     {
@@ -97,6 +128,12 @@ public class Player : MonoBehaviour
         this.ActivateSkillIfExist(2);
     }
 
+    private void OnPause(InputValue value)
+    {
+        if (value.isPressed)
+            GameManager.Instance.OnPause();
+    }
+
     private void OnDeath()
     {
         this.m_PlayerStatus = PlayerStatus.Dead;
@@ -125,6 +162,26 @@ public class Player : MonoBehaviour
     {
         Debug.Assert(skillIdx < 3, "Skill index must not exceed 2.");
         return this.m_PlayerSkills[skillIdx];
+    }
+
+    // <summary>Allow player to gain new skill
+    public bool GetNewSkill(int skillIdx)
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (m_PlayerSkills[i] == -1)
+            {
+               
+                GameManager.Instance.UIManager.OnSkillChange(m_PlayerNumber, skillIdx, i);
+                m_PlayerSkills[i] = skillIdx;
+
+                StartCoroutine(SkillExpire(i));
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -158,5 +215,14 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         this.m_PlayerStatus = PlayerStatus.Default;
+    }
+
+    private IEnumerator SkillExpire(int skillSlot)
+    {
+
+        yield return new WaitForSeconds(m_SkillExpireTime);
+
+        m_PlayerSkills[skillSlot] = -1;
+        GameManager.Instance.UIManager.OnSkillExpire(m_PlayerNumber, skillSlot);
     }
 }

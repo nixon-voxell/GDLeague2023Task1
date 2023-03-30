@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     [Header("Player Two")]
     [SerializeField] private Transform m_PlayerTwoSpawnPoint;
     [SerializeField] private GameObject m_PlayerTwoHelmet;
+    [SerializeField] private int m_MaxRoundTime;
 
     private Player[] m_Players;
 
@@ -23,6 +24,9 @@ public class LevelManager : MonoBehaviour
     public List<OrbSpawner> OrbSpawners => this.m_OrbSpawners;
     public SkillSO so_Skill => this.m_so_Skill;
     public ObjectPool<VisualEffect> VisualEffectPool => this.m_VisualEffectPool;
+
+    public int MaxRoundTime { get => m_MaxRoundTime; set => m_MaxRoundTime = value; }
+    public Player[] Players { get => m_Players; set => m_Players = value; }
 
     private void Awake()
     {
@@ -59,5 +63,59 @@ public class LevelManager : MonoBehaviour
 
         m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);
         m_Players[1].PlayerMovement.SetTransform(m_PlayerTwoSpawnPoint);
+
+        GameManager.Instance.OnMapLoad();
+    }
+
+    public void UnloadLevel()
+    {
+        ResetObstacles();
+        EnableSpawners(false);
+        Destroy(m_Players[0].gameObject);
+        Destroy(m_Players[1].gameObject);
+        this.m_Players[0] = null;
+        this.m_Players[1] = null;
+
+        GameManager.Instance.UIManager.EnableHUD(false);
+        GameManager.Instance.SoundManager.StopMusic();
+
+        SceneManager.LoadSceneAsync(GameManager.Instance.MainMenuScene, LoadSceneMode.Additive);
+
+    }
+
+    public void ResetPlayer()
+    {
+        m_Players[0].PlayerMovement.SetTransform(m_PlayerOneSpawnPoint);
+        m_Players[1].PlayerMovement.SetTransform(m_PlayerTwoSpawnPoint);
+        m_Players[0].ResetPlayer();
+        m_Players[1].ResetPlayer();
+    }
+
+    // To disable enable player action for both players
+    public void EnablePlayer(bool enable)
+    {
+        for (int i = 0; i < m_Players.Length; i++)
+        {
+            m_Players[i].EnablePlayer(enable);
+        }
+    }
+
+    public void ResetObstacles()
+    {
+        for (int i = 0; i < m_DestructableObstacles.Count; i++)
+        {
+            m_DestructableObstacles[i].CreateObstacle();
+        }
+    }
+
+    public void EnableSpawners(bool enable)
+    {
+        for (int i = 0; i < m_OrbSpawners.Count; i++)
+        {
+            if (enable)
+                m_OrbSpawners[i].EnableSpawn();
+            else
+                m_OrbSpawners[i].DisableSpawn();
+        }
     }
 }
