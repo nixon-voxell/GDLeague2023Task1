@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6601479933082590955}
   m_Layer: 0
   m_Name: Stone Floor
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -120,20 +120,22 @@ public class Player : MonoBehaviour
             Transform trans = this.transform;
             this.m_VFX.Play();
 
-            RaycastHit hit;
-            if (Physics.SphereCast(
-                trans.position, this.m_KnockbackSO.Radius, this.transform.forward,
-                out hit, this.m_KnockbackSO.Range
-            )){
-                Player otherPlayer = hit.collider.GetComponent<Player>();
-                Debug.Log(hit.collider.name);
+            Collider[] colliders = Physics.OverlapSphere(
+                trans.position + trans.forward * this.m_KnockbackSO.Range,
+                this.m_KnockbackSO.Radius
+            );
+
+            for (int c = 0; c < colliders.Length; c++)
+            {
+                Collider collider = colliders[c];
+                Player otherPlayer = collider.GetComponent<Player>();
                 if (otherPlayer != null && otherPlayer != this && otherPlayer.Immune == false)
                 {
                     otherPlayer.m_PlayerMovement.SetVelocity(trans.forward * this.m_KnockbackSO.Force);
                     this.StartCoroutine(otherPlayer.Knockback());
                 }
 
-                DestructableObstacle obstacle = hit.collider.GetComponent<DestructableObstacle>();
+                DestructableObstacle obstacle = collider.GetComponent<DestructableObstacle>();
                 if (obstacle != null)
                 {
                     obstacle.DestroyObstacle();

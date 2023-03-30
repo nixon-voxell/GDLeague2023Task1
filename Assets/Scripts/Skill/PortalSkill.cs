@@ -6,42 +6,47 @@ using UnityEngine.VFX;
 public class PortalSkill : AbstractSkill
 {
     public float TPRange;
-    public float CheckRadius;
     public VisualEffectAsset ArriveFx;
-    public float ExpandRangeAmt;
 
     public override void OnPress(Player player)
     {
         Transform playerTrans = player.transform;
-        Vector3 position = playerTrans.position;
-        Vector3 direction = player.transform.forward;
+        Vector3 playerPosition = playerTrans.position;
+        Vector3 forwardDirection = player.transform.forward;
         Vector3 offset = Vector3.zero;
         Vector3 positionToTP = Vector3.zero;
 
-        bool isFree = false;
-        float expandRange = 0;
+        const int MAX_ITERATION = 100;
+        int iteration = 0;
         bool canTp = true;
 
-        while (!isFree)
-        {
-            positionToTP = position + (direction * TPRange) + offset;
-            Collider[] collider = Physics.OverlapSphere(positionToTP, CheckRadius);
+        float playerRadius = player.GetComponent<SphereCollider>().radius;
+        float halfPlayerRadius = playerRadius * 0.5f;
 
+        while (true && iteration++ < MAX_ITERATION)
+        {
+            positionToTP = playerPosition + (forwardDirection * TPRange) + offset;
+
+            if (Vector3.Distance(positionToTP, playerPosition) < playerRadius)
+            {
+                positionToTP = playerPosition;
+                break;
+            }
+
+            Collider[] collider = Physics.OverlapSphere(positionToTP, playerRadius);
+
+            if (collider.Length == 0 || collider == null)
+            {
+                break;
+            }
 
             for (int i = 0; i < collider.Length; i++)
             {
-                if (collider[i].CompareTag("Offmap"))
+                if (collider[i].CompareTag("Obstacle") || collider[i].CompareTag("Offmap"))
                 {
-                    canTp = false;
-                    break;
+                    offset -= forwardDirection * halfPlayerRadius;
+                    continue;
                 }
-                else if (collider[i].CompareTag("Obstacle"))
-                {
-                    offset = new Vector3(Random.Range(0.1f + expandRange, 0.3f + expandRange), 0, Random.Range(0.1f + expandRange, 0.3f + expandRange));
-                    expandRange += ExpandRangeAmt;
-                }
-                else
-                    isFree = true;
             }
         }
         

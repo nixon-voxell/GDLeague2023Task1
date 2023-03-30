@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Mathematics;
 
 public enum GameState
 {
@@ -176,7 +177,9 @@ public class GameManager : Singleton<GameManager>
         }
         
 
-        
+        // stop player from moving
+        this.LevelManager.Players[0].PlayerMovement.SetMoveDirection(float2.zero);
+        this.LevelManager.Players[1].PlayerMovement.SetMoveDirection(float2.zero);
 
         // Check game end
 
