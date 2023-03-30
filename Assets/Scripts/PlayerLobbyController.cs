@@ -42,7 +42,6 @@ public class PlayerLobbyController : MonoBehaviour
 
     private void OnNavigate(InputValue value)
     {
-        Debug.Log("Navigated: " + value);
         if (!m_Navigated)
         {
             //If selected object is of itself, do not reset the UI to normal color 
