@@ -146,7 +146,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.SetCenterText(String.Format("PLAYER {0} WINS", playerWinner));
 
         // Check game end
-        if (m_WinningCount[playerWinner] == 2 || m_WinningCount[playerWinner] == 2)
+        if (m_WinningCount[playerWinner - 1] == 2 || m_WinningCount[playerWinner - 1] == 2)
             StartCoroutine(OnGameEnd(playerWinner));
         else
             Invoke("OnGameSetup", 3.0f);
@@ -158,6 +158,7 @@ public class GameManager : Singleton<GameManager>
     public IEnumerator OnGameEnd(int playerWinner)
     {
         yield return new WaitForSeconds(3.0f);
+        UIManager.SetCenterText("");
         UIManager.OnGameEnd(playerWinner);
         LevelManager.ResetObstacles(); // For the main menu to use
         CurrentGameState = GameState.GAME_END;
