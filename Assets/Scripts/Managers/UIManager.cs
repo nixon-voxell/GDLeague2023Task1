@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 
 /// <summary>
 /// Controls the UI in level only
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_PauseScreen;
     [SerializeField] private GameObject m_EndGameScreen;
     [SerializeField] private GameObject m_HUDCanvas;
+    [SerializeField] private MultiplayerEventSystem m_EventSystem;
+    [SerializeField] private GameObject m_UIParentRoot;
     [SerializeField] private PlayerHUD[] m_PlayerHUD = new PlayerHUD[2];
     [SerializeField] private GameObject[] m_Player1VictoryCount = new GameObject[2];
     [SerializeField] private GameObject[] m_Player2VictoryCount = new GameObject[2];
@@ -133,6 +136,17 @@ public class UIManager : MonoBehaviour
         StartCoroutine(m_TimerTick);
         StartCoroutine(RoundTimerTick());
     }
+
+    public void ChangeEventSystemRoot(GameObject root)
+    {
+        if (root == null)
+        {
+            m_EventSystem.playerRoot = m_UIParentRoot;
+        }
+        else
+            m_EventSystem.playerRoot = root;
+    }
+
 
     public void EnablePauseScreen(bool enable)
     {
