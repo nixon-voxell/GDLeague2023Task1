@@ -18,8 +18,8 @@ MonoBehaviour:
     m_Bits: 12
   Skills:
   - {fileID: 11400000, guid: 3120207e26871e846932f999441fd39f, type: 2}
-  - {fileID: 11400000, guid: 5c07fe81ce02a3e43ac4da71072816ad, type: 2}
   - {fileID: 11400000, guid: e1024c51553de6b408e7873363c19fad, type: 2}
   - {fileID: 11400000, guid: a81be5271450ea0499928bc0a0338f46, type: 2}
   - {fileID: 11400000, guid: 1a1de75fb8cbd4a448312b984e814fee, type: 2}
   - {fileID: 11400000, guid: 42ce95896f3e6a04fb1352fb6ab92bcd, type: 2}
+  - {fileID: 11400000, guid: 5c07fe81ce02a3e43ac4da71072816ad, type: 2}
