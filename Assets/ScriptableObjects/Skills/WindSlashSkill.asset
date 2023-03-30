@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e5e65c7eb708844a91a2d1ca8a29a11, type: 3}
   m_Name: WindSlashSkill
   m_EditorClassIdentifier: 
-  CastTime: 0
-  Damage: 0
-  PositionOffset: {x: 0, y: 0, z: 0}
+  CastTime: 2
+  Damage: 15
+  PositionOffset: {x: -0.2, y: 0, z: 0}
   OrbPrefab: {fileID: 4648844951283306422, guid: 4529591937ccade448b49655592d0644,
     type: 3}
   CastFX: {fileID: 8926484042661614526, guid: 44921620b8f0fea4d9fecef10ad324a2, type: 3}
   SkillIcon: {fileID: 21300000, guid: 72e964d23f4ee224195e206788675d04, type: 3}
-  Range: 5
-  CloseRangeDamage: 10
-  MidRangeDamage: 7
-  FarRangeDamage: 5
+  Radius: 1.5
+  CastDelay: 0.1
+  DmgPosOffset: {x: -0.5, y: 0, z: 0}
