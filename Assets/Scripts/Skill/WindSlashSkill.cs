@@ -51,6 +51,8 @@ public class WindSlashSkill : AbstractSkill
         vfx.transform.rotation = Quaternion.identity;
         vfx.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
         vfx.Play();
+        GameManager.Instance.SoundManager.PlayOneShot("sfx_windslash");
+
 
         yield return new WaitForSeconds(CastDelay);
 

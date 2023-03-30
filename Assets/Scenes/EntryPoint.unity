@@ -435,11 +435,16 @@ MonoBehaviour:
     Pitch: 1
   - SoundName: sfx_roundstart
     Clip: {fileID: 8300000, guid: 844a932d4803dbb42be1fa50cdbfd8ed, type: 3}
-    Volume: 0.8
+    Volume: 0.6
     SpatialBlend: 0
     Pitch: 1
   - SoundName: sfx_roundend
     Clip: {fileID: 8300000, guid: 8d5a07b3f340b6a43b7bbda005d35c41, type: 3}
+    Volume: 1
+    SpatialBlend: 0
+    Pitch: 1
+  - SoundName: sfx_windslash
+    Clip: {fileID: 8300000, guid: 727e3fe79727eaa4b939e4be9f3655a8, type: 3}
     Volume: 1
     SpatialBlend: 0
     Pitch: 1
