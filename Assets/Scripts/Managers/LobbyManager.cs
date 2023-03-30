@@ -169,13 +169,13 @@ public class LobbyManager : Singleton<LobbyManager>
     /// <param name="playerNumber"></param>
     private void PlayerReset(int playerNumber)
     {
-        if (playerNumber == 1)
+        if (playerNumber == 1 && m_P1PlayerInput != null)
         {
             m_P1InputSystemUIInputModule.enabled = false;
             Destroy(m_P1PlayerInput.gameObject);
             m_P1PlayerInput = null;
         }
-        else if (playerNumber == 2)
+        else if (playerNumber == 2 && m_P2PlayerInput != null)
         {
             m_P2InputSystemUIInputModule.enabled = false;
             Destroy(m_P2PlayerInput.gameObject);
@@ -249,6 +249,10 @@ public class LobbyManager : Singleton<LobbyManager>
 
     public void ReturnToMainMenu()
     {
+        //Destroy(m_P1PlayerInput.gameObject);
+        //Destroy(m_P2PlayerInput.gameObject);
+        PlayerReset(1);
+        PlayerReset(2);
         SceneManager.UnloadSceneAsync(GameManager.Instance.LobbyScene);
         SceneManager.LoadSceneAsync(GameManager.Instance.MainMenuScene, LoadSceneMode.Additive);
     }
