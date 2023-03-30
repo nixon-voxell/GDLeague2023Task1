@@ -18,10 +18,6 @@ public class KnifeSkill : AbstractSkill
         LevelManager levelManager = GameManager.Instance.LevelManager;
         VisualEffect vfx = levelManager.VisualEffectPool.GetNextObject();
 
-        Transform playerTrans = player.transform;
-        Vector3 eulerAngle = playerTrans.rotation.eulerAngles;
-        eulerAngle.x = 90.0f;
-        vfx.transform.rotation = Quaternion.Euler(eulerAngle);
         vfx.enabled = true;
         vfx.visualEffectAsset = this.CastFX;
         vfx.Play();
@@ -33,12 +29,19 @@ public class KnifeSkill : AbstractSkill
     private IEnumerator DamageRoutine(Player player, VisualEffect vfx)
     {
         Transform playerTrans = player.transform;
+        Vector3 euler = playerTrans.rotation.eulerAngles;
+        euler.x = 90.0f;
+        vfx.transform.rotation = Quaternion.Euler(euler);
+
+        Vector3 forwardDirection = playerTrans.forward;
+
         float startTime = Time.time;
         bool damaged = false;
 
         while (Time.time - startTime < this.CastTime)
         {
             vfx.transform.position = playerTrans.position;
+
             // just move the position if damage has been done
             if (!damaged)
             {
@@ -46,7 +49,7 @@ public class KnifeSkill : AbstractSkill
                 RaycastHit hit;
                 if (Physics.SphereCast(
                     playerTrans.position + this.PositionOffset,
-                    this.Radius, playerTrans.forward,
+                    this.Radius, forwardDirection,
                     out hit, this.Range
                 )) {
                     Player otherPlayer = hit.collider.GetComponent<Player>();
