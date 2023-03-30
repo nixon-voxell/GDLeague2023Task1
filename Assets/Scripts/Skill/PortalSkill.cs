@@ -28,24 +28,20 @@ public class PortalSkill : AbstractSkill
             Collider[] collider = Physics.OverlapSphere(positionToTP, CheckRadius);
 
 
-            if (collider.Length > 0)
+            for (int i = 0; i < collider.Length; i++)
             {
-                for (int i = 0; i < collider.Length; i++)
+                if (collider[i].CompareTag("Offmap"))
                 {
-                    if (collider[i].CompareTag("Offmap"))
-                    {
-                        canTp = false;
-                        break;
-                    }
+                    canTp = false;
+                    break;
                 }
-
-                offset = new Vector3(Random.Range(0.1f + expandRange, 0.3f + expandRange), 0,  Random.Range(0.1f + expandRange, 0.3f + expandRange));
-                expandRange += ExpandRangeAmt;
-
-            }
-            else
-            {
-                isFree = true;
+                else if (collider[i].CompareTag("Obstacle"))
+                {
+                    offset = new Vector3(Random.Range(0.1f + expandRange, 0.3f + expandRange), 0, Random.Range(0.1f + expandRange, 0.3f + expandRange));
+                    expandRange += ExpandRangeAmt;
+                }
+                else
+                    isFree = true;
             }
         }
         
