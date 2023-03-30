@@ -187,10 +187,7 @@ public class GameManager : Singleton<GameManager>
             StartCoroutine(OnGameEnd(actualPlayerWinner));
         else
             Invoke("OnGameSetup", 3.0f);
-
     }
-
-
 
     public IEnumerator OnGameEnd(int playerWinner)
     {
